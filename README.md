@@ -2,7 +2,7 @@
 
 Access the project on [GitHub Pages](https://it-sd-capstone.github.io/capstone-project-dungeon-crew/).
 
-Endless dungeon is a web based point-and-click dungeon crawler game. The project is developed using HTML, CSS, and JavaScript. In Endless Dungeon, the player traverses a dungeon, encountering monsters, loot, shops, and bosses along the way. The further you delve into the dungeon, the more difficult the encounters become.
+Endless Dungeon is a web based point-and-click dungeon crawler game. The project is developed using HTML, CSS, and JavaScript. In Endless Dungeon, the player traverses a dungeon, encountering monsters, loot, shops, and bosses along the way. The further you delve into the dungeon, the more difficult the encounters become.
 
 ## Dependencies
 
