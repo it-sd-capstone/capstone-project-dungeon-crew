@@ -6,12 +6,14 @@ Endless dungeon is a web based point-and-click dungeon crawler game. The project
 
 ## Dependencies
 
-### (jQuery)[https://jquery.com/]
+### [jQuery](https://jquery.com/)
 
 jQuery is preinstalled in this project, so there are no installation steps necessary.
 
-### (Jest (Optional))[https://jestjs.io/]
+### [Jest (Optional)](https://jestjs.io/)
 
 Jest may be installed if you wish to use unit testing on this projest. To install, open bash and enter:
-  npm install jest --global
-The unit test scripts are located in js/test.
+
+`npm install jest --global`
+
+The unit test scripts are located in `js/test/`.
