@@ -12,8 +12,11 @@ jQuery is preinstalled in this project, so there are no installation steps neces
 
 ### [Jest (Optional)](https://jestjs.io/)
 
-Jest may be installed if you wish to use unit testing on this projest. To install, open bash and enter:
+Jest is preinstalled in this project, so there are no installation steps necessary.
 
-`npm install jest --global`
+In order to use Jest, open up a terminal and navigate to the project directory. Then, you may run `jest [test-path]` to run a test.
 
-The unit test scripts are located in `js/test/`.
+The following tests are currently available:
+- jQuery: `js/test/jq.test.js`
+
+Alternatively, some IDEs may offer built in support for Jest. You can navigate to the desired test file and press the test icon next to the test you would like to run.
