@@ -137,7 +137,7 @@ class Monster extends Creature {
 }
 
 class Boss extends Monster {
-  itemDrop: string;
+  itemDrop: Item;
 
   constructor(
     health: number,
@@ -151,7 +151,7 @@ class Boss extends Monster {
     this.itemDrop = this.itemDrop;
   }
 
-  public get getDrop(): string {
+  public get getDrop(): Item {
     return this.itemDrop;
   }
 }
@@ -225,6 +225,10 @@ class Equipment extends Item {
 
   public get getDefMod() {
     return this.defenseMod;
+  }
+
+  public get getHealtMod() {
+    return this.healthMod;
   }
 
   public executeAttack(): void { // Test
