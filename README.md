@@ -10,7 +10,7 @@ Endless Dungeon is a web based point-and-click dungeon crawler game. The project
 
 jQuery is preinstalled in this project, so there are no installation steps necessary.
 
-### [Jest (Optional)](https://jestjs.io/)
+### [Jest](https://jestjs.io/)
 
 Jest is preinstalled in this project, so there are no installation steps necessary.
 
