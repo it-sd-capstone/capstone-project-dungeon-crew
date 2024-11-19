@@ -6,6 +6,177 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+
+    <div id="mainMenu" class="hide visible menuDiv">
+        <h1>Main Menu</h1>
+        <button onclick="enterRoom('')">Play Game</button>
+        <button onclick="enterRoom('')">How To Play</button>
+    </div>
+
+    <div id="shopRoom" class="hide shopDiv">
+        <h1>Shop Room</h1>
+        <button onclick="clickObject('')"> <!-- This is the shop keeper and you can click on them for dialogue -->
+            <img src="" alt="Shop Keeper"> 
+        </button>
+        <button onclick="enterRoom('')"> <!-- This is the door and you can click it to go to another room -->
+            <img src="" alt="Door"> 
+        </button>
+        <button onclick="clickObject('')"> <!-- This is the doctor and you can click on them for dialogue -->
+            <img src="" alt="Doctor"> 
+        </button>
+        <button onclick="clickObject('')"> <!-- This is an item a player can purchase -->
+            <img src="" alt="Item"> 
+        </button>
+        <button onclick="clickObject('')"> <!-- This is an item a player can purchase -->
+            <img src="" alt="Item"> 
+        </button>
+        <button onclick="clickObject('')"> <!-- This is an item a player can purchase -->
+            <img src="" alt="Item"> 
+        </button>
+        <button onclick="clickObject('')"> <!-- This is an item a player can purchase -->
+            <img src="" alt="Item"> 
+        </button>
+    </div>
+
+    <div id="statusBar" class="hide">
+        <input type="text" id="statusBarText" value="The default value for the text bar" readonly> <!-- The value can be changed dynamically later using JavaScript -->
+        <div id="holdStatsAndInventory">
+
+            <div id="statsBox"> <!-- The value can be changed dynamically later using JavaScript -->
+                <h4>Stats</h4>
+                <ul>
+                
+                    <li>
+                        <label for="health">HEALTH:</label>
+                        <input type="text" id="health" value="100" readonly>  <!-- The value can be changed dynamically later using JavaScript -->
+                    </li>
+                    <li>
+                        <label for="attack">ATTACK:</label>
+                        <input type="text" id="attack" value="100" readonly>  <!-- The value can be changed dynamically later using JavaScript -->
+                    </li>
+                    <li>
+                        <label for="defense">DEFENSE:</label>
+                        <input type="text" id="defense" value="100" readonly>  <!-- The value can be changed dynamically later using JavaScript -->
+                    </li>
+                    <li>
+                        <label for="gold">GOLD:</label>
+                        <input type="text" id="gold" value="100" readonly>  <!-- The value can be changed dynamically later using JavaScript -->
+                    </li>
+                    <li>
+                        <label for="score">SCORE:</label>
+                        <input type="text" id="score" value="100" readonly>  <!-- The value can be changed dynamically later using JavaScript -->
+                    </li>
+                    
+                </ul>
+
+            </div>
+
+            <div id="inventory"> <!-- The src attribute of the image tags can be changed dynamically using JS based on what the player purchased and used -->
+                <h4>inventory</h4>
+                <ul>
+                    <li>
+                        <button onclick="clickObject('')">
+                            <img src="item1.png" alt="Item 1">
+                        </button>
+                    </li>
+                    <li>
+                        <button onclick="clickObject('')">
+                            <img src="item2.png" alt="Item 2">
+                        </button>
+                    </li>
+                    <li>
+                        <button onclick="clickObject('')">
+                            <img src="item3.png" alt="Item 3">
+                        </button>
+                    </li>
+                    <li>
+                        <button onclick="clickObject('')">
+                            <img src="item4.png" alt="Item 4">
+                        </button>
+                    </li>
+                    <li>
+                        <button onclick="clickObject('')">
+                            <img src="item5.png" alt="Item 5">
+                        </button>
+                    </li>
+                    <li>
+                        <button onclick="clickObject('')">
+                            <img src="item6.png" alt="Item 6">
+                        </button>
+                    </li>
+                    <li>
+                        <button onclick="clickObject('')">
+                            <img src="item7.png" alt="Item 7">
+                        </button>
+                    </li>
+                    <li>
+                        <button onclick="clickObject('')">
+                            <img src="item8.png" alt="Item 8">
+                        </button>
+                    </li>
+                   
+                </ul>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div id="bossRoom" class="hide bossDiv">
+        <h1>Boss Room</h1>
+        <button onclick="enterRoom('')"> <!-- This is the door the user can click to go to another room -->
+            <img src="" alt="Door"> 
+        </button>
+        <button onclick="clickObject('')"> <!-- This is the boss the player is fighting -->
+            <img src="" alt="Boss"> 
+        </button>
+        <input type="text" id="bossText" value="" readonly> 
+       
+    </div>
+
+    <div id="itemRoom" class="hide itemDiv">
+        <h1>Item Room</h1>
+        <button onclick="enterRoom('')"> <!-- This is the door the player can click to go to another room -->
+            <img src="" alt="Door"> 
+        </button>
+
+        <div class="chest">
+            <button onclick="clickObject('')"> <!-- This is the chest the player can click to open. The image src attribute should change if the player clicks on the chest -->
+                <img src="" alt="Chest"> 
+            </button>
+            <button onclick="clickObject('')" class="hide"> <!-- This is the random item a player can take. We will have to use JavaScript to make it show up once the player clicks the chest -->
+                <img src="" alt="Item"> 
+            </button>
+        </div>
+
+
+    </div>
+    
+    <div id="monsterRoom" class="hide monsterDiv">
+        <h1>Monster Room</h1>
+        <button onclick="enterRoom('')"> <!-- This is the door the player can click to go to another room -->
+            <img src="" alt="Door"> 
+        </button>
+
+        <button onclick="clickObject('')"> <!-- This is a monster a player must defeat -->
+            <img src="" alt="monster"> 
+        </button>
+        <input type="text" id="monster1Text" value="" readonly> 
+
+        <button onclick="clickObject('')"> <!-- This is a monster a player must defeat -->
+            <img src="" alt="monster"> 
+        </button>
+        <input type="text" id="monster2Text" value="" readonly> 
+
+        <button onclick="clickObject('')"> <!-- This is a monster a player must defeat -->
+            <img src="" alt="monster"> 
+        </button>
+        <input type="text" id="monster3Text" value="" readonly> 
+    </div>
+
+    <script src="js/click.js"></script>
     <script src="js/main.js"></script>
+
 </body>
 </html>

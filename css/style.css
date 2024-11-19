@@ -1,0 +1,26 @@
+.hide {
+    display: none; /* Hide all rooms by default */
+}
+.visible {
+    display: block; /* Make the active room visible */
+}
+
+.menuDiv {
+    background-image: url(''); 
+}
+
+.shopDiv {
+    background-image: url('');
+}
+
+.bossDiv {
+    background-image: url('');
+}
+
+.itemDiv {
+    background-image: url('');
+}
+
+.monsterDiv {
+    background-image: url('');
+}
