@@ -51,8 +51,9 @@ class Creature {
 
 class Player extends Creature {
   gold: number;
-  inventory: Item[];
+  inventory: BaseItem[];
   equipped: Equipment[];
+  isDodged: boolean;
 
   constructor(
     health: number,
@@ -60,13 +61,14 @@ class Player extends Creature {
     attack: number,
     defense: number,
     gold: number,
-    inventory: Item[],
+    inventory: BaseItem[],
     equipped: Equipment[]
   ) {
     super(health, maxHealth, attack, defense);
     this.gold = gold;
     this.inventory = inventory;
     this.equipped = equipped;
+    this.isDodged = false;
   }
 
   public get getGold(): number {
@@ -81,7 +83,7 @@ class Player extends Creature {
     this.gold =- goldAmount;
   }
 
-  public get getInventory(): Item[] {
+  public get getInventory(): BaseItem[] {
     return this.inventory;
   }
 
@@ -110,7 +112,7 @@ class Player extends Creature {
 
 }
 
-class Monster extends Creature {
+export class Monster extends Creature {
   name: string;
   sprite: string;
 
@@ -136,8 +138,8 @@ class Monster extends Creature {
   }
 }
 
-class Boss extends Monster {
-  itemDrop: Item;
+export class Boss extends Monster {
+  itemDrop: BaseItem;
 
   constructor(
     health: number,
@@ -151,7 +153,7 @@ class Boss extends Monster {
     this.itemDrop = this.itemDrop;
   }
 
-  public get getDrop(): Item {
+  public get getDrop(): BaseItem {
     return this.itemDrop;
   }
 }
@@ -160,7 +162,7 @@ class Boss extends Monster {
 // Items
 // 
 
-class Item {
+export abstract class BaseItem {
   name: string;
   value: number;
   sprite: string;
@@ -174,9 +176,11 @@ class Item {
     this.value = value;
     this.sprite = sprite;
   }
+
+  abstract applyEffect(target: any): void; 
 }
 
-class Consumable extends Item {
+export class Consumable extends BaseItem {
     effect: () => void; // Test
 
     constructor(
@@ -189,12 +193,12 @@ class Consumable extends Item {
       this.effect = effect;
     }
 
-    useItem(): void { // Test
-      this.effect();
+    applyEffect(target: any): void {
+        this.effect();
     }
 }
 
-class Equipment extends Item {
+export class Equipment extends BaseItem {
   attackMod: number;
   defenseMod: number;
   healthMod: number;
@@ -219,23 +223,11 @@ class Equipment extends Item {
     this.hurtScript = hurtScript; // Test
   }
 
-  public get getAtkMod() {
-    return this.attackMod;
-  }
-
-  public get getDefMod() {
-    return this.defenseMod;
-  }
-
-  public get getHealtMod() {
-    return this.healthMod;
-  }
-
-  public executeAttack(): void { // Test
-    this.attackScript;
-  }
-  public executeHurt(): void { // Test
-    this.hurtScript;
+  applyEffect(target: any): void {
+      target.attack += this.attackMod;
+      target.defense += this.defenseMod;
+      target.health += this.healthMod;
+      this.attackScript();
   }
 }
 
@@ -258,17 +250,17 @@ class Room {
 }
 
 class ShopRoom extends Room {
-  forSale: Item[];
+  forSale: BaseItem[];
 
   constructor(
     type: string,
-    forSale: Item[]
+    forSale: BaseItem[]
   ) {
     super(type);
     this.forSale = forSale;
   }
 
-  public get getForSale(): Item[] {
+  public get getForSale(): BaseItem[] {
     return this.forSale;
   }
 }
@@ -320,12 +312,12 @@ class MonsterRoom extends Room {
 }
 
 class ItemRoom extends Room {
-  item: Item;
+  item: BaseItem;
   taken: Boolean;
 
   constructor(
     type: string,
-    item: Item,
+    item: BaseItem,
     taken: Boolean
   ){
     super(type);
@@ -333,7 +325,7 @@ class ItemRoom extends Room {
     this.taken = taken;
   }
 
-  public get getItem(): Item {
+  public get getItem(): BaseItem {
     return this.item;
   }
 
