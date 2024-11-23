@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CSS TEST</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/test.css">
+</head>
+<body>
+    <div id="gameWrapper">
+      <div id="roomWrapper">
+        <div id="shopRoom" class="hide">
+            <div class="doorDiv">
+                <img src="img/room/door.png" class="imgFill">
+            </div>
+            <div class="shopCharacter chrShopkeeper"></div>
+            <div class="shopCharacter chrDoctor"></div>
+            <div class="shopItemDiv sItem1"></div>
+            <div class="shopItemDiv sItem2"></div>
+            <div class="shopItemDiv sItem3"></div>
+            <div class="shopItemDiv sItem4"></div>
+        </div>
+          <div id="itemRoom" class="hide">
+              <div class="doorDiv">
+                  <img src="img/room/door.png" class="imgFill">
+              </div>
+              <div class="chestDiv"></div>
+              <div class="chestItemDiv"></div>
+          </div>
+          <div id="monsterRoom" class="hide">
+              <div class="doorDiv">
+                  <img src="img/room/door.png" class="imgFill">
+              </div>
+              <div class="enemyDiv monster1"><img src="img/monsters/crime-slime.gif" class="imgFill"></div>
+              <div class="enemyDiv monster2"></div>
+              <div class="enemyDiv monster3"></div>
+          </div>
+          <div id="bossRoom" class="hide">
+              <div class="doorDiv">
+                  <img src="img/room/door.png" class="imgFill">
+              </div>
+              <div class="bossEnemyDiv"></div>
+          </div>
+      </div>
+      <div id="statusBar">
+          <h3 id="statusBarText">Example Status Message</h3>
+        <div id="holdStatsAndInventory">
+            <div id="statsBox">
+                <h4>Player Stats</h4>
+                <ul id="statsList">
+                    <li>HEALTH: <span id="healthVal">100</span></li>
+                    <li>GOLD: <span id="goldVal">100</span></li>
+                    <li>ATTACK: <span id="attackVal">100</span></li>
+                    <li>DEFENSE: <span id="defenseVal">100</span></li>
+                    <li>SCORE: <span id="scoreVal">100</span></li>
+                </ul>
+            </div>
+            <div id="inventory">
+                <h4>Inventory</h4>
+                <ul>
+                    <li>1</li>
+                    <li>2</li>
+                    <li>3</li>
+                    <li>4</li>
+                    <li>5</li>
+                    <li>6</li>
+                    <li>7</li>
+                    <li>8</li>
+                </ul>
+            </div>
+        </div>
+      </div>
+    </div>
+</body>
+</html>

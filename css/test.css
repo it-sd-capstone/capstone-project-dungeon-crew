@@ -1,0 +1,39 @@
+#gameWrapper {
+    background-color: rgb(10,10,10);
+}
+
+#roomWrapper {
+    background-color: rgb(20,20,20);
+}
+
+#statusWrapper {
+    background-color: rgb(30,30,30);
+}
+
+.shopItemDiv {
+    background-color: yellow;
+}
+
+.shopCharacter{
+    background-color: white;
+}
+
+.enemyDiv {
+    background-color: red;
+}
+
+.chestDiv {
+    background-color: saddlebrown;
+}
+
+.chestItemDiv {
+    background-color: yellow;
+}
+
+.bossEnemyDiv {
+    background-color: red;
+}
+
+#inventory li {
+    background-color: yellow;
+}
