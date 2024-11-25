@@ -1,4 +1,4 @@
-import $ from 'jquery'
+import 'jquery'
 export class AudioManager {
     public constructor() {
     }

@@ -7,17 +7,17 @@
 </head>
 <body>
 
-    <div id="mainMenu" class="menuDiv">
+    <div id="mainMenu" class="hide menuDiv">
         <h1>Main Menu</h1>
         <button onclick="enterRoom('')">Play Game</button>
         <button onclick="enterRoom('')">How To Play</button>
     </div>
-    <div id="gameWrapper" class="hide">
+    <div id="gameWrapper" class="">
         <div id="roomWrapper">
             <div id="shopRoom" class="hide shopDiv">
                 <div class="shopCharacter chrShopkeeper">
                     <button onclick="clickObject('')"> <!-- This is the shop keeper and you can click on them for dialogue -->
-                            <img src="" alt="Shop Keeper" class="imgFill">
+                            <img src="#" alt="Shop Keeper" class="imgFill">
                     </button>
                 </div>
                 <div class="doorDiv">
@@ -27,27 +27,27 @@
                 </div>
                 <div class="shopCharacter chrDoctor">
                     <button onclick="clickObject('')"> <!-- This is the doctor and you can click on them for dialogue -->
-                        <img src="" alt="Doctor" class="imgFill">
+                        <img src="#" alt="Doctor" class="imgFill">
                     </button>
                 </div>
                 <div class="shopItemDiv sItem1">
                     <button onclick="clickObject('')"> <!-- This is an item a player can purchase -->
-                        <img src="" alt="Item" class="imgFill">
+                        <img src="#" alt="Item" class="imgFill">
                     </button>
                 </div>
                 <div class="shopItemDiv sItem2">
                     <button onclick="clickObject('')"> <!-- This is an item a player can purchase -->
-                        <img src="" alt="Item" class="imgFill">
+                        <img src="#" alt="Item" class="imgFill">
                     </button>
                 </div>
                 <div class="shopItemDiv sItem3">
                     <button onclick="clickObject('')"> <!-- This is an item a player can purchase -->
-                        <img src="" alt="Item" class="imgFill">
+                        <img src="#" alt="Item" class="imgFill">
                     </button>
                 </div>
                 <div class="shopItemDiv sItem4">
                     <button onclick="clickObject('')"> <!-- This is an item a player can purchase -->
-                        <img src="" alt="Item" class="imgFill">
+                        <img src="#" alt="Item" class="imgFill">
                     </button>
                 </div>
             </div>
@@ -60,7 +60,7 @@
                 </div>
                 <div class="bossEnemyDiv">
                     <button onclick="clickObject('')"> <!-- This is the boss the player is fighting -->
-                        <img src="" alt="Boss">
+                        <img src="#" alt="Boss">
                     </button>
                     <input type="text" id="bossText" value="" readonly>
                 </div>
@@ -76,12 +76,12 @@
                 <div class="chest">
                     <div class="chestDiv">
                         <button onclick="clickObject('')"> <!-- This is the chest the player can click to open. The image src attribute should change if the player clicks on the chest -->
-                            <img src="" alt="Chest">
+                            <img src="#" alt="Chest">
                         </button>
                     </div>
                     <div class="chestItemDiv">
                         <button onclick="clickObject('')" class="hide"> <!-- This is the random item a player can take. We will have to use JavaScript to make it show up once the player clicks the chest -->
-                            <img src="" alt="Item">
+                            <img src="#" alt="Item">
                         </button>
                     </div>
                 </div>
@@ -98,21 +98,21 @@
 
                 <div class="enemyDiv monster1">
                     <button onclick="clickObject('')"> <!-- This is a monster a player must defeat -->
-                        <img src="" alt="monster">
+                        <img src="#" alt="monster">
                     </button>
                     <input type="text" id="monster1Text" value="" readonly>
                 </div>
 
                 <div class="enemyDiv monster2">
                     <button onclick="clickObject('')"> <!-- This is a monster a player must defeat -->
-                        <img src="" alt="monster">
+                        <img src="#" alt="monster">
                     </button>
                     <input type="text" id="monster2Text" value="" readonly>
                 </div>
 
                 <div class="enemyDiv monster3">
                     <button onclick="clickObject('')"> <!-- This is a monster a player must defeat -->
-                        <img src="" alt="monster">
+                        <img src="#" alt="monster">
                     </button>
                     <input type="text" id="monster3Text" value="" readonly>
                 </div>
@@ -138,42 +138,42 @@
                     <ul>
                         <li>
                             <button onclick="clickObject('')">
-                                <img src="item1.png" alt="Item 1">
+                                <img src="#" alt="Item 1">
                             </button>
                         </li>
                         <li>
                             <button onclick="clickObject('')">
-                                <img src="item2.png" alt="Item 2">
+                                <img src="#" alt="Item 2">
                             </button>
                         </li>
                         <li>
                             <button onclick="clickObject('')">
-                                <img src="item3.png" alt="Item 3">
+                                <img src="#" alt="Item 3">
                             </button>
                         </li>
                         <li>
                             <button onclick="clickObject('')">
-                                <img src="item4.png" alt="Item 4">
+                                <img src="#" alt="Item 4">
                             </button>
                         </li>
                         <li>
                             <button onclick="clickObject('')">
-                                <img src="item5.png" alt="Item 5">
+                                <img src="#" alt="Item 5">
                             </button>
                         </li>
                         <li>
                             <button onclick="clickObject('')">
-                                <img src="item6.png" alt="Item 6">
+                                <img src="#" alt="Item 6">
                             </button>
                         </li>
                         <li>
                             <button onclick="clickObject('')">
-                                <img src="item7.png" alt="Item 7">
+                                <img src="#" alt="Item 7">
                             </button>
                         </li>
                         <li>
                             <button onclick="clickObject('')">
-                                <img src="item8.png" alt="Item 8">
+                                <img src="#" alt="Item 8">
                             </button>
                         </li>
                     </ul>
@@ -184,6 +184,9 @@
 
     <script src="js/click.js"></script>
     <script src="js/main.js"></script>
+    <script type="module" src="js/classes.js"></script>
+    <script type="module" src="js/roommanager.js"></script>
+    <script>rmBuildSampleMonster();</script>
 
 </body>
 </html>

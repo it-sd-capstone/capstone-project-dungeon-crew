@@ -2,7 +2,7 @@
 // Creatures
 // 
 
-class Creature {
+export class Creature {
   health: number;
   maxHealth: number;
   attack: number;
@@ -49,7 +49,7 @@ class Creature {
   }
 }
 
-class Player extends Creature {
+export class Player extends Creature {
   gold: number;
   inventory: Item[];
   equipped: Equipment[];
@@ -110,7 +110,7 @@ class Player extends Creature {
 
 }
 
-class Monster extends Creature {
+export class Monster extends Creature {
   name: string;
   sprite: string;
 
@@ -136,7 +136,7 @@ class Monster extends Creature {
   }
 }
 
-class Boss extends Monster {
+export class Boss extends Monster {
   itemDrop: Item;
 
   constructor(
@@ -145,10 +145,11 @@ class Boss extends Monster {
     attack: number,
     defense: number,
     name: string,
-    sprite: string
+    sprite: string,
+    itemDrop: Item,
   ) {
     super(health, maxHealth, attack, defense, name, sprite);
-    this.itemDrop = this.itemDrop;
+    this.itemDrop = itemDrop;
   }
 
   public get getDrop(): Item {
@@ -160,7 +161,7 @@ class Boss extends Monster {
 // Items
 // 
 
-class Item {
+export class Item {
   name: string;
   value: number;
   sprite: string;
@@ -176,7 +177,7 @@ class Item {
   }
 }
 
-class Consumable extends Item {
+export class Consumable extends Item {
     effect: () => void; // Test
 
     constructor(
@@ -194,7 +195,7 @@ class Consumable extends Item {
     }
 }
 
-class Equipment extends Item {
+export class Equipment extends Item {
   attackMod: number;
   defenseMod: number;
   healthMod: number;
@@ -243,7 +244,7 @@ class Equipment extends Item {
 // Rooms
 // 
 
-class Room {
+export class Room {
   type: string;
 
   constructor(
@@ -257,7 +258,7 @@ class Room {
   }
 }
 
-class ShopRoom extends Room {
+export class ShopRoom extends Room {
   forSale: Item[];
 
   constructor(
@@ -273,7 +274,7 @@ class ShopRoom extends Room {
   }
 }
 
-class BossRoom extends Room {
+export class BossRoom extends Room {
   boss: Boss;
   cleared: Boolean;
 
@@ -296,7 +297,7 @@ class BossRoom extends Room {
   }
 }
 
-class MonsterRoom extends Room {
+export class MonsterRoom extends Room {
   monsters: Monster[];
   cleared: Boolean;
 
@@ -319,7 +320,7 @@ class MonsterRoom extends Room {
   }
 }
 
-class ItemRoom extends Room {
+export class ItemRoom extends Room {
   item: Item;
   taken: Boolean;
 
@@ -342,7 +343,7 @@ class ItemRoom extends Room {
   }
 }
 
-class Dungeon {
+export class Dungeon {
   rooms: Room[];
   difficultyMultiplier: number;
   currentRoomIndex: number;

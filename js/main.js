@@ -1,0 +1,3 @@
+import './roommanager.js';
+
+rmBuildSampleMonster();
