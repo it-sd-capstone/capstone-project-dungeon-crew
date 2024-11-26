@@ -2,26 +2,6 @@
     display: none !important; /* Hide all rooms by default */
 }
 
-.menuDiv {
-    background-image: url(''); 
-}
-
-.shopDiv {
-    background-image: url('');
-}
-
-.bossDiv {
-    background-image: url('');
-}
-
-.itemDiv {
-    background-image: url('');
-}
-
-.monsterDiv {
-    background-image: url('');
-}
-
 body, html {
     background-color: black;
     padding: 0;
