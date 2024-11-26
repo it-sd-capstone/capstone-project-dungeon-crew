@@ -1,5 +1,5 @@
-import 'jquery';
-import './classes'
+import $ from 'jquery';
+import {Room,MonsterRoom,ItemRoom,ShopRoom,BossRoom,Monster} from './classes'
 
 export function rmHideAllRooms() : void {
     let shopRoom = $("#shopRoom");

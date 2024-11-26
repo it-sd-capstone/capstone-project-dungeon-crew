@@ -60,7 +60,7 @@
                 </div>
                 <div class="bossEnemyDiv">
                     <button onclick="clickObject('')"> <!-- This is the boss the player is fighting -->
-                        <img src="#" alt="Boss">
+                        <img src="#" alt="Boss" class="imgFill">
                     </button>
                     <input type="text" id="bossText" value="" readonly>
                 </div>
@@ -98,21 +98,21 @@
 
                 <div class="enemyDiv monster1">
                     <button onclick="clickObject('')"> <!-- This is a monster a player must defeat -->
-                        <img src="#" alt="monster">
+                        <img src="#" alt="monster" class="imgFill">
                     </button>
                     <input type="text" id="monster1Text" value="" readonly>
                 </div>
 
                 <div class="enemyDiv monster2">
                     <button onclick="clickObject('')"> <!-- This is a monster a player must defeat -->
-                        <img src="#" alt="monster">
+                        <img src="#" alt="monster" class="imgFill">
                     </button>
                     <input type="text" id="monster2Text" value="" readonly>
                 </div>
 
                 <div class="enemyDiv monster3">
                     <button onclick="clickObject('')"> <!-- This is a monster a player must defeat -->
-                        <img src="#" alt="monster">
+                        <img src="#" alt="monster" class="imgFill">
                     </button>
                     <input type="text" id="monster3Text" value="" readonly>
                 </div>
@@ -183,10 +183,10 @@
     </div>
 
     <script src="js/click.js"></script>
-    <script src="js/main.js"></script>
-    <script type="module" src="js/classes.js"></script>
-    <script type="module" src="js/roommanager.js"></script>
-    <script>rmBuildSampleMonster();</script>
+    <script type="module" src="./js/classes.js"></script>
+    <script type="module" src="./js/roommanager.js"></script>
+    <script type="module" src="./js/jquery-3.7.1.min.js"></script>
+    <script type="module" src="js/main.js"></script>
 
 </body>
 </html>

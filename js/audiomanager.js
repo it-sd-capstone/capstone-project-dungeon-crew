@@ -1,8 +1,5 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.SoundEffect = exports.Music = exports.AudioManager = void 0;
-require("jquery");
-class AudioManager {
+import 'jquery';
+export class AudioManager {
     constructor() {
     }
     static addMusic(name, element) {
@@ -60,8 +57,7 @@ class AudioManager {
         }
     }
 }
-exports.AudioManager = AudioManager;
-class Music {
+export class Music {
     constructor(name, element) {
         this.element = element;
         this.name = name;
@@ -76,8 +72,7 @@ class Music {
         this.element.currentTime = 0;
     }
 }
-exports.Music = Music;
-class SoundEffect {
+export class SoundEffect {
     constructor(name, element) {
         this.element = element;
         this.name = name;
@@ -91,4 +86,3 @@ class SoundEffect {
         this.element.currentTime = 0;
     }
 }
-exports.SoundEffect = SoundEffect;

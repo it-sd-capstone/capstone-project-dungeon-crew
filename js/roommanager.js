@@ -1,11 +1,6 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.rmHideAllRooms = rmHideAllRooms;
-exports.rmBuildRoom = rmBuildRoom;
-exports.rmBuildSampleMonster = rmBuildSampleMonster;
-require("jquery");
-require("./classes");
-function rmHideAllRooms() {
+import './jquery-3.7.1.min.js';
+import {Room,ItemRoom,MonsterRoom,ShopRoom,BossRoom,Monster,Boss,Item} from './classes.js';
+export function rmHideAllRooms() {
     let shopRoom = $("#shopRoom");
     let itemRoom = $("#itemRoom");
     let monsterRoom = $("#monsterRoom");
@@ -15,7 +10,7 @@ function rmHideAllRooms() {
     monsterRoom.addClass("hide");
     bossRoom.addClass("hide");
 }
-function rmBuildRoom(room) {
+export function rmBuildRoom(room) {
     rmHideAllRooms();
     if (room instanceof MonsterRoom) {
         let buildRoom = room;
@@ -57,9 +52,9 @@ function rmBuildRoom(room) {
         let itemRoom = $("#itemRoom");
         itemRoom.removeClass("hide");
         let chest = $(".chestDiv");
-        let item = $(".itemDiv");
+        let item = $(".chestItemDiv");
         let chestImg = $(".chestDiv img");
-        let itemImg = $(".itemDiv img");
+        let itemImg = $(".chestItemDiv img");
         chestImg.attr("src", "img/room/chest-closed.png");
         item.addClass("hide");
         itemImg.attr("src", buildRoom.item.sprite).attr("alt", buildRoom.item.name);
@@ -95,8 +90,27 @@ function rmBuildRoom(room) {
         bossImg.attr("src", buildRoom.boss.sprite).attr("alt", buildRoom.boss.name);
     }
 }
-function rmBuildSampleMonster() {
-    let testSlime = new Monster(5, 5, 1, 1, "Test Slime", "img/monster/crime-slime.gif");
+export function rmBuildSampleMonster() {
+    let testSlime = new Monster(5, 5, 1, 1, "Test Slime", "img/monsters/crime-slime.gif");
     let monstRoom = new MonsterRoom("monster", [testSlime, testSlime, testSlime], false);
     rmBuildRoom(monstRoom);
+}
+
+export function rmBuildSampleItem() {
+    let testItem = new Item("Test Sword",1,"img/monsters/crime-slime.gif");
+    let itemRoom = new ItemRoom("item",testItem,false);
+    rmBuildRoom(itemRoom);
+}
+
+export function rmBuildSampleShop() {
+    let testItem = new Item("Test Sword",1,"img/monsters/crime-slime.gif");
+    let shopRoom = new ShopRoom("shop",[testItem,testItem,testItem,testItem]);
+    rmBuildRoom(shopRoom);
+}
+
+export function rmBuildSampleBoss() {
+    let testItem = new Item("Test Sword",1,"img/monsters/crime-slime.gif");
+    let boss = new Boss(5,5,1,1,"Test Boss","img/monsters/crime-slime.gif",testItem);
+    let bossRoom = new BossRoom("boss",boss,false);
+    rmBuildRoom(bossRoom);
 }

@@ -1,10 +1,7 @@
-"use strict";
 // 
 // Creatures
 // 
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.Dungeon = exports.ItemRoom = exports.MonsterRoom = exports.BossRoom = exports.ShopRoom = exports.Room = exports.Equipment = exports.Consumable = exports.Item = exports.Boss = exports.Monster = exports.Player = exports.Creature = void 0;
-class Creature {
+export class Creature {
     constructor(health, maxHealth, attack, defense) {
         this.health = health;
         this.maxHealth = maxHealth;
@@ -33,8 +30,7 @@ class Creature {
         this.health = this.maxHealth;
     }
 }
-exports.Creature = Creature;
-class Player extends Creature {
+export class Player extends Creature {
     constructor(health, maxHealth, attack, defense, gold, inventory, equipped) {
         super(health, maxHealth, attack, defense);
         this.gold = gold;
@@ -71,8 +67,7 @@ class Player extends Creature {
         this.equipped.splice(itemIndex, 1);
     }
 }
-exports.Player = Player;
-class Monster extends Creature {
+export class Monster extends Creature {
     constructor(health, maxHealth, attack, defense, name, sprite) {
         super(health, maxHealth, attack, defense);
         this.name = name;
@@ -85,8 +80,7 @@ class Monster extends Creature {
         return this.name;
     }
 }
-exports.Monster = Monster;
-class Boss extends Monster {
+export class Boss extends Monster {
     constructor(health, maxHealth, attack, defense, name, sprite, itemDrop) {
         super(health, maxHealth, attack, defense, name, sprite);
         this.itemDrop = itemDrop;
@@ -95,19 +89,17 @@ class Boss extends Monster {
         return this.itemDrop;
     }
 }
-exports.Boss = Boss;
 // 
 // Items
 // 
-class Item {
+export class Item {
     constructor(name, value, sprite) {
         this.name = name;
         this.value = value;
         this.sprite = sprite;
     }
 }
-exports.Item = Item;
-class Consumable extends Item {
+export class Consumable extends Item {
     constructor(name, value, sprite, effect) {
         super(name, value, sprite);
         this.effect = effect;
@@ -116,8 +108,7 @@ class Consumable extends Item {
         this.effect();
     }
 }
-exports.Consumable = Consumable;
-class Equipment extends Item {
+export class Equipment extends Item {
     constructor(name, value, sprite, attackMod, defenseMod, healthMod, attackScript, hurtScript) {
         super(name, value, sprite);
         this.attackMod = attackMod;
@@ -142,11 +133,10 @@ class Equipment extends Item {
         this.hurtScript;
     }
 }
-exports.Equipment = Equipment;
 // 
 // Rooms
 // 
-class Room {
+export class Room {
     constructor(type) {
         this.type = type;
     }
@@ -154,8 +144,7 @@ class Room {
         return this.type;
     }
 }
-exports.Room = Room;
-class ShopRoom extends Room {
+export class ShopRoom extends Room {
     constructor(type, forSale) {
         super(type);
         this.forSale = forSale;
@@ -164,8 +153,7 @@ class ShopRoom extends Room {
         return this.forSale;
     }
 }
-exports.ShopRoom = ShopRoom;
-class BossRoom extends Room {
+export class BossRoom extends Room {
     constructor(type, boss, cleared) {
         super(type);
         this.boss = boss;
@@ -178,8 +166,7 @@ class BossRoom extends Room {
         return this.cleared;
     }
 }
-exports.BossRoom = BossRoom;
-class MonsterRoom extends Room {
+export class MonsterRoom extends Room {
     constructor(type, monsters, cleared) {
         super(type);
         this.monsters = monsters;
@@ -192,8 +179,7 @@ class MonsterRoom extends Room {
         return this.cleared;
     }
 }
-exports.MonsterRoom = MonsterRoom;
-class ItemRoom extends Room {
+export class ItemRoom extends Room {
     constructor(type, item, taken) {
         super(type);
         this.item = item;
@@ -206,8 +192,7 @@ class ItemRoom extends Room {
         return this.taken;
     }
 }
-exports.ItemRoom = ItemRoom;
-class Dungeon {
+export class Dungeon {
     constructor(rooms, difficultyMultiplier, currentRoomIndex) {
         this.rooms = rooms;
         this.difficultyMultiplier = difficultyMultiplier;
@@ -226,4 +211,3 @@ class Dungeon {
         this.difficultyMultiplier = difficulty;
     }
 }
-exports.Dungeon = Dungeon;
