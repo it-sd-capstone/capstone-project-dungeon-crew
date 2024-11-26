@@ -9,8 +9,8 @@
 
     <div id="mainMenu" class="menuDiv">
         <h1>Main Menu</h1>
-        <button onclick="enterRoom('')">Play Game</button>
-        <button onclick="enterRoom('')">How To Play</button>
+        <button onclick="enterRoom('shopRoom')">Play Game</button>
+        <button onclick="openDirections('howToPlay')">How To Play</button>
     </div>
     <div id="gameWrapper" class="hide">
         <div id="roomWrapper">
@@ -21,7 +21,7 @@
                     </button>
                 </div>
                 <div class="doorDiv">
-                    <button onclick="enterRoom('')"> <!-- This is the door and you can click it to go to another room -->
+                    <button onclick="enterRoom('bossRoom')"> <!-- This is the door and you can click it to go to another room -->
                             <img src="img/room/door-gray.png" alt="Next Room" class="imgFill">
                     </button>
                 </div>
@@ -54,7 +54,7 @@
 
             <div id="bossRoom" class="hide bossDiv">
                 <div class="doorDiv">
-                    <button onclick="enterRoom('')"> <!-- This is the door and you can click it to go to another room -->
+                    <button onclick="enterRoom('itemRoom')"> <!-- This is the door and you can click it to go to another room -->
                         <img src="img/room/door-gray.png" alt="Next Room" class="imgFill">
                     </button>
                 </div>
@@ -68,7 +68,7 @@
 
             <div id="itemRoom" class="hide itemDiv">
                 <div class="doorDiv">
-                    <button onclick="enterRoom('')">
+                    <button onclick="enterRoom('monsterRoom')">
                         <img src="img/room/door-gray.png" alt="Next Room" class="imgFill">
                     </button>
                 </div>
@@ -91,7 +91,7 @@
 
             <div id="monsterRoom" class="hide monsterDiv">
                 <div class="doorDiv">
-                    <button onclick="enterRoom('')">
+                    <button onclick="enterRoom('shopRoom')">
                         <img src="img/room/door-gray.png" alt="Next Room" class="imgFill">
                     </button>
                 </div>
@@ -180,6 +180,17 @@
                 </div>
             </div>
         </div>
+    </div>
+    <div id="howToPlay" class="hide">
+        <h2>Directions</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+           Cras est quam, fringilla ut elit ut, dictum ultrices enim. Donec ac enim et lorem vestibulum gravida ut eget massa.
+           In commodo tristique ultrices. Duis tempus ultricies massa id aliquam. Duis tristique est in iaculis maximus. 
+           Pellentesque at augue in eros tincidunt vehicula quis quis risus. Mauris semper pellentesque metus non bibendum. 
+           Pellentesque ut vulputate libero. Nam ac arcu orci. Pellentesque consectetur odio eros, id venenatis magna elementum quis. 
+           Vivamus tempus ante id nisl ornare imperdiet.
+        </p>
+
     </div>
 
     <script src="js/click.js"></script>

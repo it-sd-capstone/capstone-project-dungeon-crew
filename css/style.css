@@ -2,10 +2,6 @@
     display: none !important; /* Hide all rooms by default */
 }
 
-.visible {
-    display: block; /* Make the active room visible */
-}
-
 .menuDiv {
     background-image: url(''); 
 }
