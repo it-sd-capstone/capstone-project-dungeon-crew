@@ -1,27 +1,44 @@
+import { updateStatusBar } from "./combat-manager";
 // 
 // Creatures
 // 
 
-class Creature {
+export class Creature {
   health: number;
   maxHealth: number;
   attack: number;
   defense: number;
+  dodgeChance: number;
+  isDodged: boolean;
 
   constructor(
     health: number,
     maxHealth: number,
     attack: number,
-    defense: number
+    defense: number,
+    dodgeChance: number = 0.1,
   ) {
     this.health = health;
     this.maxHealth = maxHealth;
     this.attack = attack;
     this.defense = defense;
+    this.dodgeChance = dodgeChance;
+    this.isDodged = false;
   }
 
-  public takeDamage(damage): void {
-    this.health = damage / (this.defense + 100 / 100); // Test
+  public dodgeAttack(): boolean {
+    const random = Math.random();
+    this.isDodged = random < this.dodgeChance;
+    return this.isDodged;
+  }
+
+  public takeDamage(damage: number): void {
+    const damageAfterDefense = damage * (1 - this.defense / 100); // Test
+    if (this.isDodged) {
+      updateStatusBar("Attack dodged!");
+      return;
+    }
+    this.health = Math.max(this.health - damageAfterDefense, 0);
   }
 
   public get getAttack(): number {
@@ -40,8 +57,8 @@ class Creature {
     return this.maxHealth;
   }
 
-  public set heal(healAmount) {
-    this.health =+ healAmount;
+  public set heal(healAmount: number) {
+    this.health += healAmount;
   }
 
   public healFull(): void {
@@ -49,11 +66,10 @@ class Creature {
   }
 }
 
-class Player extends Creature {
+export class Player extends Creature {
   gold: number;
   inventory: BaseItem[];
   equipped: Equipment[];
-  isDodged: boolean;
 
   constructor(
     health: number,
@@ -62,54 +78,56 @@ class Player extends Creature {
     defense: number,
     gold: number,
     inventory: BaseItem[],
-    equipped: Equipment[]
+    equipped: Equipment[],
+    dodgeChance: number = 0.2
   ) {
-    super(health, maxHealth, attack, defense);
+    super(health, maxHealth, attack, defense, dodgeChance);
     this.gold = gold;
     this.inventory = inventory;
     this.equipped = equipped;
-    this.isDodged = false;
   }
 
   public get getGold(): number {
     return this.gold;
   }
 
-  public set addGold(goldAmount) {
-    this.gold =+ goldAmount;
+  public set addGold(goldAmount: number) {
+    this.gold += goldAmount;
   }
 
-  public set removeGold(goldAmount) {
-    this.gold =- goldAmount;
+  public set removeGold(goldAmount: number) {
+    this.gold -= goldAmount;
   }
 
   public get getInventory(): BaseItem[] {
     return this.inventory;
   }
 
-  public set addToInventory(consumable) {
+  public set addToInventory(consumable: BaseItem) {
     this.inventory.push(consumable);
   }
 
-  public set removeFromInventory(consumable) {
-    let itemIndex = this.inventory.findIndex(consumable);
-    this.inventory.splice(itemIndex, 1);
+  public set removeFromInventory(consumable: BaseItem) {
+    const itemIndex = this.inventory.findIndex(item => item === consumable);
+    if (itemIndex !== -1) {
+      this.inventory.splice(itemIndex, 1);
+    }
   }
 
   public get getEquipment(): Equipment[] {
     return this.equipped;
   }
 
-  public set addToEquipment(equipment) {
+  public set addToEquipment(equipment: Equipment) {
     this.equipped.push(equipment);
   }
 
-  public set removeFromEquipment(equipment) {
-    let itemIndex = this.equipped.findIndex(equipment);
-    this.equipped.splice(itemIndex, 1);
+  public set removeFromEquipment(equipment: Equipment) {
+    const itemIndex = this.equipped.findIndex(item => item === equipment);
+    if (itemIndex !== -1) {
+      this.equipped.splice(itemIndex, 1);
+    }
   }
-
-
 }
 
 export class Monster extends Creature {
@@ -122,9 +140,10 @@ export class Monster extends Creature {
     attack: number,
     defense: number,
     name: string,
-    sprite: string
+    sprite: string,
+    dodgeChance: number = 0.05
   ) {
-    super(health, maxHealth, attack, defense);
+    super(health, maxHealth, attack, defense, dodgeChance);
     this.name = name;
     this.sprite = sprite;
   }
@@ -139,7 +158,7 @@ export class Monster extends Creature {
 }
 
 export class Boss extends Monster {
-  itemDrop: BaseItem;
+  itemDrops: BaseItem[];
 
   constructor(
     health: number,
@@ -147,14 +166,17 @@ export class Boss extends Monster {
     attack: number,
     defense: number,
     name: string,
-    sprite: string
+    sprite: string,
+    itemDrops: BaseItem[],
+    dodgeChance: number = 0.1
   ) {
-    super(health, maxHealth, attack, defense, name, sprite);
-    this.itemDrop = this.itemDrop;
+    super(health, maxHealth, attack, defense, name, sprite, dodgeChance);
+    this.itemDrops = itemDrops;
   }
 
-  public get getDrop(): BaseItem {
-    return this.itemDrop;
+  public get getRandomDrop(): BaseItem {
+    const randomIndex = Math.floor(Math.random() * this.itemDrops.length);
+    return this.itemDrops[randomIndex];
   }
 }
 
@@ -202,8 +224,8 @@ export class Equipment extends BaseItem {
   attackMod: number;
   defenseMod: number;
   healthMod: number;
-  attackScript: () => void; // Test
-  hurtScript: () => void; // Test
+  attackScript: (target?: any) => void; // Test
+  hurtScript: (target?: any) => void; // Test
 
   constructor(
     name: string,
@@ -212,8 +234,8 @@ export class Equipment extends BaseItem {
     attackMod: number,
     defenseMod: number,
     healthMod: number,
-    attackScript: () => void,
-    hurtScript: () => void
+    attackScript: (target?: any) => void,
+    hurtScript: (target?: any) => void
   ) {
     super(name, value, sprite);
     this.attackMod = attackMod;
@@ -235,7 +257,7 @@ export class Equipment extends BaseItem {
 // Rooms
 // 
 
-class Room {
+export class Room {
   type: string;
 
   constructor(
@@ -249,7 +271,7 @@ class Room {
   }
 }
 
-class ShopRoom extends Room {
+export class ShopRoom extends Room {
   forSale: BaseItem[];
 
   constructor(
@@ -265,7 +287,7 @@ class ShopRoom extends Room {
   }
 }
 
-class BossRoom extends Room {
+export class BossRoom extends Room {
   boss: Boss;
   cleared: Boolean;
 
@@ -288,7 +310,7 @@ class BossRoom extends Room {
   }
 }
 
-class MonsterRoom extends Room {
+export class MonsterRoom extends Room {
   monsters: Monster[];
   cleared: Boolean;
 
@@ -311,7 +333,7 @@ class MonsterRoom extends Room {
   }
 }
 
-class ItemRoom extends Room {
+export class ItemRoom extends Room {
   item: BaseItem;
   taken: Boolean;
 
@@ -334,7 +356,7 @@ class ItemRoom extends Room {
   }
 }
 
-class Dungeon {
+export class Dungeon {
   rooms: Room[];
   difficultyMultiplier: number;
   currentRoomIndex: number;
