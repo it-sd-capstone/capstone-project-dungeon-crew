@@ -56,7 +56,7 @@ let dungeon = new Dungeon(generateRooms(1),1,0);
 
 rmBuildRoom(dungeon.getCurrentRoom);
 
-/*$(".doorDiv button").on("click", () => {
+$(".doorDiv button").on("click", () => {
     dungeon.nextRoom();
     rmBuildRoom(dungeon.getCurrentRoom);
-});*/
+});
