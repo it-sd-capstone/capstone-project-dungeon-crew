@@ -1,5 +1,5 @@
 import './jquery-3.7.1.min.js';
-import {Room,ItemRoom,MonsterRoom,ShopRoom,BossRoom,Monster,Boss,Item} from './classes.js';
+import {Room,ItemRoom,MonsterRoom,ShopRoom,BossRoom,Monster,Boss,BaseItem } from './classes.js';
 export function rmHideAllRooms() {
     let shopRoom = $("#shopRoom");
     let itemRoom = $("#itemRoom");

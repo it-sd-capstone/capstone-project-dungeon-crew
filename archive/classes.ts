@@ -1,4 +1,4 @@
-import { updateStatusBar } from "./combat-manager";
+import { updateStatusBar } from "../js/combat-manager";
 // 
 // Creatures
 // 
