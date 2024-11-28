@@ -82,6 +82,8 @@ export class CombatManager {
             this.nextTurn();
         }
     }
+
+    // So it can be used in this class
     updateStatusBar(message) {
         const statusBar = document.getElementById("statusBarText");
         if (statusBar) {
@@ -129,6 +131,8 @@ export class CombatManager {
         }
     }
 }
+
+// So it can be used in other files
 export function updateStatusBar(message) {
     const statusBar = document.getElementById("statusBarText");
     if (statusBar) {
