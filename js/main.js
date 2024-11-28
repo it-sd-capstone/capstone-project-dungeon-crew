@@ -80,27 +80,22 @@ function generateRooms(difficulty) {
     return rooms;
 }
 
-let dungeon = new Dungeon(generateRooms(1),1,0);
+function initRoom(firstRoom = false) {
+    if (!firstRoom) {
+        if (dungeon.getCurrentRoom instanceof BossRoom) { // regenerate dungeon after last room of floor
+            dungeon.setDifficulty = dungeon.getDifficulty+0.25;
+            dungeon.setRooms = generateRooms(dungeon.getDifficulty);
+            dungeon.resetRoomIndex();
 
-rmBuildRoom(dungeon.getCurrentRoom);
-
-// Move to next room
-// TODO: ONLY ALLOW PLAYER TO MOVE TO NEXT ROOM AFTER ROOM IS CLEARED
-// TODO: INITIALIZE EACH ROOM TYPE
-$(".doorDiv button").on("click", () => {
-    if (dungeon.getCurrentRoom instanceof BossRoom) { // regenerate dungeon after last room of floor
-        dungeon.setDifficulty = dungeon.getDifficulty+0.25;
-        dungeon.setRooms = generateRooms(dungeon.getDifficulty);
-        dungeon.resetRoomIndex();
-
-        console.log("Diff: "+dungeon.getDifficulty + ", Rooms:"+dungeon.getRooms.length)
-    } else { // otherwise just move to next room
-        dungeon.nextRoom();
+            console.log("Diff: "+dungeon.getDifficulty + ", Rooms:"+dungeon.getRooms.length)
+        } else { // otherwise just move to next room
+            dungeon.nextRoom();
+        }
     }
 
     rmBuildRoom(dungeon.getCurrentRoom);
 
-    switch (dungeon.getCurrentRoom.getType) { // room initialization
+    switch (dungeon.getCurrentRoom.getType) { // room type initialization
         case "monster":
 
             break;
@@ -114,21 +109,9 @@ $(".doorDiv button").on("click", () => {
 
             break;
     }
-});
-
-// Listeners for each room type
-// TODD: POPULATE EACH ROOM TYPE WITH LISTENERS
-switch (dungeon.getCurrentRoom.getType) {
-    case "monster":
-
-        break;
-    case "item":
-
-        break;
-    case "shop":
-
-        break;
-    case "boss":
-
-        break;
 }
+
+let dungeon = new Dungeon(generateRooms(1),1,0);
+initRoom(true);
+
+$(".doorDiv button").on("click", initRoom);
