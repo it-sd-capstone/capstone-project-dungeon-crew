@@ -31,6 +31,8 @@ export function rmBuildRoom(room : Room) : void {
             monster1.removeClass("hide");
             monster1Img.attr("src",buildRoom.monsters[0].sprite);
             monster1Img.attr("alt",buildRoom.monsters[0].name);
+
+            console.log(buildRoom.monsters[0].name+" "+buildRoom.monsters[0].health);
         } else {
             monster1.addClass("hide");
         }
@@ -39,6 +41,8 @@ export function rmBuildRoom(room : Room) : void {
             monster2.removeClass("hide");
             monster2Img.attr("src",buildRoom.monsters[1].sprite);
             monster2Img.attr("alt",buildRoom.monsters[1].name);
+
+
         } else {
             monster2.addClass("hide");
         }
@@ -47,6 +51,8 @@ export function rmBuildRoom(room : Room) : void {
             monster3.removeClass("hide");
             monster3Img.attr("src",buildRoom.monsters[2].sprite);
             monster3Img.attr("alt",buildRoom.monsters[2].name);
+
+
         } else {
             monster3.addClass("hide");
         }
@@ -97,8 +103,11 @@ export function rmBuildRoom(room : Room) : void {
         let boss = $(".bossEnemyDiv");
         let bossImg = $(".bossEnemyDiv img");
 
+
+
         boss.removeClass("hide");
         bossImg.attr("src",buildRoom.boss.sprite).attr("alt",buildRoom.boss.name);
+
     }
 }
 

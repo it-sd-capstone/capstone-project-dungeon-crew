@@ -223,4 +223,12 @@ export class Dungeon {
     nextRoom() {
         this.currentRoomIndex++;
     }
+
+    resetRoomIndex() {
+        this.currentRoomIndex = 0;
+    }
+
+    set setRooms(rooms) {
+        this.rooms = rooms;
+    }
 }
