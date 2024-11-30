@@ -71,6 +71,12 @@ export function rmBuildRoom(room) {
         let item2Img = $(".sItem2 img");
         let item3Img = $(".sItem3 img");
         let item4Img = $(".sItem4 img");
+
+        let item1Label = $(".sItem1 .sItemLabel");
+        let item2Label = $(".sItem2 .sItemLabel");
+        let item3Label = $(".sItem3 .sItemLabel");
+        let item4Label = $(".sItem4 .sItemLabel");
+
         item1.removeClass("hide");
         item2.removeClass("hide");
         item3.removeClass("hide");
@@ -79,6 +85,11 @@ export function rmBuildRoom(room) {
         item2Img.attr("src", buildRoom.forSale[1].sprite).attr("alt", buildRoom.forSale[1].name);
         item3Img.attr("src", buildRoom.forSale[2].sprite).attr("alt", buildRoom.forSale[2].name);
         item4Img.attr("src", buildRoom.forSale[3].sprite).attr("alt", buildRoom.forSale[3].name);
+
+        item1Label.text(buildRoom.forSale[0].value+" gold");
+        item2Label.text(buildRoom.forSale[1].value+" gold");
+        item3Label.text(buildRoom.forSale[2].value+" gold");
+        item4Label.text(buildRoom.forSale[3].value+" gold");
     }
     if (room instanceof BossRoom) {
         let buildRoom = room;
