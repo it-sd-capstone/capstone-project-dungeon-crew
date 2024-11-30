@@ -64,7 +64,7 @@ function generateRooms(difficulty) {
         let newIndex = remainingRooms[randSelect];
         remainingRooms.splice(randSelect,1);
         let rewardItem = ItemFactory.createItem(itemPool[Math.floor(Math.random()*itemPool.length)])
-        rooms[newIndex] = new ItemRoom("item",rewardItem,false);
+        rooms[newIndex] = new ItemRoom("item",rewardItem,false, false);
     }
 
     for (let i = 0; i < remainingRooms.length; i++) { // fill remaining rooms with monsters
@@ -114,6 +114,9 @@ function initRoom(firstRoom = false) {
 // dungeon initialization
 let dungeon = new Dungeon(generateRooms(1),1,0);
 initRoom(true);
+
+// player initialization
+let player = new Player(25,25,5,0,0,[],[], 0);
 
 // go to next room
 // TODO: ONLY ALLOW PASSAGE TO NEXT ROOM IF CURRENT ROOM IS CLEARED

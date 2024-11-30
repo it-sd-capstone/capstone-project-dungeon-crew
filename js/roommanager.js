@@ -38,7 +38,9 @@ export function rmBuildRoom(room) {
         let mon3Health = $(".monster3 .monsterHealth");
         let mon3MaxHealth = $(".monster3 .monsterMaxHealth");
 
-        if (buildRoom.monsters.length >= 1) {
+        let doorImg = $(".doorDiv img");
+
+        if (buildRoom.monsters.length >= 1 && buildRoom.monsters[0].health > 0) {
             monster1.removeClass("hide");
             monster1Img.attr("src", buildRoom.monsters[0].sprite);
             monster1Img.attr("alt", buildRoom.monsters[0].name);
@@ -50,7 +52,7 @@ export function rmBuildRoom(room) {
         else {
             monster1.addClass("hide");
         }
-        if (buildRoom.monsters.length >= 2) {
+        if (buildRoom.monsters.length >= 2 && buildRoom.monsters[1].health > 0) {
             monster2.removeClass("hide");
             monster2Img.attr("src", buildRoom.monsters[1].sprite);
             monster2Img.attr("alt", buildRoom.monsters[1].name);
@@ -62,7 +64,7 @@ export function rmBuildRoom(room) {
         else {
             monster2.addClass("hide");
         }
-        if (buildRoom.monsters.length === 3) {
+        if (buildRoom.monsters.length === 3 && buildRoom.monsters[2].health > 0) {
             monster3.removeClass("hide");
             monster3Img.attr("src", buildRoom.monsters[2].sprite);
             monster3Img.attr("alt", buildRoom.monsters[2].name);
@@ -73,6 +75,12 @@ export function rmBuildRoom(room) {
         }
         else {
             monster3.addClass("hide");
+        }
+
+        if (buildRoom.isCleared === true) {
+            doorImg.attr("src","img/room/door.png");
+        } else {
+            doorImg.attr("src","img/room/door-gray.png");
         }
     }
     if (room instanceof ItemRoom) {
@@ -86,9 +94,23 @@ export function rmBuildRoom(room) {
         let chestImg = $(".chestDiv img");
         let itemImg = $(".chestItemDiv img");
 
-        chestImg.attr("src", "img/room/chest-closed.png");
-        item.addClass("hide");
-        itemImg.attr("src", buildRoom.item.sprite).attr("alt", buildRoom.item.name);
+        let doorImg = $(".doorDiv img");
+
+        if (buildRoom.chestOpen === false) {
+            chestImg.attr("src", "img/room/chest-closed.png");
+            item.addClass("hide");
+            itemImg.attr("src", buildRoom.item.sprite).attr("alt", buildRoom.item.name);
+        } else {
+            chestImg.attr("src", "img/room/chest-open.png");
+            if (buildRoom.isTaken === true) {
+                item.addClass("hide");
+            } else {
+                item.removeClass("hide");
+            }
+            itemImg.attr("src", buildRoom.item.sprite).attr("alt", buildRoom.item.name);
+        }
+
+        doorImg.attr("src","img/room/door.png");
     }
     if (room instanceof ShopRoom) {
         let buildRoom = room;
@@ -110,20 +132,41 @@ export function rmBuildRoom(room) {
         let item3Label = $(".sItem3 .sItemLabel");
         let item4Label = $(".sItem4 .sItemLabel");
 
-        item1.removeClass("hide");
-        item2.removeClass("hide");
-        item3.removeClass("hide");
-        item4.removeClass("hide");
+        let doorImg = $(".doorDiv img");
 
-        item1Img.attr("src", buildRoom.forSale[0].sprite).attr("alt", buildRoom.forSale[0].name);
-        item2Img.attr("src", buildRoom.forSale[1].sprite).attr("alt", buildRoom.forSale[1].name);
-        item3Img.attr("src", buildRoom.forSale[2].sprite).attr("alt", buildRoom.forSale[2].name);
-        item4Img.attr("src", buildRoom.forSale[3].sprite).attr("alt", buildRoom.forSale[3].name);
+        if (buildRoom.forSale[0] !== undefined) {
+            item1.removeClass("hide");
+            item1Img.attr("src", buildRoom.forSale[0].sprite).attr("alt", buildRoom.forSale[0].name);
+            item1Label.text(buildRoom.forSale[0].value+" gold");
+        } else {
+            item1.addClass("hide");
+        }
 
-        item1Label.text(buildRoom.forSale[0].value+" gold");
-        item2Label.text(buildRoom.forSale[1].value+" gold");
-        item3Label.text(buildRoom.forSale[2].value+" gold");
-        item4Label.text(buildRoom.forSale[3].value+" gold");
+        if (buildRoom.forSale[1] !== undefined) {
+            item2.removeClass("hide");
+            item2Img.attr("src", buildRoom.forSale[1].sprite).attr("alt", buildRoom.forSale[1].name);
+            item2Label.text(buildRoom.forSale[1].value+" gold");
+        } else {
+            item2.addClass("hide");
+        }
+
+        if (buildRoom.forSale[2] !== undefined) {
+            item3.removeClass("hide");
+            item3Img.attr("src", buildRoom.forSale[2].sprite).attr("alt", buildRoom.forSale[2].name);
+            item3Label.text(buildRoom.forSale[2].value+" gold");
+        } else {
+            item3.addClass("hide");
+        }
+
+        if (buildRoom.forSale[3] !== undefined) {
+            item4.removeClass("hide");
+            item4Img.attr("src", buildRoom.forSale[3].sprite).attr("alt", buildRoom.forSale[3].name);
+            item4Label.text(buildRoom.forSale[3].value+" gold");
+        } else {
+            item4.addClass("hide");
+        }
+
+        doorImg.attr("src","img/room/door.png");
     }
     if (room instanceof BossRoom) {
         let buildRoom = room;
@@ -138,11 +181,23 @@ export function rmBuildRoom(room) {
         let bossHealth = $(".bossEnemyDiv .monsterHealth");
         let bossMaxHealth = $(".bossEnemyDiv .monsterMaxHealth");
 
-        boss.removeClass("hide");
-        bossImg.attr("src", buildRoom.boss.sprite).attr("alt", buildRoom.boss.name);
-        bossName.text(buildRoom.boss.name);
-        bossHealth.text(buildRoom.boss.health);
-        bossMaxHealth.text(buildRoom.boss.maxHealth);
+        let doorImg = $(".doorDiv img");
+
+        if (buildRoom.boss.health > 0) {
+            boss.removeClass("hide");
+            bossImg.attr("src", buildRoom.boss.sprite).attr("alt", buildRoom.boss.name);
+            bossName.text(buildRoom.boss.name);
+            bossHealth.text(buildRoom.boss.health);
+            bossMaxHealth.text(buildRoom.boss.maxHealth);
+        } else {
+            boss.addClass("hide");
+        }
+
+        if (buildRoom.isCleared === true) {
+            doorImg.attr("src","img/room/door.png");
+        } else {
+            doorImg.attr("src","img/room/door-gray.png");
+        }
     }
 }
 export function rmBuildSampleMonster() {
@@ -152,19 +207,19 @@ export function rmBuildSampleMonster() {
 }
 
 export function rmBuildSampleItem() {
-    let testItem = new Item("Test Sword",1,"img/monsters/crime-slime.gif");
+    let testItem = new BaseItem("Test Sword",1,"img/monsters/crime-slime.gif");
     let itemRoom = new ItemRoom("item",testItem,false);
     rmBuildRoom(itemRoom);
 }
 
 export function rmBuildSampleShop() {
-    let testItem = new Item("Test Sword",1,"img/monsters/crime-slime.gif");
+    let testItem = new BaseItem("Test Sword",1,"img/monsters/crime-slime.gif");
     let shopRoom = new ShopRoom("shop",[testItem,testItem,testItem,testItem]);
     rmBuildRoom(shopRoom);
 }
 
 export function rmBuildSampleBoss() {
-    let testItem = new Item("Test Sword",1,"img/monsters/crime-slime.gif");
+    let testItem = new BaseItem("Test Sword",1,"img/monsters/crime-slime.gif");
     let boss = new Boss(5,5,1,1,"Test Boss","img/monsters/crime-slime.gif",testItem);
     let bossRoom = new BossRoom("boss",boss,false);
     rmBuildRoom(bossRoom);

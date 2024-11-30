@@ -189,10 +189,11 @@ export class MonsterRoom extends Room {
     }
 }
 export class ItemRoom extends Room {
-    constructor(type, item, taken) {
+    constructor(type, item, taken, chestOpen) {
         super(type);
         this.item = item;
         this.taken = taken;
+        this.chestOpen = chestOpen;
     }
     get getItem() {
         return this.item;
