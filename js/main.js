@@ -111,7 +111,10 @@ function initRoom(firstRoom = false) {
     }
 }
 
+// dungeon initialization
 let dungeon = new Dungeon(generateRooms(1),1,0);
 initRoom(true);
 
-$(".doorDiv button").on("click", initRoom);
+// go to next room
+// TODO: ONLY ALLOW PASSAGE TO NEXT ROOM IF CURRENT ROOM IS CLEARED
+$(".doorDiv button").on("click", () => {initRoom(false)});
