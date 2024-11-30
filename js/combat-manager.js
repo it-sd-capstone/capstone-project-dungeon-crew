@@ -19,6 +19,8 @@ export class CombatManager {
         else {
             this.enemyAttack();
         }
+
+        this.updateUI();
     }
     playerAttack(targetIndex) {
         const target = this.enemies[targetIndex];
@@ -49,7 +51,6 @@ export class CombatManager {
                 }
             }
         });
-        this.updateUI();
         this.checkCombatEnd();
         if (!this.isCombatOver()) {
             this.turn = "player";
@@ -115,6 +116,7 @@ export class CombatManager {
     }
     applyItemEffect(effect, target) {
         effect(target, this);
+        this.updateUI();
     }
     isCombatOver() {
         const allEnemiesDefeated = this.enemies.every(enemy => enemy.health <= 0);
@@ -129,6 +131,7 @@ export class CombatManager {
         else if (action === "useItem" && itemEffect) {
             itemEffect();
         }
+        this.updateUI();
     }
 }
 
