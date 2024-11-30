@@ -1,5 +1,6 @@
 import './jquery-3.7.1.min.js';
-import {Room,ItemRoom,MonsterRoom,ShopRoom,BossRoom,Monster,Boss,Item} from './classes.js';
+import {Room,ItemRoom,MonsterRoom,ShopRoom,BossRoom,Monster,Boss,BaseItem } from './classes.js';
+
 export function rmHideAllRooms() {
     let shopRoom = $("#shopRoom");
     let itemRoom = $("#itemRoom");
@@ -14,18 +15,37 @@ export function rmBuildRoom(room) {
     rmHideAllRooms();
     if (room instanceof MonsterRoom) {
         let buildRoom = room;
+
         let monsterRoom = $("#monsterRoom");
         monsterRoom.removeClass("hide");
+
         let monster1 = $(".monster1");
         let monster2 = $(".monster2");
         let monster3 = $(".monster3");
         let monster1Img = $(".monster1 img");
         let monster2Img = $(".monster2 img");
         let monster3Img = $(".monster3 img");
+
+        let mon1Name = $(".monster1 .monsterName");
+        let mon1Health = $(".monster1 .monsterHealth");
+        let mon1MaxHealth = $(".monster1 .monsterMaxHealth");
+
+        let mon2Name = $(".monster2 .monsterName");
+        let mon2Health = $(".monster2 .monsterHealth");
+        let mon2MaxHealth = $(".monster2 .monsterMaxHealth");
+
+        let mon3Name = $(".monster3 .monsterName");
+        let mon3Health = $(".monster3 .monsterHealth");
+        let mon3MaxHealth = $(".monster3 .monsterMaxHealth");
+
         if (buildRoom.monsters.length >= 1) {
             monster1.removeClass("hide");
             monster1Img.attr("src", buildRoom.monsters[0].sprite);
             monster1Img.attr("alt", buildRoom.monsters[0].name);
+
+            mon1Name.text(buildRoom.monsters[0].name);
+            mon1Health.text(buildRoom.monsters[0].health);
+            mon1MaxHealth.text(buildRoom.monsters[0].maxHealth);
         }
         else {
             monster1.addClass("hide");
@@ -34,14 +54,22 @@ export function rmBuildRoom(room) {
             monster2.removeClass("hide");
             monster2Img.attr("src", buildRoom.monsters[1].sprite);
             monster2Img.attr("alt", buildRoom.monsters[1].name);
+
+            mon2Name.text(buildRoom.monsters[1].name);
+            mon2Health.text(buildRoom.monsters[1].health);
+            mon2MaxHealth.text(buildRoom.monsters[1].maxHealth);
         }
         else {
             monster2.addClass("hide");
         }
-        if (buildRoom.monsters.length == 3) {
+        if (buildRoom.monsters.length === 3) {
             monster3.removeClass("hide");
             monster3Img.attr("src", buildRoom.monsters[2].sprite);
             monster3Img.attr("alt", buildRoom.monsters[2].name);
+
+            mon3Name.text(buildRoom.monsters[2].name);
+            mon3Health.text(buildRoom.monsters[2].health);
+            mon3MaxHealth.text(buildRoom.monsters[2].maxHealth);
         }
         else {
             monster3.addClass("hide");
@@ -49,20 +77,25 @@ export function rmBuildRoom(room) {
     }
     if (room instanceof ItemRoom) {
         let buildRoom = room;
+
         let itemRoom = $("#itemRoom");
         itemRoom.removeClass("hide");
+
         let chest = $(".chestDiv");
         let item = $(".chestItemDiv");
         let chestImg = $(".chestDiv img");
         let itemImg = $(".chestItemDiv img");
+
         chestImg.attr("src", "img/room/chest-closed.png");
         item.addClass("hide");
         itemImg.attr("src", buildRoom.item.sprite).attr("alt", buildRoom.item.name);
     }
     if (room instanceof ShopRoom) {
         let buildRoom = room;
+
         let shopRoom = $("#shopRoom");
         shopRoom.removeClass("hide");
+
         let item1 = $(".sItem1");
         let item2 = $(".sItem2");
         let item3 = $(".sItem3");
@@ -81,6 +114,7 @@ export function rmBuildRoom(room) {
         item2.removeClass("hide");
         item3.removeClass("hide");
         item4.removeClass("hide");
+
         item1Img.attr("src", buildRoom.forSale[0].sprite).attr("alt", buildRoom.forSale[0].name);
         item2Img.attr("src", buildRoom.forSale[1].sprite).attr("alt", buildRoom.forSale[1].name);
         item3Img.attr("src", buildRoom.forSale[2].sprite).attr("alt", buildRoom.forSale[2].name);
@@ -93,12 +127,22 @@ export function rmBuildRoom(room) {
     }
     if (room instanceof BossRoom) {
         let buildRoom = room;
+
         let bossRoom = $("#bossRoom");
         bossRoom.removeClass("hide");
+
         let boss = $(".bossEnemyDiv");
         let bossImg = $(".bossEnemyDiv img");
+
+        let bossName = $(".bossEnemyDiv .monsterName");
+        let bossHealth = $(".bossEnemyDiv .monsterHealth");
+        let bossMaxHealth = $(".bossEnemyDiv .monsterMaxHealth");
+
         boss.removeClass("hide");
         bossImg.attr("src", buildRoom.boss.sprite).attr("alt", buildRoom.boss.name);
+        bossName.text(buildRoom.boss.name);
+        bossHealth.text(buildRoom.boss.health);
+        bossMaxHealth.text(buildRoom.boss.maxHealth);
     }
 }
 export function rmBuildSampleMonster() {

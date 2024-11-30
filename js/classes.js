@@ -1,15 +1,28 @@
+import { updateStatusBar } from "./combat-manager.js";
 // 
 // Creatures
 // 
 export class Creature {
-    constructor(health, maxHealth, attack, defense) {
+    constructor(health, maxHealth, attack, defense, dodgeChance = 0.1) {
         this.health = health;
         this.maxHealth = maxHealth;
         this.attack = attack;
         this.defense = defense;
+        this.dodgeChance = dodgeChance;
+        this.isDodged = false;
+    }
+    dodgeAttack() {
+        const random = Math.random();
+        this.isDodged = random < this.dodgeChance;
+        return this.isDodged;
     }
     takeDamage(damage) {
-        this.health = damage / (this.defense + 100 / 100); // Test
+        const damageAfterDefense = damage * (1 - this.defense / 100); // Test
+        if (this.isDodged) {
+            updateStatusBar("Attack dodged!");
+            return;
+        }
+        this.health = Math.max(this.health - damageAfterDefense, 0);
     }
     get getAttack() {
         return this.attack;
@@ -24,15 +37,15 @@ export class Creature {
         return this.maxHealth;
     }
     set heal(healAmount) {
-        this.health = +healAmount;
+        this.health += healAmount;
     }
     healFull() {
         this.health = this.maxHealth;
     }
 }
 export class Player extends Creature {
-    constructor(health, maxHealth, attack, defense, gold, inventory, equipped) {
-        super(health, maxHealth, attack, defense);
+    constructor(health, maxHealth, attack, defense, gold, inventory, equipped, dodgeChance = 0.2) {
+        super(health, maxHealth, attack, defense, dodgeChance);
         this.gold = gold;
         this.inventory = inventory;
         this.equipped = equipped;
@@ -41,10 +54,10 @@ export class Player extends Creature {
         return this.gold;
     }
     set addGold(goldAmount) {
-        this.gold = +goldAmount;
+        this.gold += goldAmount;
     }
     set removeGold(goldAmount) {
-        this.gold = -goldAmount;
+        this.gold -= goldAmount;
     }
     get getInventory() {
         return this.inventory;
@@ -53,8 +66,10 @@ export class Player extends Creature {
         this.inventory.push(consumable);
     }
     set removeFromInventory(consumable) {
-        let itemIndex = this.inventory.findIndex(consumable);
-        this.inventory.splice(itemIndex, 1);
+        const itemIndex = this.inventory.findIndex(item => item === consumable);
+        if (itemIndex !== -1) {
+            this.inventory.splice(itemIndex, 1);
+        }
     }
     get getEquipment() {
         return this.equipped;
@@ -63,13 +78,15 @@ export class Player extends Creature {
         this.equipped.push(equipment);
     }
     set removeFromEquipment(equipment) {
-        let itemIndex = this.equipped.findIndex(equipment);
-        this.equipped.splice(itemIndex, 1);
+        const itemIndex = this.equipped.findIndex(item => item === equipment);
+        if (itemIndex !== -1) {
+            this.equipped.splice(itemIndex, 1);
+        }
     }
 }
 export class Monster extends Creature {
-    constructor(health, maxHealth, attack, defense, name, sprite) {
-        super(health, maxHealth, attack, defense);
+    constructor(health, maxHealth, attack, defense, name, sprite, dodgeChance = 0.05) {
+        super(health, maxHealth, attack, defense, dodgeChance);
         this.name = name;
         this.sprite = sprite;
     }
@@ -81,34 +98,35 @@ export class Monster extends Creature {
     }
 }
 export class Boss extends Monster {
-    constructor(health, maxHealth, attack, defense, name, sprite, itemDrop) {
-        super(health, maxHealth, attack, defense, name, sprite);
-        this.itemDrop = itemDrop;
+    constructor(health, maxHealth, attack, defense, name, sprite, itemDrops, dodgeChance = 0.1) {
+        super(health, maxHealth, attack, defense, name, sprite, dodgeChance);
+        this.itemDrops = itemDrops;
     }
-    get getDrop() {
-        return this.itemDrop;
+    get getRandomDrop() {
+        const randomIndex = Math.floor(Math.random() * this.itemDrops.length);
+        return this.itemDrops[randomIndex];
     }
 }
 // 
 // Items
 // 
-export class Item {
+export class BaseItem {
     constructor(name, value, sprite) {
         this.name = name;
         this.value = value;
         this.sprite = sprite;
     }
 }
-export class Consumable extends Item {
+export class Consumable extends BaseItem {
     constructor(name, value, sprite, effect) {
         super(name, value, sprite);
         this.effect = effect;
     }
-    useItem() {
+    applyEffect(target) {
         this.effect();
     }
 }
-export class Equipment extends Item {
+export class Equipment extends BaseItem {
     constructor(name, value, sprite, attackMod, defenseMod, healthMod, attackScript, hurtScript) {
         super(name, value, sprite);
         this.attackMod = attackMod;
@@ -117,20 +135,11 @@ export class Equipment extends Item {
         this.attackScript = attackScript; // Test
         this.hurtScript = hurtScript; // Test
     }
-    get getAtkMod() {
-        return this.attackMod;
-    }
-    get getDefMod() {
-        return this.defenseMod;
-    }
-    get getHealtMod() {
-        return this.healthMod;
-    }
-    executeAttack() {
-        this.attackScript;
-    }
-    executeHurt() {
-        this.hurtScript;
+    applyEffect(target) {
+        target.attack += this.attackMod;
+        target.defense += this.defenseMod;
+        target.health += this.healthMod;
+        this.attackScript();
     }
 }
 // 
@@ -209,5 +218,17 @@ export class Dungeon {
     }
     set setDifficulty(difficulty) {
         this.difficultyMultiplier = difficulty;
+    }
+
+    nextRoom() {
+        this.currentRoomIndex++;
+    }
+
+    resetRoomIndex() {
+        this.currentRoomIndex = 0;
+    }
+
+    set setRooms(rooms) {
+        this.rooms = rooms;
     }
 }

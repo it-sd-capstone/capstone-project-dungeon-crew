@@ -1,4 +1,4 @@
-import { Player, Monster, Boss, Equipment, Consumable } from "./classes";
+import { Player, Monster, Boss, Equipment, Consumable } from "./classes.js";
 
 export class CombatManager {
   player: Player;

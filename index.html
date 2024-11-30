@@ -9,8 +9,8 @@
 
     <div id="mainMenu" class="menuDiv">
         <h1>Main Menu</h1>
-        <button onclick="enterRoom('')">Play Game</button>
-        <button onclick="enterRoom('')">How To Play</button>
+        <button onclick="enterRoom('shopRoom')">Play Game</button>
+        <button onclick="openDirections('howToPlay')">How To Play</button>
     </div>
     <div id="gameWrapper" class="hide">
         <div id="roomWrapper">
@@ -21,7 +21,7 @@
                     </button>
                 </div>
                 <div class="doorDiv">
-                    <button onclick="enterRoom('')"> <!-- This is the door and you can click it to go to another room -->
+                    <button onclick="enterRoom('bossRoom')"> <!-- This is the door and you can click it to go to another room -->
                             <img src="img/room/door-gray.png" alt="Next Room" class="imgFill">
                     </button>
                 </div>
@@ -34,27 +34,31 @@
                     <button onclick="clickObject('')"> <!-- This is an item a player can purchase -->
                         <img src="#" alt="Item" class="imgFill">
                     </button>
+                    <span class="sItemLabel">0 gold</span>
                 </div>
                 <div class="shopItemDiv sItem2">
                     <button onclick="clickObject('')"> <!-- This is an item a player can purchase -->
                         <img src="#" alt="Item" class="imgFill">
                     </button>
+                    <span class="sItemLabel">0 gold</span>
                 </div>
                 <div class="shopItemDiv sItem3">
                     <button onclick="clickObject('')"> <!-- This is an item a player can purchase -->
                         <img src="#" alt="Item" class="imgFill">
                     </button>
+                    <span class="sItemLabel">0 gold</span>
                 </div>
                 <div class="shopItemDiv sItem4">
                     <button onclick="clickObject('')"> <!-- This is an item a player can purchase -->
                         <img src="#" alt="Item" class="imgFill">
                     </button>
+                    <span class="sItemLabel">0 gold</span>
                 </div>
             </div>
 
             <div id="bossRoom" class="hide bossDiv">
                 <div class="doorDiv">
-                    <button onclick="enterRoom('')"> <!-- This is the door and you can click it to go to another room -->
+                    <button onclick="enterRoom('itemRoom')"> <!-- This is the door and you can click it to go to another room -->
                         <img src="img/room/door-gray.png" alt="Next Room" class="imgFill">
                     </button>
                 </div>
@@ -62,13 +66,16 @@
                     <button onclick="clickObject('')"> <!-- This is the boss the player is fighting -->
                         <img src="#" alt="Boss" class="imgFill">
                     </button>
-                    <input type="text" id="bossText" value="" readonly>
+                    <span class="monsterLabel">
+                        <span class="monsterName">Monster</span>:
+                        <span class="monsterHealth">0</span>/<span class="monsterMaxHealth">0</span>
+                    </span>
                 </div>
             </div>
 
             <div id="itemRoom" class="hide itemDiv">
                 <div class="doorDiv">
-                    <button onclick="enterRoom('')">
+                    <button onclick="enterRoom('monsterRoom')">
                         <img src="img/room/door-gray.png" alt="Next Room" class="imgFill">
                     </button>
                 </div>
@@ -91,7 +98,7 @@
 
             <div id="monsterRoom" class="hide monsterDiv">
                 <div class="doorDiv">
-                    <button onclick="enterRoom('')">
+                    <button onclick="enterRoom('shopRoom')">
                         <img src="img/room/door-gray.png" alt="Next Room" class="imgFill">
                     </button>
                 </div>
@@ -100,21 +107,30 @@
                     <button onclick="clickObject('')"> <!-- This is a monster a player must defeat -->
                         <img src="#" alt="monster" class="imgFill">
                     </button>
-                    <input type="text" id="monster1Text" value="" readonly>
+                    <span class="monsterLabel">
+                        <span class="monsterName">Monster</span>:
+                        <span class="monsterHealth">0</span>/<span class="monsterMaxHealth">0</span>
+                    </span>
                 </div>
 
                 <div class="enemyDiv monster2">
                     <button onclick="clickObject('')"> <!-- This is a monster a player must defeat -->
                         <img src="#" alt="monster" class="imgFill">
                     </button>
-                    <input type="text" id="monster2Text" value="" readonly>
+                    <span class="monsterLabel">
+                        <span class="monsterName">Monster</span>:
+                        <span class="monsterHealth">0</span>/<span class="monsterMaxHealth">0</span>
+                    </span>
                 </div>
 
                 <div class="enemyDiv monster3">
                     <button onclick="clickObject('')"> <!-- This is a monster a player must defeat -->
                         <img src="#" alt="monster" class="imgFill">
                     </button>
-                    <input type="text" id="monster3Text" value="" readonly>
+                    <span class="monsterLabel">
+                        <span class="monsterName">Monster</span>:
+                        <span class="monsterHealth">0</span>/<span class="monsterMaxHealth">0</span>
+                    </span>
                 </div>
             </div>
         </div>
@@ -124,13 +140,13 @@
             <div id="holdStatsAndInventory">
                 <div id="statsBox"> <!-- The value can be changed dynamically later using JavaScript -->
                     <h4>Stats</h4>
-                    <ul id="statsList">
-                        <li>HEALTH: <span id="healthVal">100</span></li>
-                        <li>GOLD: <span id="goldVal">100</span></li>
-                        <li>ATTACK: <span id="attackVal">100</span></li>
-                        <li>DEFENSE: <span id="defenseVal">100</span></li>
-                        <li>SCORE: <span id="scoreVal">100</span></li>
-                    </ul>
+                    <table id="statsList">
+                        <tr><td class="sLabel">HEALTH:</td><td class="sValue"><span id="healthVal">100</span>/<span id="maxHealthVal">100</span></td></tr>
+                        <tr><td class="sLabel">GOLD:</td><td class="sValue"><span id="goldVal">100</span></td></tr>
+                        <tr><td class="sLabel">ATTACK:</td><td class="sValue"><span id="attackVal">100</span></td></tr>
+                        <tr><td class="sLabel">DEFENSE:</td><td class="sValue"><span id="defenseVal">100</span></td></tr>
+                        <tr><td class="sLabel">SCORE:</td><td class="sValue"><span id="scoreVal">100</span></td></tr>
+                    </table>
                 </div>
 
                 <div id="inventory"> <!-- The src attribute of the image tags can be changed dynamically using JS based on what the player purchased and used -->
@@ -180,6 +196,17 @@
                 </div>
             </div>
         </div>
+    </div>
+    <div id="howToPlay" class="hide">
+        <h2>Directions</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+           Cras est quam, fringilla ut elit ut, dictum ultrices enim. Donec ac enim et lorem vestibulum gravida ut eget massa.
+           In commodo tristique ultrices. Duis tempus ultricies massa id aliquam. Duis tristique est in iaculis maximus. 
+           Pellentesque at augue in eros tincidunt vehicula quis quis risus. Mauris semper pellentesque metus non bibendum. 
+           Pellentesque ut vulputate libero. Nam ac arcu orci. Pellentesque consectetur odio eros, id venenatis magna elementum quis. 
+           Vivamus tempus ante id nisl ornare imperdiet.
+        </p>
+
     </div>
 
     <script src="js/click.js"></script>
