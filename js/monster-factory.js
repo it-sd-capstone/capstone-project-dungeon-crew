@@ -16,7 +16,7 @@ export class EnemyFactory {
                 2 * difficultyMultiplier, // Attack
                 0 * difficultyMultiplier, // Defense
                 EnemyType.Seeker, // Name
-                "../img/monsters/seeker.gif" // Sprite
+                "img/monsters/seeker.gif" // Sprite
                 );
             case EnemyType.CrimeSlime:
                 return new Monster(10 * difficultyMultiplier, // Health
@@ -24,7 +24,7 @@ export class EnemyFactory {
                 3 * difficultyMultiplier, // Attack
                 3 * difficultyMultiplier, // Defense
                 EnemyType.CrimeSlime, // Name
-                "../img/monsters/crime-slime.gif" // Sprite
+                "img/monsters/crime-slime.gif" // Sprite
                 );
             case EnemyType.Snobgoblin:
                 return new Monster(20 * difficultyMultiplier, // Health
@@ -32,7 +32,7 @@ export class EnemyFactory {
                 6 * difficultyMultiplier, // Attack
                 5 * difficultyMultiplier, // Defense
                 EnemyType.Snobgoblin, // Name
-                "../img/monsters/snobgoblin.gif" // Sprite
+                "img/monsters/snobgoblin.gif" // Sprite
                 );
             case EnemyType.LazyBones:
                 return new Monster(35 * difficultyMultiplier, // Health
@@ -40,7 +40,7 @@ export class EnemyFactory {
                 10 * difficultyMultiplier, // Attack
                 10 * difficultyMultiplier, // Defense
                 EnemyType.LazyBones, // Name
-                "../img/monsters/lazy-bones.gif" // Sprite
+                "img/monsters/lazy-bones.gif" // Sprite
                 );
             case EnemyType.HungryGhost:
                 return new Monster(50 * difficultyMultiplier, // Health
@@ -48,7 +48,7 @@ export class EnemyFactory {
                 20 * difficultyMultiplier, // Attack
                 25 * difficultyMultiplier, // Defense
                 EnemyType.HungryGhost, // Name
-                "../img/monsters/hungry-ghost.gif" // Sprite
+                "img/monsters/hungry-ghost.gif" // Sprite
                 );
             default:
                 throw new Error(`Unknown enemy type: ${type}`);
