@@ -4,7 +4,7 @@ import {
     rmBuildSampleItem,
     rmBuildSampleShop,
     rmBuildSampleBoss,
-    rmBuildRoom
+    rmBuildRoom, rmBuildMap
 } from "./roommanager.js";
 import { Room, BossRoom, ShopRoom, ItemRoom, MonsterRoom, Boss, BaseItem, Monster, Creature, Dungeon, Player, Equipment, Consumable } from "./classes.js";
 import {ItemFactory, ItemType} from './item-factory.js';
@@ -94,6 +94,7 @@ function initRoom(firstRoom = false) {
     }
 
     rmBuildRoom(dungeon.getCurrentRoom);
+    rmBuildMap(dungeon);
 
     switch (dungeon.getCurrentRoom.getType) { // room type initialization
         case "monster":
@@ -120,4 +121,16 @@ let player = new Player(25,25,5,0,0,[],[], 0);
 
 // go to next room
 // TODO: ONLY ALLOW PASSAGE TO NEXT ROOM IF CURRENT ROOM IS CLEARED
-$(".doorDiv button").on("click", () => {initRoom(false)});
+$(".doorDiv button").on("click", () => {
+    initRoom(false)
+
+    /* USE THIS CODE INSTEAD ONCE BATTLE SYSTEM IS FUNCTIONAL
+    if (dungeon.getCurrentRoom.type === "monster" || dungeon.getCurrentRoom.type === "boss") {
+        if (dungeon.getCurrentRoom.isCleared()) {
+            initRoom(false)
+        }
+    } else {
+        initRoom(false)
+    }
+    */
+});

@@ -1,5 +1,5 @@
 import './jquery-3.7.1.min.js';
-import {Room,ItemRoom,MonsterRoom,ShopRoom,BossRoom,Monster,Boss,BaseItem } from './classes.js';
+import {Room,ItemRoom,MonsterRoom,ShopRoom,BossRoom,Monster,Boss,BaseItem,Dungeon } from './classes.js';
 
 export function rmHideAllRooms() {
     let shopRoom = $("#shopRoom");
@@ -198,6 +198,101 @@ export function rmBuildRoom(room) {
         } else {
             doorImg.attr("src","img/room/door-gray.png");
         }
+    }
+}
+
+export function rmBuildMap(dungeon) {
+    // Update Map
+    let mapNum1 = $("#mapNumberRow .mapCol1");
+    let mapNum2 = $("#mapNumberRow .mapCol2");
+    let mapNum3 = $("#mapNumberRow .mapCol3");
+    let mapNum4 = $("#mapNumberRow .mapCol4"); //CURRENT
+    let mapNum5 = $("#mapNumberRow .mapCol5");
+    let mapNum6 = $("#mapNumberRow .mapCol6");
+    let mapNum7 = $("#mapNumberRow .mapCol7");
+
+    let mapType1 = $("#mapTypeRow .mapCol1");
+    let mapType2 = $("#mapTypeRow .mapCol2");
+    let mapType3 = $("#mapTypeRow .mapCol3");
+    let mapType4 = $("#mapTypeRow .mapCol4");
+    let mapType5 = $("#mapTypeRow .mapCol5");
+    let mapType6 = $("#mapTypeRow .mapCol6");
+    let mapType7 = $("#mapTypeRow .mapCol7");
+
+    let mapRemaining = $("#mapRemaining td");
+
+    let curRoom = dungeon.currentRoomIndex;
+    let dunLength = dungeon.rooms.length;
+
+    if (curRoom-3 < 0) { //col 1
+        mapNum1.addClass("mapBlack");
+        mapType1.addClass("mapBlack");
+    } else {
+        mapNum1.removeClass("mapBlack");
+        mapType1.removeClass("mapBlack");
+        mapNum1.text(curRoom-2);
+        mapType1.text(dungeon.rooms[curRoom-3].type.toUpperCase().charAt(0));
+    }
+
+    if (curRoom-2 < 0) { //col 2
+        mapNum2.addClass("mapBlack");
+        mapType2.addClass("mapBlack");
+    } else {
+        mapNum2.removeClass("mapBlack");
+        mapType2.removeClass("mapBlack");
+        mapNum2.text(curRoom-1);
+        mapType2.text(dungeon.rooms[curRoom-2].type.toUpperCase().charAt(0));
+    }
+
+    if (curRoom-1 < 0) { //col 3
+        mapNum3.addClass("mapBlack");
+        mapType3.addClass("mapBlack");
+    } else {
+        mapNum3.removeClass("mapBlack");
+        mapType3.removeClass("mapBlack");
+        mapNum3.text(curRoom);
+        mapType3.text(dungeon.rooms[curRoom-1].type.toUpperCase().charAt(0));
+    }
+
+    //col 4 (ALWAYS ACTIVE)
+    mapNum4.text(curRoom+1);
+    mapType4.text(dungeon.getCurrentRoom.type.toUpperCase().charAt(0));
+
+    if (curRoom+1 >= dunLength) { //col 5
+        mapNum5.addClass("mapBlack");
+        mapType5.addClass("mapBlack");
+    } else {
+        mapNum5.removeClass("mapBlack");
+        mapType5.removeClass("mapBlack");
+        mapNum5.text(curRoom+2);
+        mapType5.text(dungeon.rooms[curRoom+1].type.toUpperCase().charAt(0));
+    }
+
+    if (curRoom+2 >= dunLength) { //col 6
+        mapNum6.addClass("mapBlack");
+        mapType6.addClass("mapBlack");
+    } else {
+        mapNum6.removeClass("mapBlack");
+        mapType6.removeClass("mapBlack");
+        mapNum6.text(curRoom+3);
+        mapType6.text(dungeon.rooms[curRoom+2].type.toUpperCase().charAt(0));
+    }
+
+    if (curRoom+3 >= dunLength) { //col 7
+        mapNum7.addClass("mapBlack");
+        mapType7.addClass("mapBlack");
+    } else {
+        mapNum7.removeClass("mapBlack");
+        mapType7.removeClass("mapBlack");
+        mapNum7.text(curRoom+4);
+        mapType7.text(dungeon.rooms[curRoom+3].type.toUpperCase().charAt(0));
+    }
+
+    let roomsLeft = ((dunLength-1)-curRoom)
+    if (roomsLeft !== 0) {
+        mapRemaining.text(roomsLeft+" Room"+((roomsLeft === 1)?"":"s")+" Until Boss");
+    } else {
+        mapRemaining.text("");
     }
 }
 export function rmBuildSampleMonster() {

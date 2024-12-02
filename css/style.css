@@ -238,3 +238,52 @@ div button:not(#mainMenu button):hover {
     top: 25%;
     left: 30%;
 }
+
+/* MAP */
+#mapTable {
+    text-align: center;
+    position: absolute;
+    top: 8.5%;
+    left: 37.5%;
+    width: 25%;
+    table-layout: fixed;
+}
+
+#mapNumberRow td {
+    border: none;
+    background-color: black;
+}
+
+#mapTypeRow td {
+    aspect-ratio: 1/1;
+}
+
+.mapGray {
+    color: rgb(50,50,50);
+}
+#mapTypeRow .mapGray {
+    border: 2px solid rgb(50,50,50);
+}
+
+.mapLtGray {
+    color: rgb(100,100,100);
+}
+#mapTypeRow .mapLtGray {
+    border: 2px solid rgb(100,100,100);
+}
+
+.mapWhite {
+    color: white;
+}
+#mapTypeRow .mapWhite {
+    border: 2px solid white;
+}
+
+.mapBlack {
+    border: none !important;
+    color: transparent !important;
+}
+
+#mapRemaining {
+    color: rgb(150,150,150);
+}
