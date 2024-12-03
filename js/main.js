@@ -73,8 +73,7 @@ function generateRooms(difficulty) {
         floorBoss = BossType.SoulFeaster;
     }
 
-
-    let bossRoom = new BossRoom("boss",BossFactory.createBoss(floorBoss),false);
+    let bossRoom = new BossRoom("boss",BossFactory.createBoss(floorBoss,difficulty),false);
     rooms[roomCount-1] = bossRoom; // last room = boss room
 
     let sItem1 = ItemFactory.createItem(shopEquipPool[Math.floor(Math.random()*shopEquipPool.length)]);
