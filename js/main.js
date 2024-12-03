@@ -9,7 +9,7 @@ import {
 import { Room, BossRoom, ShopRoom, ItemRoom, MonsterRoom, Boss, BaseItem, Monster, Creature, Dungeon, Player, Equipment, Consumable } from "./classes.js";
 import {ItemFactory, ItemType} from './item-factory.js';
 import {EnemyFactory, EnemyType} from "./monster-factory.js";
-import {updateStatusBar} from "./combat-manager.js"
+import { CombatManager, updateStatusBar } from './combat-manager.js';
 
 // Generate Dungeon
 
@@ -97,9 +97,11 @@ function initRoom(firstRoom = false) {
     rmBuildRoom(dungeon.getCurrentRoom);
     rmBuildMap(dungeon);
 
+    makeMonstersClickable();
+
     switch (dungeon.getCurrentRoom.getType) { // room type initialization
         case "monster":
-
+            handleMonsterRoom(dungeon.getCurrentRoom);
             break;
         case "item":
             updateStatusBar("A chest lies before you!")
@@ -301,10 +303,9 @@ function initRoom(firstRoom = false) {
             }).on("click",()=>{
                 updateStatusBar("\"Hands off! I'm not for sale!\"");
             });
-
             break;
         case "boss":
-
+            handleBossRoom(dungeon.getCurrentRoom);
             break;
     }
 }
@@ -314,20 +315,63 @@ let dungeon = new Dungeon(generateRooms(1),1,0);
 initRoom(true);
 
 // player initialization
-let player = new Player(10,25,5,0,25,[],[], 0);
+let player = new Player(25,25,5,0,25,[],[], 0);
 
 // go to next room
 // TODO: ONLY ALLOW PASSAGE TO NEXT ROOM IF CURRENT ROOM IS CLEARED
 $(".doorDiv button").on("click", () => {
     initRoom(false)
-
+    
     /* USE THIS CODE INSTEAD ONCE BATTLE SYSTEM IS FUNCTIONAL
     if (dungeon.getCurrentRoom.type === "monster" || dungeon.getCurrentRoom.type === "boss") {
         if (dungeon.getCurrentRoom.isCleared()) {
             initRoom(false)
+            }
+            } else {
+                initRoom(false)
         }
-    } else {
-        initRoom(false)
+        */
+    });
+
+function makeMonstersClickable() {
+    $(".enemyDiv").filter(function() {
+        return $(this).hasClass("monster1") ||
+                $(this).hasClass("monster2") ||
+                $(this).hasClass("monster3");
+    }).on("click", function() {
+        const monsterId = $(this).attr('class').split(' ')[1].replace('monster', '');
+        const monsterIndex = parseInt(monsterId.replace('monster', '')) - 1;
+        const monsters = dungeon.getCurrentRoom.getMonsters();
+
+        if (monsterIndex >= 0 && monsterIndex < monsters.length) {
+            const monster = monsters[monsterIndex];
+            combatManager.handleCombat(monster);
+        }
+    });
+}
+
+function handleMonsterRoom(monsterRoom) {
+    const monsters = monsterRoom.getMonsters();
+    const combatManager = new CombatManager(player, monsters, (playerState, enemiesState) => {
+        rmBuildRoom(monsterRoom);
+    });
+
+    combatManager.startCombat();
+
+    if (combatManager.isCombatOver()) {
+        monsterRoom.markCleared();
     }
-    */
-});
+}
+
+function handleBossRoom(bossRoom) {
+    const boss = bossRoom.getBoss();
+    const combatManager = new CombatManager(player, [boss], (playerState, enemiesState) => {
+        rmBuildRoom(bossRoom);
+    });
+
+    combatManager.startCombat();
+
+    if (combatManager.isCombatOver()) {
+        bossRoom.markCleared();
+    }
+}

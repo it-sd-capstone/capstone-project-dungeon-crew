@@ -1,4 +1,5 @@
-import { Monster, Boss } from "./classes.js";
+import { Monster, Boss, Dungeon } from "./classes.js";
+import { ItemType } from "./item-factory.js";
 export class CombatManager {
     constructor(player, enemies, onUpdate) {
         this.player = player;
@@ -11,10 +12,17 @@ export class CombatManager {
         this.updateStatusBar(`Combat started! It's your turn.`);
         this.nextTurn();
     }
+    handleCombat(monster) {
+        const targetIndex = this.enemies.findIndex(enemy => enemy === monster);
+        if (this.turn === "player") {
+            this.playerAttack(targetIndex)
+        } else {
+            this.enemyAttack();
+        }
+    }
     nextTurn() {
         if (this.turn === "player") {
             this.updateStatusBar(`It's your turn! Choose and action.`);
-            // Wait for player input !!!!!!!!!!
         }
         else {
             this.enemyAttack();
@@ -22,16 +30,28 @@ export class CombatManager {
 
         this.updateUI();
     }
+    resolveTurn(action, target, itemEffect) {
+        if (action === "attack" && (target instanceof Monster || target instanceof Boss)) {
+            const damage = this.player.attack - target.defense;
+            target.health -= Math.max(damage, 0); // Ensure damage isn't negative
+        }
+        else if (action === "useItem" && itemEffect) {
+            itemEffect();
+        }
+        this.updateUI();
+    }
     playerAttack(targetIndex) {
         const target = this.enemies[targetIndex];
-        if (target.health > 0) {
-            const damage = Math.max(0, this.player.attack - target.defense);
-            target.health -= damage;
-            this.updateStatusBar(`You attacked ${target.name} for ${damage} damage.`);
-        }
-        else {
+        const damage = Math.max(0, this.player.attack - target.defense);
+
+        if (target.health <= 0) {
             this.updateStatusBar(`${target.name} is already defeated.`);
+            return;
         }
+        
+        target.health -= damage;
+        this.updateStatusBar(`You attacked ${target.name} for ${damage} damage.`);
+
         this.updateUI();
         this.checkCombatEnd();
         this.turn = "enemies";
@@ -44,7 +64,7 @@ export class CombatManager {
                 this.player.health -= damage;
                 this.updateStatusBar(`${enemy.name} attacked you for ${damage} damage.`);
                 // Check if player is defeated
-                if (this.player.health < 0) {
+                if (this.player.health <= 0) {
                     this.updateUI();
                     this.checkCombatEnd();
                     return;
@@ -62,16 +82,34 @@ export class CombatManager {
         item.applyEffect(this.player);
         this.player.inventory.splice(itemIndex, 1);
         this.updateStatusBar(`You used ${item.name}.`);
+        this.updateInventoryUI();
         this.updateUI();
         this.turn = "enemies";
         this.nextTurn();
+    }
+    applyItemEffect(effect, target) {
+        effect(target, this);
+        this.updateUI();
+    }
+    getRandomEnemies() {
+        const aliveEnemies = this.enemies.filter(enemy => enemy.health > 0);
+        if (aliveEnemies.length === 0) {
+            throw new Error("No enemies to target.");
+        }
+        return aliveEnemies[Math.floor(Math.random() * aliveEnemies.length)];
+    }
+    isCombatOver() {
+        const allEnemiesDefeated = this.enemies.every(enemy => enemy.health <= 0);
+        const playerDefeated = this.player.health <= 0;
+        return allEnemiesDefeated || playerDefeated;
     }
     checkCombatEnd() {
         const allEnemiesDefeated = this.enemies.every(enemy => enemy.health <= 0);
         const playerDefeated = this.player.health <= 0;
         if (allEnemiesDefeated) {
-            this.updateStatusBar(`You are victorious!`);
-            // Victory logic !!!!!!!!!!!!!!!
+            let goldAward = this.calculateGoldReward();
+            this.updateStatusBar(`You are victorious! You earned ${goldAward} gold.`);
+            this.player.gold += goldAward;
             return;
         }
         else if (playerDefeated) {
@@ -83,13 +121,16 @@ export class CombatManager {
             this.nextTurn();
         }
     }
+    calculateGoldReward() {
+        let totalGold = 0;
 
-    // So it can be used in this class
-    updateStatusBar(message) {
-        const statusBar = document.getElementById("statusBarText");
-        if (statusBar) {
-            statusBar.value = message;
-        }
+        this.enemies.forEach((enemy) => {
+            if (enemy.health <= 0) {
+                totalGold += enemy.maxHealth;
+            }
+        });
+
+        return totalGold;
     }
     updateUI() {
         // Update player's stats
@@ -107,31 +148,37 @@ export class CombatManager {
         });
         this.onUpdate(this.player, this.enemies);
     }
-    getRandomEnemies() {
-        const aliveEnemies = this.enemies.filter(enemy => enemy.health > 0);
-        if (aliveEnemies.length === 0) {
-            throw new Error("No enemies to target.");
-        }
-        return aliveEnemies[Math.floor(Math.random() * aliveEnemies.length)];
+    updateInventoryUI() {
+        const inventoryList = document.querySelectorAll('#inventory button');
+
+        inventoryList.forEach((button, index) => {
+            const img = button.querySelector('img');
+
+            if (this.player.inventory[index]) {
+                const item = this.player.inventory[index];
+                
+                // Update image and alt text for item
+                img.src = item.sprite;
+                img.alt = item.name;
+                
+                // Attach click event to each item slot
+                button.onclick = () => this.useItem(index);
+                button.disabled = false; // Ensure button is clickable
+            } else {
+                // Clear empty slots (if inventory has less than 8 items)
+                img.src = "#";  // Set an empty img
+                img.alt = "Empty"
+                button.onclick = null;  // Disable click event
+                button.disabled = true; // Disable button
+            }
+        });
     }
-    applyItemEffect(effect, target) {
-        effect(target, this);
-        this.updateUI();
-    }
-    isCombatOver() {
-        const allEnemiesDefeated = this.enemies.every(enemy => enemy.health <= 0);
-        const playerDefeated = this.player.health <= 0;
-        return allEnemiesDefeated || playerDefeated;
-    }
-    resolveTurn(action, target, itemEffect) {
-        if (action === "attack" && (target instanceof Monster || target instanceof Boss)) {
-            const damage = this.player.attack - target.defense;
-            target.health -= Math.max(damage, 0); // Ensure damage isn't negative
+    // So it can be used in this class
+    updateStatusBar(message) {
+        const statusBar = document.getElementById("statusBarText");
+        if (statusBar) {
+            statusBar.value = message;
         }
-        else if (action === "useItem" && itemEffect) {
-            itemEffect();
-        }
-        this.updateUI();
     }
 }
 
