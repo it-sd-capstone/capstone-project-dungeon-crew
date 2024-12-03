@@ -10,6 +10,8 @@ import { Room, BossRoom, ShopRoom, ItemRoom, MonsterRoom, Boss, BaseItem, Monste
 import {ItemFactory, ItemType} from './item-factory.js';
 import {EnemyFactory, EnemyType} from "./monster-factory.js";
 import { CombatManager, updateStatusBar } from './combat-manager.js';
+import {BossFactory,BossType} from "./boss-factory.js";
+import {ConsumableFactory,ConsumableType} from "./consumable-factory.js";
 
 // Generate Dungeon
 
@@ -25,34 +27,60 @@ function generateRooms(difficulty) {
     // !! TODO add more items to pools once implemented. !!
     let testConsume = new Consumable("Test Potion",10,"../img/items/placeholder.png",() => {})
 
-    let shopEquipPool = [ItemType.Bow,ItemType.Whip,ItemType.Shield];
-    let shopConsumePool = [];
-    let itemPool = [ItemType.RabbitsFoot,ItemType.RustyDagger,ItemType.Shield];
+    let shopEquipPool = [
+        ItemType.Bow,
+        ItemType.Whip,
+        ItemType.Shield
+    ];
+    let shopConsumePool = [
+        ConsumableType.LesserHealingPotion,
+        ConsumableType.GreaterHealingPotion,
+        ConsumableType.Bomb
+    ];
+    let itemEquipPool = [
+        ItemType.RabbitsFoot,
+        ItemType.RustyDagger,
+        ItemType.Shield
+    ];
+    let itemConsumePool = [
+        ConsumableType.BlizzardScroll,
+        ConsumableType.FireballScroll,
+        ConsumableType.LesserHealingPotion,
+        ConsumableType.GreaterHealingPotion,
+        ConsumableType.SuperiorHealingPotion
+    ];
 
     // Build Monster Pool
     let monsterPool = [EnemyType.Seeker];
+    let floorBoss = BossType.Eyemalgam;
 
     if (difficulty >= 1) {
         monsterPool.push(EnemyType.CrimeSlime);
     }
     if (difficulty >= 1.25) {
         monsterPool.push(EnemyType.Snobgoblin);
+        floorBoss = BossType.Slimelord;
     }
     if (difficulty >= 1.5) {
         monsterPool.push(EnemyType.LazyBones);
+        floorBoss = BossType.Orchestrator;
     }
     if (difficulty >= 1.75) {
         monsterPool.push(EnemyType.HungryGhost);
+        floorBoss = BossType.GrimSleeper;
+    }
+    if (difficulty >= 2) {
+        floorBoss = BossType.SoulFeaster;
     }
 
 
-    let bossRoom = new BossRoom("boss",new Boss(5,5,1,1,"test boss","img/monsters/crime-slime.gif",testConsume),false);
+    let bossRoom = new BossRoom("boss",BossFactory.createBoss(floorBoss),false);
     rooms[roomCount-1] = bossRoom; // last room = boss room
 
     let sItem1 = ItemFactory.createItem(shopEquipPool[Math.floor(Math.random()*shopEquipPool.length)]);
     let sItem2 = ItemFactory.createItem(shopEquipPool[Math.floor(Math.random()*shopEquipPool.length)]);
-    let sItem3 = testConsume;
-    let sItem4 = testConsume;
+    let sItem3 = ConsumableFactory.createConsumable(shopConsumePool[Math.floor(Math.random()*shopConsumePool.length)]);
+    let sItem4 = ConsumableFactory.createConsumable(shopConsumePool[Math.floor(Math.random()*shopConsumePool.length)]);
 
     let shopRoom = new ShopRoom("shop",[sItem1,sItem2,sItem3,sItem4]);
     rooms[roomCount-2] = shopRoom; // second to last room = shop
@@ -64,7 +92,14 @@ function generateRooms(difficulty) {
         let randSelect = Math.floor(Math.random()*remainingRooms.length);
         let newIndex = remainingRooms[randSelect];
         remainingRooms.splice(randSelect,1);
-        let rewardItem = ItemFactory.createItem(itemPool[Math.floor(Math.random()*itemPool.length)])
+
+        let rewardItem;
+        if (Math.random < .5) { //give equipment
+            rewardItem = ItemFactory.createItem(itemEquipPool[Math.floor(Math.random()*itemEquipPool.length)]);
+        } else { //give consumable
+            rewardItem = ConsumableFactory.createConsumable(itemConsumePool[Math.floor(Math.random()*itemConsumePool.length)]);
+        }
+
         rooms[newIndex] = new ItemRoom("item",rewardItem,false, false);
     }
 

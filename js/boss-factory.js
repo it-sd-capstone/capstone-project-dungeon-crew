@@ -1,4 +1,4 @@
-import { Boss } from "./classes";
+import { Boss } from "./classes.js";
 
 export var BossType;
 (function (BossType) {
