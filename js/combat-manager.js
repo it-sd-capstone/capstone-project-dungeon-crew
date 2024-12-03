@@ -139,6 +139,6 @@ export class CombatManager {
 export function updateStatusBar(message) {
     const statusBar = document.getElementById("statusBarText");
     if (statusBar) {
-        statusBar.value = message;
+        statusBar.innerHTML = message;
     }
 }
