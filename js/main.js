@@ -101,35 +101,19 @@ function initRoom(firstRoom = false) {
 
     switch (dungeon.getCurrentRoom.getType) { // room type initialization
         case "monster":
-
+            handleMonsterRoom(currentRoom);
             break;
         case "item":
-
+            currentRoom.markCleared();
+            updateStatusBar("You found an item!")
             break;
         case "shop":
-
+            updateStatusBar("You entered a shop!")
             break;
         case "boss":
-
+            handleBossRoom(currentRoom);
             break;
     }
-}
-
-function makeMonstersClickable() {
-    $(".enemyDiv").filter(function() {
-        return $(this).hasClass("monster1") ||
-               $(this).hasClass("monster2") ||
-               $(this).hasClass("monster3");
-    }).on("click", function() {
-        const monsterId = $(this).attr('class').split(' ')[1].replace('monster', '');
-        const monsterIndex = parseInt(monsterId.replace('monster', '')) - 1;
-        const monsters = dungeon.getCurrentRoom.getMonsters();
-
-        if (monsterIndex >= 0 && monsterIndex < monsters.length) {
-            const monster = monsters[monsterIndex];
-            handleCombat(monster);
-        }
-    });
 }
 
 // dungeon initialization
@@ -143,14 +127,57 @@ let player = new Player(25,25,5,0,0,[],[], 0);
 // TODO: ONLY ALLOW PASSAGE TO NEXT ROOM IF CURRENT ROOM IS CLEARED
 $(".doorDiv button").on("click", () => {
     initRoom(false)
-
+    
     /* USE THIS CODE INSTEAD ONCE BATTLE SYSTEM IS FUNCTIONAL
     if (dungeon.getCurrentRoom.type === "monster" || dungeon.getCurrentRoom.type === "boss") {
         if (dungeon.getCurrentRoom.isCleared()) {
             initRoom(false)
+            }
+            } else {
+                initRoom(false)
         }
-    } else {
-        initRoom(false)
+        */
+    });
+
+function makeMonstersClickable() {
+    $(".enemyDiv").filter(function() {
+        return $(this).hasClass("monster1") ||
+                $(this).hasClass("monster2") ||
+                $(this).hasClass("monster3");
+    }).on("click", function() {
+        const monsterId = $(this).attr('class').split(' ')[1].replace('monster', '');
+        const monsterIndex = parseInt(monsterId.replace('monster', '')) - 1;
+        const monsters = dungeon.getCurrentRoom.getMonsters();
+
+        if (monsterIndex >= 0 && monsterIndex < monsters.length) {
+            const monster = monsters[monsterIndex];
+            combatManager.handleCombat(monster);
+        }
+    });
+}
+
+function handleMonsterRoom(monsterRoom) {
+    const monsters = monsterRoom.getMonsters();
+    const combatManager = new CombatManager(player, monsters, (playerState, enemiesState) => {
+        rmBuildRoom(monsterRoom);
+    });
+
+    combatManager.startCombat();
+
+    if (combatManager.isCombatOver()) {
+        monsterRoom.markCleared();
     }
-    */
-});
+}
+
+function handleBossRoom(bossRoom) {
+    const boss = bossRoom.getBoss();
+    const combatManager = new CombatManager(player, [boss], (playerState, enemiesState) => {
+        rmBuildRoom(bossRoom);
+    });
+
+    combatManager.startCombat();
+
+    if (combatManager.isCombatOver()) {
+        bossRoom.markCleared();
+    }
+}
