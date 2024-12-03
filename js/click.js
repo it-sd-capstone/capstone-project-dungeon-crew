@@ -35,6 +35,16 @@ function backToMainMenu(mainMenuId) {
 
 }
 
+function showGameWrapper() {
+    const gameWrapperDiv = document.querySelector('#gameWrapper');
+    gameWrapperDiv.classList.remove('hide'); 
+
+    const mainMenu = document.querySelector('#mainMenu');
+    if (mainMenu) {
+        mainMenu.classList.add('hide');
+    }
+}
+
 function openDirections(divId){
     const mainMenu = document.querySelector('#mainMenu');
     if (mainMenu) {
