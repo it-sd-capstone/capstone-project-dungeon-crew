@@ -1,4 +1,5 @@
-import { Monster, Boss } from "./classes.js";
+import { Monster, Boss, Dungeon } from "./classes.js";
+import { ItemType } from "./item-factory.js";
 export class CombatManager {
     constructor(player, enemies, onUpdate) {
         this.player = player;
@@ -14,7 +15,6 @@ export class CombatManager {
     nextTurn() {
         if (this.turn === "player") {
             this.updateStatusBar(`It's your turn! Choose and action.`);
-            // Wait for player input !!!!!!!!!!
         }
         else {
             this.enemyAttack();
@@ -44,7 +44,7 @@ export class CombatManager {
                 this.player.health -= damage;
                 this.updateStatusBar(`${enemy.name} attacked you for ${damage} damage.`);
                 // Check if player is defeated
-                if (this.player.health < 0) {
+                if (this.player.health <= 0) {
                     this.updateUI();
                     this.checkCombatEnd();
                     return;
@@ -62,6 +62,7 @@ export class CombatManager {
         item.applyEffect(this.player);
         this.player.inventory.splice(itemIndex, 1);
         this.updateStatusBar(`You used ${item.name}.`);
+        this.updateInventoryUI();
         this.updateUI();
         this.turn = "enemies";
         this.nextTurn();
@@ -70,8 +71,9 @@ export class CombatManager {
         const allEnemiesDefeated = this.enemies.every(enemy => enemy.health <= 0);
         const playerDefeated = this.player.health <= 0;
         if (allEnemiesDefeated) {
-            this.updateStatusBar(`You are victorious!`);
-            // Victory logic !!!!!!!!!!!!!!!
+            let goldAward = this.calculateGoldReward();
+            this.updateStatusBar(`You are victorious! You earned ${goldAward} gold.`);
+            this.player.gold += goldAward;
             return;
         }
         else if (playerDefeated) {
@@ -132,6 +134,48 @@ export class CombatManager {
             itemEffect();
         }
         this.updateUI();
+    }
+    handleCombat(monster) {
+        const targetIndex = this.enemies.findIndex(enemy => enemy === monster);
+        if (this.turn === "player") {
+            this.playerAttack(targetIndex)
+        } else {
+            this.enemyAttack();
+        }
+    }
+    updateInventoryUI() {
+        const inventoryList = document.querySelectorAll('#inventory button');
+
+        inventoryList.forEach((button, index) => {
+            const img = button.querySelector('img');
+
+            if (this.player.inventory[index]) {
+                const item = this.player.inventory[index];
+                
+                // Update image and alt text for item
+                img.src = item.sprite;
+                img.alt = item.name;
+                
+                // Attach click event to each item slot
+                button.onClick = () => this.useItem(index);
+            } else {
+                // Clear empty slots (if inventory has less than 8 items)
+                img.src = "#";  // Set an empty img
+                img.alt = "Empty"
+                button.onClick = null;  // Disable click
+            }
+        });
+    }
+    calculateGoldReward() {
+        let totalGold = 0;
+
+        this.enemies.forEach((enemy) => {
+            if (enemy.health <= 0) {
+                totalGold += enemy.maxHealth;
+            }
+        });
+
+        return totalGold;
     }
 }
 

@@ -9,6 +9,7 @@ import {
 import { Room, BossRoom, ShopRoom, ItemRoom, MonsterRoom, Boss, BaseItem, Monster, Creature, Dungeon, Player, Equipment, Consumable } from "./classes.js";
 import {ItemFactory, ItemType} from './item-factory.js';
 import {EnemyFactory, EnemyType} from "./monster-factory.js";
+import { CombatManager, updateStatusBar } from './combat-manager.js';
 
 // Generate Dungeon
 
@@ -96,6 +97,8 @@ function initRoom(firstRoom = false) {
     rmBuildRoom(dungeon.getCurrentRoom);
     rmBuildMap(dungeon);
 
+    makeMonstersClickable();
+
     switch (dungeon.getCurrentRoom.getType) { // room type initialization
         case "monster":
 
@@ -110,6 +113,23 @@ function initRoom(firstRoom = false) {
 
             break;
     }
+}
+
+function makeMonstersClickable() {
+    $(".enemyDiv").filter(function() {
+        return $(this).hasClass("monster1") ||
+               $(this).hasClass("monster2") ||
+               $(this).hasClass("monster3");
+    }).on("click", function() {
+        const monsterId = $(this).attr('class').split(' ')[1].replace('monster', '');
+        const monsterIndex = parseInt(monsterId.replace('monster', '')) - 1;
+        const monsters = dungeon.getCurrentRoom.getMonsters();
+
+        if (monsterIndex >= 0 && monsterIndex < monsters.length) {
+            const monster = monsters[monsterIndex];
+            handleCombat(monster);
+        }
+    });
 }
 
 // dungeon initialization
