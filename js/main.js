@@ -94,7 +94,7 @@ function generateRooms(difficulty) {
         remainingRooms.splice(randSelect,1);
 
         let rewardItem;
-        if (Math.random < .5) { //give equipment
+        if (Math.random() < .5) { //give equipment
             rewardItem = ItemFactory.createItem(itemEquipPool[Math.floor(Math.random()*itemEquipPool.length)]);
         } else { //give consumable
             rewardItem = ConsumableFactory.createConsumable(itemConsumePool[Math.floor(Math.random()*itemConsumePool.length)]);
@@ -386,7 +386,7 @@ function makeMonstersClickable() {
 }
 
 function handleMonsterRoom(monsterRoom) {
-    const monsters = monsterRoom.getMonsters();
+    const monsters = monsterRoom.getMonsters;
     const combatManager = new CombatManager(player, monsters, (playerState, enemiesState) => {
         rmBuildRoom(monsterRoom);
     });
@@ -399,7 +399,7 @@ function handleMonsterRoom(monsterRoom) {
 }
 
 function handleBossRoom(bossRoom) {
-    const boss = bossRoom.getBoss();
+    const boss = bossRoom.getBoss;
     const combatManager = new CombatManager(player, [boss], (playerState, enemiesState) => {
         rmBuildRoom(bossRoom);
     });
