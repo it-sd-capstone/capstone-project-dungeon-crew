@@ -10,6 +10,13 @@ body, html {
     height: 100%;
 }
 
+button#backToMainMenu {
+    padding: 10px 20px;    
+    margin-top: 50px;  
+    font-size: 16px;    
+    cursor: pointer;         
+}
+
 #mainMenu {
     margin: auto;
     padding: 32px;

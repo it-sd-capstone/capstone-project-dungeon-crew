@@ -25,6 +25,16 @@ function enterRoom(roomId) {
     }
 }
 
+function backToMainMenu(mainMenuId) {
+    const directionsDiv = document.querySelector('#howToPlay');
+    directionsDiv.classList.add('hide'); 
+
+    const mainMenuDiv = document.querySelector(`#${mainMenuId}`);
+    mainMenuDiv.classList.remove('hide'); 
+
+
+}
+
 function openDirections(divId){
     const mainMenu = document.querySelector('#mainMenu');
     if (mainMenu) {
