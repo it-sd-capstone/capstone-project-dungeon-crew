@@ -147,6 +147,10 @@ div button:not(#mainMenu button):hover {
     border: 2px solid white;
 }
 
+div#howToPlay > h2 {
+    text-align: center;
+}
+
 .sItem1 {
     top: 60%;
     left: 25%;
