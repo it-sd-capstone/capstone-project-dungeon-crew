@@ -131,11 +131,11 @@ function initRoom(firstRoom = false) {
     rmBuildRoom(dungeon.getCurrentRoom);
     rmBuildMap(dungeon);
 
-    makeMonstersClickable();
+    //makeMonstersClickable();
 
     switch (dungeon.getCurrentRoom.getType) { // room type initialization
         case "monster":
-            handleMonsterRoom(dungeon.getCurrentRoom);
+            //handleMonsterRoom(dungeon.getCurrentRoom);
             break;
         case "item":
             updateStatusBar("A chest lies before you!")
@@ -171,7 +171,7 @@ function initRoom(firstRoom = false) {
             });
             break;
         case "shop":
-            updateStatusBar("You walk into a shop.");
+            updateStatusBar("Welcome to the shop!");
 
             let item1 = $(".sItem1 button");
             let item2 = $(".sItem2 button");
@@ -339,7 +339,7 @@ function initRoom(firstRoom = false) {
             });
             break;
         case "boss":
-            handleBossRoom(dungeon.getCurrentRoom);
+            //handleBossRoom(dungeon.getCurrentRoom);
             break;
     }
 }
