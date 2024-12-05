@@ -23,7 +23,7 @@ button#backToMainMenu {
     text-align: center;
 }
 
-#gameWrapper {
+#gameWrapper, #howToPlay {
     aspect-ratio: 1 / 1;
     min-height: 720px;
     height: 100vh;
@@ -95,7 +95,7 @@ button#backToMainMenu {
     flex: 3;
     margin: 0;
     padding: 0;
-    overflow: scroll;
+    overflow: auto;
 }
 
 #inventory ul {
@@ -134,7 +134,7 @@ button#backToMainMenu {
     object-fit: cover;
 }
 
-div button:not(#mainMenu button) {
+div button:not(#mainMenu button, #helpOverview button) {
     background-color: transparent;
     border: 2px solid transparent;
     color: white;
@@ -143,11 +143,11 @@ div button:not(#mainMenu button) {
     outline: none;
 }
 
-div button:not(#mainMenu button):hover {
+div button:not(#mainMenu button, #helpOverview button):hover {
     border: 2px solid white;
 }
 
-div#howToPlay > h2 {
+div#howToPlay h2 {
     text-align: center;
 }
 

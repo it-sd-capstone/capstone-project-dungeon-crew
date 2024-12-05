@@ -161,7 +161,7 @@
         </div>
 
         <div id="statusBar" class="">
-            <h3 id="statusBarText">The default value for the text bar</h3>
+            <h3 id="statusBarText"></h3>
             <div id="holdStatsAndInventory">
                 <div id="statsBox"> <!-- The value can be changed dynamically later using JavaScript -->
                     <h4>Stats</h4>
@@ -223,18 +223,29 @@
         </div>
     </div>
     <div id="howToPlay" class="hide">
-        <h2>Directions</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-           Cras est quam, fringilla ut elit ut, dictum ultrices enim. Donec ac enim et lorem vestibulum gravida ut eget massa.
-           In commodo tristique ultrices. Duis tempus ultricies massa id aliquam. Duis tristique est in iaculis maximus. 
-           Pellentesque at augue in eros tincidunt vehicula quis quis risus. Mauris semper pellentesque metus non bibendum. 
-           Pellentesque ut vulputate libero. Nam ac arcu orci. Pellentesque consectetur odio eros, id venenatis magna elementum quis. 
-           Vivamus tempus ante id nisl ornare imperdiet.
-        </p>
+        <div id="helpOverview">
+            <h2>Directions</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+               Cras est quam, fringilla ut elit ut, dictum ultrices enim. Donec ac enim et lorem vestibulum gravida ut eget massa.
+               In commodo tristique ultrices. Duis tempus ultricies massa id aliquam. Duis tristique est in iaculis maximus.
+               Pellentesque at augue in eros tincidunt vehicula quis quis risus. Mauris semper pellentesque metus non bibendum.
+               Pellentesque ut vulputate libero. Nam ac arcu orci. Pellentesque consectetur odio eros, id venenatis magna elementum quis.
+               Vivamus tempus ante id nisl ornare imperdiet.
+            </p>
+            <button onclick="backToMainMenu('mainMenu')" id="backToMainMenu">Back to Main Menu</button>
+        </div>
+        <div id="helpMonster" class="hide">
 
-        <button onclick="backToMainMenu('mainMenu')" id="backToMainMenu">Back to Main Menu</button>
-        
+        </div>
+        <div id="helpItem" class="hide">
 
+        </div>
+        <div id="helpShop" class="hide">
+
+        </div>
+        <div id="helpBoss" class="hide">
+
+        </div>
     </div>
 
     <script src="js/click.js"></script>

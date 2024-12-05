@@ -367,6 +367,8 @@ $(".doorDiv button").on("click", () => {
         */
     });
 
+
+
 function makeMonstersClickable() {
     $(".enemyDiv").filter(function() {
         return $(this).hasClass("monster1") ||
