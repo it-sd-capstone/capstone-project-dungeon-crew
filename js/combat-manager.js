@@ -11,7 +11,7 @@ export class CombatManager {
     }
     startCombat() {
         this.updateUI();
-        this.updateStatusBar(`Combat started! It's your turn.`);
+        updateStatusBar(`Combat started! It's your turn.`);
         this.nextTurn();
     }
     handleCombat(monster) {
@@ -24,7 +24,7 @@ export class CombatManager {
     }
     nextTurn() {
         if (this.turn === "player") {
-            this.updateStatusBar(`It's your turn! Choose and action.`);
+            updateStatusBar(`It's your turn! Choose and action.`);
         }
         else {
             this.enemyAttack();
@@ -47,12 +47,12 @@ export class CombatManager {
         const damage = Math.max(0, this.player.attack - target.defense);
 
         if (target.health <= 0) {
-            this.updateStatusBar(`${target.name} is already defeated.`);
+            updateStatusBar(`${target.name} is already defeated.`);
             return;
         }
         
         target.health -= damage;
-        this.updateStatusBar(`You attacked ${target.name} for ${damage} damage.`);
+        updateStatusBar(`You attacked ${target.name} for ${damage} damage.`);
         
         this.updateUI();
         this.checkCombatEnd();
@@ -67,7 +67,7 @@ export class CombatManager {
             if (enemy.health > 0) {
                 const damage = Math.max(0, enemy.attack - this.player.defense);
                 this.player.health -= damage;
-                this.updateStatusBar(`${enemy.name} attacked you for ${damage} damage.`);
+                updateStatusBar(`${enemy.name} attacked you for ${damage} damage.`);
                 // Check if player is defeated
                 if (this.player.health <= 0) {
                     this.updateUI();
@@ -86,7 +86,7 @@ export class CombatManager {
         const item = this.player.inventory[itemIndex];
         item.applyEffect(this.player);
         this.player.inventory.splice(itemIndex, 1);
-        this.updateStatusBar(`You used ${item.name}.`);
+        updateStatusBar(`You used ${item.name}.`);
         this.updateInventoryUI();
         this.updateUI();
         this.turn = "enemies";
@@ -113,12 +113,12 @@ export class CombatManager {
         const playerDefeated = this.player.health <= 0;
         if (allEnemiesDefeated) {
             let goldAward = this.calculateGoldReward();
-            this.updateStatusBar(`You are victorious! You earned ${goldAward} gold.`);
+            updateStatusBar(`You are victorious! You earned ${goldAward} gold.`);
             this.player.gold += goldAward;
             return;
         }
         else if (playerDefeated) {
-            this.updateStatusBar(`You were defeated!`);
+            updateStatusBar(`You were defeated!`);
             // Death logic !!!!!!!!!!!!!!
             return;
         }
