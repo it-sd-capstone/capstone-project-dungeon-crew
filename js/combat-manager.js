@@ -139,11 +139,11 @@ export class CombatManager {
     }
     updateUI() {
         // Update player's stats
-        document.getElementById("health").value = `${this.player.health}`;
-        document.getElementById("attack").value = `${this.player.attack}`;
-        document.getElementById("defense").value = `${this.player.defense}`;
-        document.getElementById("gold").value = `${this.player.gold}`;
-        // (document.getElementById("score") as HTMLInputElement).value = `${this.player.score}`;   Don't have score built out yet !!!!!!!!!!!!
+        document.getElementById("healthVal").value = `${this.player.health}`;
+        document.getElementById("goldVal").value = `${this.player.gold}`;
+        document.getElementById("attackVal").value = `${this.player.attack}`;
+        document.getElementById("defenseVal").value = `${this.player.defense}`;
+        // (document.getElementById("scoreVal") as HTMLInputElement).value = `${this.player.score}`;   Don't have score built out yet !!!!!!!!!!!!
         // Update enemies' statuses in Monster room
         this.enemies.forEach((enemy, index) => {
             const monsterText = document.getElementById(`monster${index + 1}Text`);
