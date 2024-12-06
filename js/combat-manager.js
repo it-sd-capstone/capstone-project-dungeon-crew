@@ -1,7 +1,7 @@
 import { Monster, Boss, Dungeon } from "./classes.js";
 import { ItemType } from "./item-factory.js";
 export class CombatManager {
-    constructor(player, []) {
+    constructor(player, enemies = []) {
         this.player = player;
         this.enemies = enemies;
         this.turn = "player";
