@@ -13,6 +13,12 @@ import { CombatManager, updateStatusBar } from './combat-manager.js';
 import {BossFactory,BossType} from "./boss-factory.js";
 import {ConsumableFactory,ConsumableType} from "./consumable-factory.js";
 
+// player initialization
+let player = new Player(25,25,5,0,25,[],[], 0);
+
+// combat manager initialization
+let combatManager = new CombatManager(player, []);
+
 // Generate Dungeon
 
 function generateRooms(difficulty) {
@@ -110,6 +116,7 @@ function generateRooms(difficulty) {
         }
 
         rooms[remainingRooms[i]] = new MonsterRoom("monster",monsters,false);
+        combatManager.enemies = monsters;
     }
 
     return rooms;
@@ -133,11 +140,50 @@ function initRoom(firstRoom = false) {
     rmBuildStats(player);
     rmBuildInventory(player);
 
-    //makeMonstersClickable();
-
     switch (dungeon.getCurrentRoom.getType) { // room type initialization
         case "monster":
-            //handleMonsterRoom(dungeon.getCurrentRoom);
+            if (dungeon.getCurrentRoom instanceof MonsterRoom) {
+                let monsters = dungeon.getCurrentRoom.getMonsters;
+
+                combatManager.setEnemies(monsters);
+
+                // Start combat
+                combatManager.startCombat();
+            }
+
+            let monsterButtons = [
+                $(".enemyDiv.monster1 button"),
+                $(".enemyDiv.monster2 button"),
+                $(".enemyDiv.monster3 button"),
+            ];
+
+            // Attach event listeners to monsters
+            monsterButtons.forEach((button, index) => {
+                button.on("click", () => {
+                    const targetMonster = combatManager.enemies[index];
+
+                    if (targetMonster.health > 0) {
+                        combatManager.playerAttack(index);
+                        if (targetMonster.health <= 0) {
+                            button.closest(".enemyDiv").css("display", "none");
+                            rmBuildRoom(dungeon.getCurrentRoom)
+                        }
+                    }
+                });
+            });
+
+            // Monitor combat status
+            const combatCheckInterval = setInterval(() => {
+                if (combatManager.isCombatOver()) {
+                    clearInterval(combatCheckInterval);
+                    if (dungeon.getCurrentRoom.isCleared()) {
+                        rmBuildRoom(dungeon.getCurrentRoom);
+                    }
+                } else if (combatManager.turn === "enemies") {
+                    combatManager.enemyAttack();
+                }
+            }, 100); // Check every 100ms
+
             break;
         case "item":
             updateStatusBar("A chest lies before you!")
@@ -370,7 +416,7 @@ function initRoom(firstRoom = false) {
             });
             break;
         case "boss":
-            //handleBossRoom(dungeon.getCurrentRoom);
+            
             break;
     }
 }
@@ -399,6 +445,7 @@ $(".doorDiv button").on("click", () => {
         }
         */
     });
+    });
 
 $("#viewEquip").on("click", ()=>{
     rmBuildEquip(player);
@@ -408,47 +455,3 @@ $("#returnToGame").on("click", ()=>{
     $("#gameWrapper").removeClass("hide");
     $("#equipmentDiv").addClass("hide");
 });
-
-
-function makeMonstersClickable() {
-    $(".enemyDiv").filter(function() {
-        return $(this).hasClass("monster1") ||
-                $(this).hasClass("monster2") ||
-                $(this).hasClass("monster3");
-    }).on("click", function() {
-        const monsterId = $(this).attr('class').split(' ')[1].replace('monster', '');
-        const monsterIndex = parseInt(monsterId.replace('monster', '')) - 1;
-        const monsters = dungeon.getCurrentRoom.getMonsters();
-
-        if (monsterIndex >= 0 && monsterIndex < monsters.length) {
-            const monster = monsters[monsterIndex];
-            combatManager.handleCombat(monster);
-        }
-    });
-}
-
-function handleMonsterRoom(monsterRoom) {
-    const monsters = monsterRoom.getMonsters;
-    const combatManager = new CombatManager(player, monsters, (playerState, enemiesState) => {
-        rmBuildRoom(monsterRoom);
-    });
-
-    combatManager.startCombat();
-
-    if (combatManager.isCombatOver()) {
-        monsterRoom.markCleared();
-    }
-}
-
-function handleBossRoom(bossRoom) {
-    const boss = bossRoom.getBoss;
-    const combatManager = new CombatManager(player, [boss], (playerState, enemiesState) => {
-        rmBuildRoom(bossRoom);
-    });
-
-    combatManager.startCombat();
-
-    if (combatManager.isCombatOver()) {
-        bossRoom.markCleared();
-    }
-}
