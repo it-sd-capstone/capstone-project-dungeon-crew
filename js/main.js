@@ -151,11 +151,7 @@ function initRoom(firstRoom = false) {
                 combatManager.startCombat();
             }
 
-            let monsterButtons = [
-                $(".enemyDiv.monster1 button"),
-                $(".enemyDiv.monster2 button"),
-                $(".enemyDiv.monster3 button"),
-            ];
+            let monsterButtons = $(".enemyDiv button").toArray();
 
             // Attach event listeners to monsters
             monsterButtons.forEach((button, index) => {
