@@ -155,14 +155,14 @@ function initRoom(firstRoom = false) {
 
             // Attach event listeners to monsters
             monsterButtons.forEach((button, index) => {
-                button.on("click", () => {
+                $(button).on("click", () => {
                     const targetMonster = combatManager.enemies[index];
 
                     if (targetMonster.health > 0) {
                         combatManager.playerAttack(index);
                         if (targetMonster.health <= 0) {
                             // Monster defeated
-                            button.closest(".enemyDiv").css("display", "none");
+                            $(button).closest(".enemyDiv").css("display", "none");
                             rmBuildRoom(dungeon.getCurrentRoom)
                         }
                     }
