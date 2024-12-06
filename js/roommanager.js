@@ -6,10 +6,14 @@ export function rmHideAllRooms() {
     let itemRoom = $("#itemRoom");
     let monsterRoom = $("#monsterRoom");
     let bossRoom = $("#bossRoom");
+    let helpDiv = $("#howToPlay");
+    let equipDiv = $("#equipmentDiv");
     shopRoom.addClass("hide");
     itemRoom.addClass("hide");
     monsterRoom.addClass("hide");
     bossRoom.addClass("hide");
+    helpDiv.addClass("hide");
+    equipDiv.addClass("hide");
 }
 export function rmBuildRoom(room) {
     rmHideAllRooms();
@@ -365,6 +369,45 @@ export function rmBuildInventory(player) {
         }
     }
 }
+
+export function rmBuildEquip(player) {
+    $("#gameWrapper").addClass("hide");
+
+    let equipDiv = $("#equipmentDiv");
+    let equipHolder = $("#equipHolder div");
+    let equipText = $("#equipName");
+
+    equipDiv.removeClass("hide");
+
+    // remove all preexisting items
+    $("#equipHolder img").remove();
+
+    // rebuild all current items
+    /*player.equipped.forEach((value,index)=>{
+        let sprite = value.sprite;
+        let name = value.name;
+        equipHolder.append(`<img src="${sprite}" alt="${name}">`).on("mouseenter",()=>{
+            equipText.text(value.name);
+        }).on("mouseleave",()=>{
+            equipText.text("");
+        });
+    })*/
+
+    for (let i = 0; i < player.equipped.length; i++) {
+        let sprite = player.equipped[i].sprite;
+        let name = player.equipped[i].name;
+
+        equipHolder.append(`<img src="${sprite}" alt="${name}" class="equipItem${i}">`);
+
+        $(`.equipItem${i}`).on("mouseenter",()=>{
+            equipText.text(name);
+        }).on("mouseleave",()=>{
+            equipText.text("");
+        });
+    }
+}
+
+
 
 // TEST FUNCTIONS
 export function rmBuildSampleMonster() {

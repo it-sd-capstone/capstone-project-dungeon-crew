@@ -4,7 +4,7 @@ import {
     rmBuildSampleItem,
     rmBuildSampleShop,
     rmBuildSampleBoss,
-    rmBuildRoom, rmBuildMap, rmBuildInventory, rmBuildStats
+    rmBuildRoom, rmBuildMap, rmBuildInventory, rmBuildStats, rmBuildEquip
 } from "./roommanager.js";
 import { Room, BossRoom, ShopRoom, ItemRoom, MonsterRoom, Boss, BaseItem, Monster, Creature, Dungeon, Player, Equipment, Consumable } from "./classes.js";
 import {ItemFactory, ItemType} from './item-factory.js';
@@ -400,6 +400,14 @@ $(".doorDiv button").on("click", () => {
         */
     });
 
+$("#viewEquip").on("click", ()=>{
+    rmBuildEquip(player);
+});
+
+$("#returnToGame").on("click", ()=>{
+    $("#gameWrapper").removeClass("hide");
+    $("#equipmentDiv").addClass("hide");
+});
 
 
 function makeMonstersClickable() {

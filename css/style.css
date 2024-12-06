@@ -23,11 +23,25 @@ button#backToMainMenu {
     text-align: center;
 }
 
-#gameWrapper, #howToPlay {
+#gameWrapper button:not(#returnToGame,#viewEquip) {
+    background-color: transparent;
+    border: 2px solid transparent;
+    color: white;
+    width: 100%;
+    height: 100%;
+    outline: none;
+}
+
+#gameWrapper button:not(#returnToGame,#viewEquip):hover {
+    border: 2px solid white;
+}
+
+#gameWrapper, #howToPlay, #equipmentDiv {
     aspect-ratio: 1 / 1;
     min-height: 720px;
     height: 100vh;
     margin: auto;
+    padding: 0;
 }
 
 #roomWrapper {
@@ -118,6 +132,61 @@ button#backToMainMenu {
     overflow: hidden;
 }
 
+/* EQUIPMENT MENU */
+
+#equipHolder {
+    height: 80%;
+    overflow: auto;
+}
+
+#equipBottom {
+    height: 20%;
+}
+
+#equipHolder img {
+    aspect-ratio: 1/1;
+    display: inline-block;
+    float: left;
+    min-height: 50px;
+    height: 7.5vh;
+    margin: 4px;
+    overflow: auto;
+}
+
+#equipHolder img:hover {
+    background-color: rgb(50,50,50);
+}
+
+#equipHolder div {
+    width: fit-content;
+    margin: auto;
+}
+
+#equipmentDiv h3, h4 {
+    color: white;
+    display: block;
+    text-align: center;
+    min-height: 24px;
+    margin: 0;
+    padding: 16px;
+}
+
+#returnToGame, #viewEquip {
+    background-color: transparent;
+    border: 1px solid white;
+    color: white;
+    display: block;
+    margin: 4px auto;
+    outline: none;
+    padding: 6px;
+    width: 30%;
+}
+
+#returnToGame:hover, #viewEquip:hover {
+    padding: 5px;
+    border: 2px solid white;
+}
+
 /* ROOMS */
 
 .doorDiv {
@@ -138,19 +207,6 @@ button#backToMainMenu {
     height: 100%;
     width: 100%;
     object-fit: cover;
-}
-
-div button:not(#mainMenu button, #helpOverview button) {
-    background-color: transparent;
-    border: 2px solid transparent;
-    color: white;
-    width: 100%;
-    height: 100%;
-    outline: none;
-}
-
-div button:not(#mainMenu button, #helpOverview button):hover {
-    border: 2px solid white;
 }
 
 div#howToPlay h2 {
