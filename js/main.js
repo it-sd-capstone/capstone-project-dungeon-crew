@@ -424,9 +424,6 @@ function initRoom(firstRoom = false) {
 // dungeon initialization
 let dungeon = new Dungeon(generateRooms(1),1,0);
 
-// player initialization
-let player = new Player(25,25,5,0,25,[],[], 0);
-
 // initialize room
 initRoom(true);
 
@@ -444,7 +441,6 @@ $(".doorDiv button").on("click", () => {
                 initRoom(false)
         }
         */
-    });
     });
 
 $("#viewEquip").on("click", ()=>{
