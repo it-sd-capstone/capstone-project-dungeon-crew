@@ -6,10 +6,14 @@ export function rmHideAllRooms() {
     let itemRoom = $("#itemRoom");
     let monsterRoom = $("#monsterRoom");
     let bossRoom = $("#bossRoom");
+    let helpDiv = $("#howToPlay");
+    let equipDiv = $("#equipmentDiv");
     shopRoom.addClass("hide");
     itemRoom.addClass("hide");
     monsterRoom.addClass("hide");
     bossRoom.addClass("hide");
+    helpDiv.addClass("hide");
+    equipDiv.addClass("hide");
 }
 export function rmBuildRoom(room) {
     rmHideAllRooms();
@@ -295,6 +299,117 @@ export function rmBuildMap(dungeon) {
         mapRemaining.text("");
     }
 }
+
+/*
+updateUI() {
+        // Update player's stats
+        document.getElementById("health").value = `${this.player.health}`;
+        document.getElementById("attack").value = `${this.player.attack}`;
+        document.getElementById("defense").value = `${this.player.defense}`;
+        document.getElementById("gold").value = `${this.player.gold}`;
+        // (document.getElementById("score") as HTMLInputElement).value = `${this.player.score}`;   Don't have score built out yet !!!!!!!!!!!!
+        // Update enemies' statuses in Monster room
+        this.enemies.forEach((enemy, index) => {
+            const monsterText = document.getElementById(`monster${index + 1}Text`);
+            if (monsterText) {
+                monsterText.textContent = `${enemy.name} - Health: ${enemy.health}`;
+            }
+        });
+        this.onUpdate(this.player, this.enemies);
+    }
+    updateInventoryUI() {
+        const inventoryList = document.querySelectorAll('#inventory button');
+
+        inventoryList.forEach((button, index) => {
+            const img = button.querySelector('img');
+
+            if (this.player.inventory[index]) {
+                const item = this.player.inventory[index];
+
+                // Update image and alt text for item
+                img.src = item.sprite;
+                img.alt = item.name;
+
+                // Attach click event to each item slot
+                button.onclick = () => this.useItem(index);
+                button.disabled = false; // Ensure button is clickable
+            } else {
+                // Clear empty slots (if inventory has less than 8 items)
+                img.src = "#";  // Set an empty img
+                img.alt = "Empty"
+                button.onclick = null;  // Disable click event
+                button.disabled = true; // Disable button
+            }
+        });
+    }
+ */
+export function rmBuildStats(player) {
+    // Update player's stats
+    $("#healthVal").text(player.health);
+    $("#maxHealthVal").text(player.maxHealth);
+    $("#attackVal").text(player.attack);
+    $("#defenseVal").text(player.defense);
+    $("#goldVal").text(player.gold);
+    // $("#scoreVal").text(player.score);   Don't have score built out yet !!!!!!!!!!!!
+}
+
+export function rmBuildInventory(player) {
+    const inventoryList = $(".invItem");
+    const inventoryImgList = $(".invItem img");
+
+    for (let i = 0; i < inventoryList.length; i++) {
+        if (i < player.inventory.length) {
+            inventoryList.eq(i).removeClass("hide");
+
+            // Update image and alt text for item
+            inventoryImgList.eq(i).attr("src",player.inventory[i].sprite);
+            inventoryImgList.eq(i).attr("alt",player.inventory[i].name);
+        } else {
+            inventoryList.eq(i).addClass("hide");
+        }
+    }
+}
+
+export function rmBuildEquip(player) {
+    $("#gameWrapper").addClass("hide");
+
+    let equipDiv = $("#equipmentDiv");
+    let equipHolder = $("#equipHolder div");
+    let equipText = $("#equipName");
+
+    equipDiv.removeClass("hide");
+
+    // remove all preexisting items
+    $("#equipHolder img").remove();
+
+    // rebuild all current items
+    /*player.equipped.forEach((value,index)=>{
+        let sprite = value.sprite;
+        let name = value.name;
+        equipHolder.append(`<img src="${sprite}" alt="${name}">`).on("mouseenter",()=>{
+            equipText.text(value.name);
+        }).on("mouseleave",()=>{
+            equipText.text("");
+        });
+    })*/
+
+    for (let i = 0; i < player.equipped.length; i++) {
+        let sprite = player.equipped[i].sprite;
+        let name = player.equipped[i].name;
+
+        equipHolder.append(`<img src="${sprite}" alt="${name}" class="equipItem${i}">`);
+
+        $(`.equipItem${i}`).on("mouseenter",()=>{
+            equipText.text(name);
+        }).on("mouseleave",()=>{
+            equipText.text("");
+        });
+    }
+}
+
+
+
+// TEST FUNCTIONS
 export function rmBuildSampleMonster() {
     let testSlime = new Monster(5, 5, 1, 1, "Test Slime", "img/monsters/crime-slime.gif");
     let monstRoom = new MonsterRoom("monster", [testSlime, testSlime, testSlime], false);

@@ -4,7 +4,7 @@ import {
     rmBuildSampleItem,
     rmBuildSampleShop,
     rmBuildSampleBoss,
-    rmBuildRoom, rmBuildMap
+    rmBuildRoom, rmBuildMap, rmBuildInventory, rmBuildStats, rmBuildEquip
 } from "./roommanager.js";
 import { Room, BossRoom, ShopRoom, ItemRoom, MonsterRoom, Boss, BaseItem, Monster, Creature, Dungeon, Player, Equipment, Consumable } from "./classes.js";
 import {ItemFactory, ItemType} from './item-factory.js';
@@ -137,6 +137,8 @@ function initRoom(firstRoom = false) {
 
     rmBuildRoom(dungeon.getCurrentRoom);
     rmBuildMap(dungeon);
+    rmBuildStats(player);
+    rmBuildInventory(player);
 
     switch (dungeon.getCurrentRoom.getType) { // room type initialization
         case "monster":
@@ -200,13 +202,17 @@ function initRoom(firstRoom = false) {
                         player.addToEquipment = takeItem;
                         dungeon.getCurrentRoom.taken = true;
                         updateStatusBar("You took the "+takeItem.name+"!");
+
                         rmBuildRoom(dungeon.getCurrentRoom);
+                        rmBuildInventory(player);
                     } else if (takeItem instanceof Consumable) {
                         if (player.inventory.length < 8) { //has room
                             player.addToInventory = takeItem;
                             dungeon.getCurrentRoom.taken = true;
                             updateStatusBar("You took the "+takeItem.name+"!");
+
                             rmBuildRoom(dungeon.getCurrentRoom);
+                            rmBuildInventory(player);
                         } else { //no room
                             updateStatusBar("You have no room in your inventory!");
                         }
@@ -246,14 +252,20 @@ function initRoom(firstRoom = false) {
                         player.gold -= shopItem1.value;
                         delete dungeon.getCurrentRoom.forSale[0];
                         updateStatusBar("You bought the "+shopItem1.name+"!");
+
                         rmBuildRoom(dungeon.getCurrentRoom);
+                        rmBuildStats(player);
+                        rmBuildInventory(player);
                     } else if (shopItem1 instanceof Consumable) {
                         if (player.inventory.length < 8) { //has room
                             player.addToInventory = shopItem1;
                             player.gold -= shopItem1.value;
                             delete dungeon.getCurrentRoom.forSale[0];
                             updateStatusBar("You bought the "+shopItem1.name+"!");
+
                             rmBuildRoom(dungeon.getCurrentRoom);
+                            rmBuildStats(player);
+                            rmBuildInventory(player);
                         } else { //no room
                             updateStatusBar("You have no room in your inventory!");
                         }
@@ -277,14 +289,20 @@ function initRoom(firstRoom = false) {
                         player.gold -= shopItem2.value;
                         delete dungeon.getCurrentRoom.forSale[1];
                         updateStatusBar("You bought the "+shopItem2.name+"!");
+
                         rmBuildRoom(dungeon.getCurrentRoom);
+                        rmBuildStats(player);
+                        rmBuildInventory(player);
                     } else if (shopItem2 instanceof Consumable) {
                         if (player.inventory.length < 8) { //has room
                             player.addToInventory = shopItem2;
                             player.gold -= shopItem2.value;
                             delete dungeon.getCurrentRoom.forSale[1];
                             updateStatusBar("You bought the "+shopItem2.name+"!");
+
                             rmBuildRoom(dungeon.getCurrentRoom);
+                            rmBuildStats(player);
+                            rmBuildInventory(player);
                         } else { //no room
                             updateStatusBar("You have no room in your inventory!");
                         }
@@ -308,14 +326,20 @@ function initRoom(firstRoom = false) {
                         player.gold -= shopItem3.value;
                         delete dungeon.getCurrentRoom.forSale[2];
                         updateStatusBar("You bought the "+shopItem3.name+"!");
+
                         rmBuildRoom(dungeon.getCurrentRoom);
+                        rmBuildStats(player);
+                        rmBuildInventory(player);
                     } else if (shopItem3 instanceof Consumable) {
                         if (player.inventory.length < 8) { //has room
                             player.addToInventory = shopItem3;
                             player.gold -= shopItem3.value;
                             delete dungeon.getCurrentRoom.forSale[2];
                             updateStatusBar("You bought the "+shopItem3.name+"!");
+
                             rmBuildRoom(dungeon.getCurrentRoom);
+                            rmBuildStats(player);
+                            rmBuildInventory(player);
                         } else { //no room
                             updateStatusBar("You have no room in your inventory!");
                         }
@@ -339,14 +363,20 @@ function initRoom(firstRoom = false) {
                         player.gold -= shopItem4.value;
                         delete dungeon.getCurrentRoom.forSale[3];
                         updateStatusBar("You bought the "+shopItem4.name+"!");
+
                         rmBuildRoom(dungeon.getCurrentRoom);
+                        rmBuildStats(player);
+                        rmBuildInventory(player);
                     } else if (shopItem4 instanceof Consumable) {
                         if (player.inventory.length < 8) { //has room
                             player.addToInventory = shopItem4;
                             player.gold -= shopItem4.value;
                             delete dungeon.getCurrentRoom.forSale[3];
                             updateStatusBar("You bought the "+shopItem4.name+"!");
+
                             rmBuildRoom(dungeon.getCurrentRoom);
+                            rmBuildStats(player);
+                            rmBuildInventory(player);
                         } else { //no room
                             updateStatusBar("You have no room in your inventory!");
                         }
@@ -370,6 +400,7 @@ function initRoom(firstRoom = false) {
                         updateStatusBar("\"There, good as new!\"");
                         player.gold-=doctorCost;
                         player.healFull();
+                        rmBuildStats(player);
                     } else {
                         updateStatusBar("\"Sorry kid, I don't work for free.\"");
                     }
@@ -392,6 +423,11 @@ function initRoom(firstRoom = false) {
 
 // dungeon initialization
 let dungeon = new Dungeon(generateRooms(1),1,0);
+
+// player initialization
+let player = new Player(25,25,5,0,25,[],[], 0);
+
+// initialize room
 initRoom(true);
 
 // go to next room
@@ -409,3 +445,13 @@ $(".doorDiv button").on("click", () => {
         }
         */
     });
+    });
+
+$("#viewEquip").on("click", ()=>{
+    rmBuildEquip(player);
+});
+
+$("#returnToGame").on("click", ()=>{
+    $("#gameWrapper").removeClass("hide");
+    $("#equipmentDiv").addClass("hide");
+});
