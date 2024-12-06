@@ -429,7 +429,7 @@ initRoom(true);
 $(".doorDiv button").on("click", () => {
     initRoom(false)
     
-    
+    /* USE THIS CODE INSTEAD ONCE BATTLE SYSTEM IS FUNCTIONAL
     if (dungeon.getCurrentRoom.type === "monster" || dungeon.getCurrentRoom.type === "boss") {
         if (dungeon.getCurrentRoom.isCleared()) {
             initRoom(false)
@@ -437,7 +437,7 @@ $(".doorDiv button").on("click", () => {
             } else {
                 initRoom(false)
         }
-        
+        */
     });
 
 $("#viewEquip").on("click", ()=>{
