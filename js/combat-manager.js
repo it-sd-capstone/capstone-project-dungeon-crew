@@ -1,11 +1,13 @@
 import { Monster, Boss, Dungeon } from "./classes.js";
 import { ItemType } from "./item-factory.js";
 export class CombatManager {
-    constructor(player, enemies, onUpdate) {
+    constructor(player, []) {
         this.player = player;
         this.enemies = enemies;
         this.turn = "player";
-        this.onUpdate = onUpdate;
+    }
+    setEnemies() {
+        this.enemies = this.enemies;
     }
     startCombat() {
         this.updateUI();
@@ -51,11 +53,14 @@ export class CombatManager {
         
         target.health -= damage;
         this.updateStatusBar(`You attacked ${target.name} for ${damage} damage.`);
-
+        
         this.updateUI();
         this.checkCombatEnd();
-        this.turn = "enemies";
-        this.nextTurn();
+
+        if (!this.isCombatOver) {
+            this.turn = "enemies";
+            this.nextTurn();
+        }
     }
     enemyAttack() {
         this.enemies.forEach(enemy => {
@@ -146,7 +151,6 @@ export class CombatManager {
                 monsterText.textContent = `${enemy.name} - Health: ${enemy.health}`;
             }
         });
-        this.onUpdate(this.player, this.enemies);
     }
     updateInventoryUI() {
         const inventoryList = document.querySelectorAll('#inventory button');

@@ -152,6 +152,11 @@ export class Room {
     get getType() {
         return this.type;
     }
+    removeMonster() {
+        if (this.monsters[index]) {
+            this.monsters.splice(index, 1);
+        }
+    }
 }
 export class ShopRoom extends Room {
     constructor(type, forSale) {
