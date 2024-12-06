@@ -161,11 +161,6 @@ function initRoom(firstRoom = false) {
                     console.log("Clicked index: " + index); // Debugging purpose
                     if (targetMonster.health > 0) {
                         combatManager.playerAttack(index);
-                        if (targetMonster.health <= 0) {
-                            // Monster defeated
-                            $(button).closest(".enemyDiv").css("display", "none");
-                            rmBuildRoom(dungeon.getCurrentRoom)
-                        }
                     }
                 });
             });
