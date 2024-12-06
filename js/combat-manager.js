@@ -52,12 +52,14 @@ export class CombatManager {
         }
         
         target.health -= damage;
+        console.log(`You attacked ${target.name} for ${damage} damage.`); // Debugging purpose
         updateStatusBar(`You attacked ${target.name} for ${damage} damage.`);
         
         this.updateUI();
         this.checkCombatEnd();
 
         if (!this.isCombatOver) {
+            console.log("Inside of isCombatOver if statement"); // Debugging purpose
             this.turn = "enemies";
             this.nextTurn();
         }
@@ -67,6 +69,7 @@ export class CombatManager {
             if (enemy.health > 0) {
                 const damage = Math.max(0, enemy.attack - this.player.defense);
                 this.player.health -= damage;
+                console.log(`${enemy.name} attacked you for ${damage} damage.`); // Debugging purpose
                 updateStatusBar(`${enemy.name} attacked you for ${damage} damage.`);
                 // Check if player is defeated
                 if (this.player.health <= 0) {
@@ -118,7 +121,7 @@ export class CombatManager {
             return;
         }
         else if (playerDefeated) {
-            updateStatusBar(`You were defeated!`);
+            alert(`You were defeated!`);
             // Death logic !!!!!!!!!!!!!!
             return;
         }
@@ -143,6 +146,7 @@ export class CombatManager {
         document.getElementById("goldVal").value = `${this.player.gold}`;
         document.getElementById("attackVal").value = `${this.player.attack}`;
         document.getElementById("defenseVal").value = `${this.player.defense}`;
+        console.log("Inside of updateUI after stat changes"); // Debugging purpose
         // (document.getElementById("scoreVal") as HTMLInputElement).value = `${this.player.score}`;   Don't have score built out yet !!!!!!!!!!!!
         // Update enemies' statuses in Monster room
         this.enemies.forEach((enemy, index) => {

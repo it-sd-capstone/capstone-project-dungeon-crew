@@ -144,6 +144,7 @@ function initRoom(firstRoom = false) {
         case "monster":
             if (dungeon.getCurrentRoom instanceof MonsterRoom) {
                 let monsters = dungeon.getCurrentRoom.getMonsters;
+                console.log("Current room monsters: " + monsters); // Debugging purpose
 
                 combatManager.setEnemies(monsters);
 
@@ -157,7 +158,7 @@ function initRoom(firstRoom = false) {
             monsterButtons.forEach((button, index) => {
                 $(button).on("click", () => {
                     const targetMonster = combatManager.enemies[index];
-
+                    console.log("Clicked index: " + index); // Debugging purpose
                     if (targetMonster.health > 0) {
                         combatManager.playerAttack(index);
                         if (targetMonster.health <= 0) {
