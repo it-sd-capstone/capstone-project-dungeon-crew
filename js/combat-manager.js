@@ -14,14 +14,6 @@ export class CombatManager {
         updateStatusBar(`Combat started! It's your turn.`);
         this.nextTurn();
     }
-    handleCombat(monster) {
-        const targetIndex = this.enemies.findIndex(enemy => enemy === monster);
-        if (this.turn === "player") {
-            this.playerAttack(targetIndex)
-        } else {
-            this.enemyAttack();
-        }
-    }
     nextTurn() {
         if (this.turn === "player") {
             updateStatusBar(`It's your turn! Choose and action.`);
@@ -30,16 +22,6 @@ export class CombatManager {
             this.enemyAttack();
         }
 
-        this.updateUI();
-    }
-    resolveTurn(action, target, itemEffect) {
-        if (action === "attack" && (target instanceof Monster || target instanceof Boss)) {
-            const damage = this.player.attack - target.defense;
-            target.health -= Math.max(damage, 0); // Ensure damage isn't negative
-        }
-        else if (action === "useItem" && itemEffect) {
-            itemEffect();
-        }
         this.updateUI();
     }
     playerAttack(targetIndex) {
@@ -146,7 +128,6 @@ export class CombatManager {
         document.getElementById("goldVal").value = `${this.player.gold}`;
         document.getElementById("attackVal").value = `${this.player.attack}`;
         document.getElementById("defenseVal").value = `${this.player.defense}`;
-        console.log("Inside of updateUI after stat changes"); // Debugging purpose
         // (document.getElementById("scoreVal") as HTMLInputElement).value = `${this.player.score}`;   Don't have score built out yet !!!!!!!!!!!!
         // Update enemies' statuses in Monster room
         this.enemies.forEach((enemy, index) => {
@@ -180,13 +161,6 @@ export class CombatManager {
                 button.disabled = true; // Disable button
             }
         });
-    }
-    // So it can be used in this class
-    updateStatusBar(message) {
-        const statusBar = document.getElementById("statusBarText");
-        if (statusBar) {
-            statusBar.innerHTML = message;
-        }
     }
 }
 

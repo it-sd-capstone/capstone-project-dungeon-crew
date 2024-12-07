@@ -143,7 +143,7 @@ function initRoom(firstRoom = false) {
         case "monster":
             if (dungeon.getCurrentRoom instanceof MonsterRoom) {
                 let monsters = dungeon.getCurrentRoom.getMonsters;
-                console.log("Current room monsters: " + monsters); // Debugging purpose
+                console.log("Current room monsters: " + JSON.stringify(monsters, null, 2)); // Debugging purpose
 
                 combatManager.setEnemies(monsters);
 
@@ -152,6 +152,11 @@ function initRoom(firstRoom = false) {
             }
 
             let monsterButtons = $(".enemyDiv button").toArray();
+
+            // Remove old event listeners
+            monsterButtons.forEach((button) => {
+                $(button).off("click");
+            });
 
             // Attach event listeners to monsters
             monsterButtons.forEach((button, index) => {
@@ -409,7 +414,47 @@ function initRoom(firstRoom = false) {
             });
             break;
         case "boss":
-            
+            if (dungeon.getCurrentRoom instanceof BossRoom) {
+                let monsters = dungeon.getCurrentRoom.getBoss;
+                console.log("Current room monsters: " + JSON.stringify(monsters, null, 2)); // Debugging purpose
+
+                combatManager.setEnemies(monsters);
+
+                // Start combat
+                combatManager.startCombat();
+            }
+
+            monsterButtons = $(".bossEnemyDiv button").toArray();
+
+            // Remove old event listeners
+            monsterButtons.forEach((button, index) => {
+                $(button).off("click");
+            });
+
+            // Attach event listeners to monsters
+            monsterButtons.forEach((button) => {
+                $(button).on("click", () => {
+                    const targetMonster = combatManager.enemies[index];
+                    console.log("Clicked index: " + index); // Debugging purpose
+                    if (targetMonster.health > 0) {
+                        combatManager.playerAttack(index);
+                    }
+                    rmBuildRoom(dungeon.getCurrentRoom); // update room
+                });
+            });
+
+            // Monitor combat status
+            combatCheckInterval = setInterval(() => {
+                if (combatManager.isCombatOver()) {
+                    clearInterval(combatCheckInterval);
+                    if (dungeon.getCurrentRoom.isCleared()) {
+                        rmBuildRoom(dungeon.getCurrentRoom);
+                    }
+                } else if (combatManager.turn === "enemies") {
+                    combatManager.enemyAttack();
+                }
+            }, 100); // Check every 100ms
+
             break;
     }
 }
