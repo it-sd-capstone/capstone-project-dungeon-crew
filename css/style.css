@@ -143,14 +143,14 @@ button#backToMainMenu {
     height: 20%;
 }
 
-#equipHolder img {
+#equipHolder .itemHoldDiv {
     aspect-ratio: 1/1;
     display: inline-block;
     float: left;
     min-height: 50px;
     height: 7.5vh;
     margin: 4px;
-    overflow: auto;
+    overflow: visible;
 }
 
 #equipHolder img:hover {

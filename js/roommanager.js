@@ -380,7 +380,7 @@ export function rmBuildEquip(player) {
     equipDiv.removeClass("hide");
 
     // remove all preexisting items
-    $("#equipHolder img").remove();
+    $("#equipHolder .itemHoldDiv").remove();
 
     // rebuild all current items
     /*player.equipped.forEach((value,index)=>{
@@ -397,7 +397,7 @@ export function rmBuildEquip(player) {
         let sprite = player.equipped[i].sprite;
         let name = player.equipped[i].name;
 
-        equipHolder.append(`<img src="${sprite}" alt="${name}" class="equipItem${i}">`);
+        equipHolder.append(`<div class="itemHoldDiv"><img src="${sprite}" alt="${name}" class="equipItem${i} imgFill"></div>`);
 
         $(`.equipItem${i}`).on("mouseenter",()=>{
             equipText.text(name);

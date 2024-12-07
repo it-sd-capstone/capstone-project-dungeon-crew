@@ -16,7 +16,7 @@ export class ItemFactory {
         return new Equipment(
           ItemType.RustyDagger,             // Name
           10,                               // Value
-          "../img/items/rusty-dagger.png",  // Sprite
+          "img/items/rusty-dagger.png",  // Sprite
           2,                                // Attack Mod
           0,                                // Defense Mod
           0,                                // Health Mod
@@ -28,7 +28,7 @@ export class ItemFactory {
         return new Equipment(
           ItemType.Whip,                    // Name
           15,                               // Value
-          "../img/items/whip.png",          // Sprite
+          "img/items/whip.png",          // Sprite
           1,                                // Attack Mod
           0,                                // Defense Mod
           0,                                // Health Mod
@@ -42,7 +42,7 @@ export class ItemFactory {
         return new Equipment(
           ItemType.Bow,                     // Name
           25,                               // Value
-          "../img/items/bow.png",           // Sprite
+          "img/items/bow.png",           // Sprite
           2,                                // Attack Mod
           0,                                // Defense Mod
           0,                                // Health Mod
@@ -59,7 +59,7 @@ export class ItemFactory {
         return new Equipment(
           ItemType.RabbitsFoot,             // Name
           15,                               // Value
-          "../img/items/rabbits-foot.png",  // Sprite
+          "img/items/rabbits-foot.png",  // Sprite
           0,                                // Attack Mod
           0,                                // Defense Mod
           0,                                // Health Mod
@@ -75,7 +75,7 @@ export class ItemFactory {
         return new Equipment(
           ItemType.SturdyBoots,             // Name
           15,                               // Value
-          "../img/items/sturdy-boots.png",  // Sprite
+          "img/items/sturdy-boots.png",  // Sprite
           0,                                // Attack Mod
           2,                                // Defense Mod
           0,                                // Health Mod
@@ -87,7 +87,7 @@ export class ItemFactory {
         return new Equipment(
           ItemType.Shield,                  // Name
           20,                               // Value
-          "../img/items/shield.png",        // Sprite
+          "img/items/shield.png",        // Sprite
           0,                                // Attack Mod
           4,                                // Defense Mod
           0,                                // Health Mod

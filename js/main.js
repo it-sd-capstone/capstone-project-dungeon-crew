@@ -31,7 +31,6 @@ function generateRooms(difficulty) {
 
 
     // !! TODO add more items to pools once implemented. !!
-    let testConsume = new Consumable("Test Potion",10,"../img/items/placeholder.png",() => {})
 
     let shopEquipPool = [
         ItemType.Bow,

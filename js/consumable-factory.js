@@ -19,7 +19,7 @@ export class ConsumableFactory {
                 return new Consumable(
                     ConsumableType.LesserHealingPotion, // Name
                     10, // Value
-                    "../img/consumables/lesser-healing-potion.png", // Sprite
+                    "img/items/lesser-healing-potion.png", // Sprite
                     0, // Attack Mod
                     0, // Defense Mod
                     0, // Health Mod
@@ -36,7 +36,7 @@ export class ConsumableFactory {
                 return new Consumable(
                     ConsumableType.GreaterHealingPotion, // Name
                     15, // Value
-                    "../img/consumables/greater-healing-potion.png", // Sprite
+                    "img/items/greater-healing-potion.png", // Sprite
                     0, // Attack Mod
                     0, // Defense Mod
                     0, // Health Mod
@@ -49,7 +49,7 @@ export class ConsumableFactory {
                 return new Consumable(
                     ConsumableType.BlizzardScroll, // Name
                     25, // Value
-                    "../img/consumables/blizzard-scroll.png", // Sprite
+                    "img/items/blizzard-scroll.png", // Sprite
                     0, // Attack Mod
                     0, // Defense Mod
                     0, // Health Mod
@@ -64,7 +64,7 @@ export class ConsumableFactory {
                 return new Consumable(
                     ConsumableType.FireballScroll, // Name
                     15, // Value
-                    "../img/consumables/fireball-scroll.png", // Sprite
+                    "img/items/fireball-scroll.png", // Sprite
                     0, // Attack Mod
                     0, // Defense Mod
                     0, // Health Mod
@@ -77,7 +77,7 @@ export class ConsumableFactory {
                 return new Consumable(
                     ConsumableType.Bomb, // Name
                     15, // Value
-                    "../img/consumables/bomb.png", // Sprite
+                    "img/items/bomb.png", // Sprite
                     0, // Attack Mod
                     0, // Defense Mod
                     0, // Health Mod
@@ -92,7 +92,7 @@ export class ConsumableFactory {
                 return new Consumable(
                     ConsumableType.SuperiorHealingPotion, // Name
                     20, // Value
-                    "../img/consumables/superior-healing-potion.png", // Sprite
+                    "img/items/superior-healing-potion.png", // Sprite
                     0, // Attack Mod
                     0, // Defense Mod
                     0, // Health Mod
