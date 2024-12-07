@@ -6,8 +6,8 @@ export class CombatManager {
         this.enemies = enemies;
         this.turn = "player";
     }
-    setEnemies() {
-        this.enemies = this.enemies;
+    setEnemies(enemies) {
+        this.enemies = enemies;
     }
     startCombat() {
         this.updateUI();

@@ -162,6 +162,7 @@ function initRoom(firstRoom = false) {
                     if (targetMonster.health > 0) {
                         combatManager.playerAttack(index);
                     }
+                    rmBuildRoom(dungeon.getCurrentRoom); // update room
                 });
             });
 
