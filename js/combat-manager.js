@@ -10,7 +10,6 @@ export class CombatManager {
         this.enemies = enemies;
     }
     startCombat() {
-        this.updateUI();
         updateStatusBar(`Combat started! It's your turn.`);
     }
     nextTurn() {
@@ -20,8 +19,6 @@ export class CombatManager {
         else {
             this.enemyAttack();
         }
-
-        this.updateUI();
     }
     playerAttack(targetIndex) {
         const target = this.enemies[targetIndex];
@@ -35,8 +32,7 @@ export class CombatManager {
         target.health -= damage;
         console.log(`You attacked ${target.name} for ${damage} damage.`); // Debugging purpose
         updateStatusBar(`You attacked ${target.name} for ${damage} damage.`);
-        
-        this.updateUI();
+    
         this.checkCombatEnd();
 
         if (!this.isCombatOver) {
@@ -54,7 +50,6 @@ export class CombatManager {
                 updateStatusBar(`${enemy.name} attacked you for ${damage} damage.`);
                 // Check if player is defeated
                 if (this.player.health <= 0) {
-                    this.updateUI();
                     this.checkCombatEnd();
                     return;
                 }
@@ -71,14 +66,11 @@ export class CombatManager {
         item.applyEffect(this.player);
         this.player.inventory.splice(itemIndex, 1);
         updateStatusBar(`You used ${item.name}.`);
-        this.updateInventoryUI();
-        this.updateUI();
         this.turn = "enemies";
         this.nextTurn();
     }
     applyItemEffect(effect, target) {
         effect(target, this);
-        this.updateUI();
     }
     getRandomEnemies() {
         const aliveEnemies = this.enemies.filter(enemy => enemy.health > 0);
@@ -120,46 +112,6 @@ export class CombatManager {
         });
 
         return totalGold;
-    }
-    updateUI() {
-        // Update player's stats
-        document.getElementById("healthVal").value = `${this.player.health}`;
-        document.getElementById("goldVal").value = `${this.player.gold}`;
-        document.getElementById("attackVal").value = `${this.player.attack}`;
-        document.getElementById("defenseVal").value = `${this.player.defense}`;
-        // (document.getElementById("scoreVal") as HTMLInputElement).value = `${this.player.score}`;   Don't have score built out yet !!!!!!!!!!!!
-        // Update enemies' statuses in Monster room
-        this.enemies.forEach((enemy, index) => {
-            const monsterText = document.getElementById(`monster${index + 1}Text`);
-            if (monsterText) {
-                monsterText.textContent = `${enemy.name} - Health: ${enemy.health}`;
-            }
-        });
-    }
-    updateInventoryUI() {
-        const inventoryList = document.querySelectorAll('#inventory button');
-
-        inventoryList.forEach((button, index) => {
-            const img = button.querySelector('img');
-
-            if (this.player.inventory[index]) {
-                const item = this.player.inventory[index];
-                
-                // Update image and alt text for item
-                img.src = item.sprite;
-                img.alt = item.name;
-                
-                // Attach click event to each item slot
-                button.onclick = () => this.useItem(index);
-                button.disabled = false; // Ensure button is clickable
-            } else {
-                // Clear empty slots (if inventory has less than 8 items)
-                img.src = "#";  // Set an empty img
-                img.alt = "Empty"
-                button.onclick = null;  // Disable click event
-                button.disabled = true; // Disable button
-            }
-        });
     }
 }
 
