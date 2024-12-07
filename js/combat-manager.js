@@ -13,26 +13,25 @@ export class CombatManager {
         updateStatusBar(`Combat started! It's your turn.`);
     }
     nextTurn() {
-        if (this.turn === "player") {
-            updateStatusBar(`It's your turn!`);
-        }
-        else {
+        if (this.turn === "enemies") {
             this.enemyAttack();
         }
     }
     playerAttack(targetIndex) {
+        // Grab correct target clicked
         const target = this.enemies[targetIndex];
-        const damage = Math.max(0, this.player.attack - target.defense);
 
-        if (target.health <= 0) {
-            updateStatusBar(`${target.name} is already defeated.`);
-            return;
-        }
+        // Calculate damage
+        const damage = Math.max(0, this.player.attack - target.defense);
         
+        // Assign damage to target health
         target.health -= damage;
+
+        // Update status bar to show damage to which enemy
         console.log(`You attacked ${target.name} for ${damage} damage.`); // Debugging purpose
         updateStatusBar(`You attacked ${target.name} for ${damage} damage.`);
     
+        // Check to see if all enemies or player died
         this.checkCombatEnd();
 
         if (!this.isCombatOver) {
@@ -85,22 +84,26 @@ export class CombatManager {
         return allEnemiesDefeated || playerDefeated;
     }
     checkCombatEnd() {
+        // Place all enemies at 0 health check into variable
         const allEnemiesDefeated = this.enemies.every(enemy => enemy.health <= 0);
+
+        // Place player at 0 health check into variable
         const playerDefeated = this.player.health <= 0;
+
+        // If all enemies defeated, award gold the sum of enemies health
         if (allEnemiesDefeated) {
             let goldAward = this.calculateGoldReward();
             updateStatusBar(`You are victorious! You earned ${goldAward} gold.`);
             this.player.gold += goldAward;
             return;
-        }
-        else if (playerDefeated) {
+        } else if (playerDefeated) {            // If player dies give prompt
             alert(`You were defeated!`);
             // Death logic !!!!!!!!!!!!!!
             return;
+        } else {
+            this.turn = "enemies";
         }
-        else {
-            this.nextTurn();
-        }
+        
     }
     calculateGoldReward() {
         let totalGold = 0;
