@@ -19,7 +19,7 @@ export class BossFactory {
                 5 * difficultyMultiplier, // Attack
                 0 * difficultyMultiplier, // Defense
                 BossType.Eyemalgam, // Name
-                "../img/bosses/eyemalgam.gif" // Sprite
+                "img/monsters/eyemalgam.gif" // Sprite
                 );
             case BossType.Slimelord:
                 return new Boss(
@@ -28,7 +28,7 @@ export class BossFactory {
                 7 * difficultyMultiplier, // Attack
                 5 * difficultyMultiplier, // Defense
                 BossType.Slimelord, // Name
-                "../img/bosses/slimelord.gif" // Sprite
+                "img/monsters/slimelord.gif" // Sprite
                 );
             case BossType.Orchestrator:
                 return new Boss(
@@ -37,7 +37,7 @@ export class BossFactory {
                 10 * difficultyMultiplier, // Attack
                 10 * difficultyMultiplier, // Defense
                 BossType.Orchestrator, // Name
-                "../img/bosses/orchestrator.gif" // Sprite
+                "img/monsters/orchestrator.gif" // Sprite
                 );
             case BossType.GrimSleeper:
                 return new Boss(
@@ -46,7 +46,7 @@ export class BossFactory {
                 20 * difficultyMultiplier, // Attack
                 15 * difficultyMultiplier, // Defense
                 BossType.GrimSleeper, // Name
-                "../img/bosses/grimsleeper.gif" // Sprite
+                "img/monsters/grim-sleeper.gif" // Sprite
                 );
             case BossType.SoulFeaster:
                 return new Boss(
@@ -55,7 +55,7 @@ export class BossFactory {
                 30 * difficultyMultiplier, // Attack
                 30 * difficultyMultiplier, // Defense
                 BossType.SoulFeaster, // Name
-                "../img/bosses/soulfeaster.gif" // Sprite
+                "img/monsters/soul-feaster.gif" // Sprite
                 );
             default:
                 throw new Error(`Unknown boss type: ${type}`);
