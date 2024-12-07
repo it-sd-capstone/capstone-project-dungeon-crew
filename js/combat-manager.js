@@ -12,11 +12,10 @@ export class CombatManager {
     startCombat() {
         this.updateUI();
         updateStatusBar(`Combat started! It's your turn.`);
-        this.nextTurn();
     }
     nextTurn() {
         if (this.turn === "player") {
-            updateStatusBar(`It's your turn! Choose and action.`);
+            updateStatusBar(`It's your turn!`);
         }
         else {
             this.enemyAttack();
