@@ -5,12 +5,35 @@ export class CombatManager {
         this.player = player;
         this.enemies = enemies;
         this.turn = "player";
+        this.isCombatActive = false;
+        this.combatInterval = null;
     }
     setEnemies(enemies) {
         this.enemies = enemies;
     }
-    startCombat() {
+    startCombat(updateRoom, updateStats, updateInventory) {
+        this.isCombatActive = true;
         updateStatusBar(`Combat started! It's your turn.`);
+        this.startCombatLoop(updateRoom, updateStats, updateInventory);
+    }
+    startCombatLoop(updateRoom, updateStats, updateInventory) {
+        this.combatInterval = setInterval(() => {
+            if (this.turn === "player") {
+                // Wait for player input via main.js
+                console.log("Player's turn: " + this.turn);
+            } else if (this.turn === "enemies") {
+                this.enemyAttack();
+
+                updateRoom();
+                updateStats();
+                updateInventory();
+            }
+
+            // Check combat end after each turn
+            if (this.isCombatOver()) {
+                this.endCombat();
+            }
+        }, 1700);
     }
     nextTurn() {
         if (this.turn === "enemies") {
@@ -18,8 +41,18 @@ export class CombatManager {
         }
     }
     playerAttack(targetIndex) {
+        // Make sure playerAttack() is only triggered if it's player's turn and combat is active
+        if (this.turn !== "player" || !this.isCombatActive) {
+            return;
+        }
+
         // Grab correct target clicked
         const target = this.enemies[targetIndex];
+
+        // Make sure target is valid
+        if (!target) {
+            return;
+        }
 
         // Calculate damage
         const damage = Math.max(0, this.player.attack - target.defense);
@@ -34,39 +67,57 @@ export class CombatManager {
         // Check to see if all enemies or player died
         this.checkCombatEnd();
 
-        if (!this.isCombatOver) {
+        console.log(this.isCombatOver());
+        console.log(this.isCombatActive);
+        if (this.isCombatOver) {
+            console.log(this.isCombatOver());
+            console.log(this.isCombatActive);
             console.log("Inside of isCombatOver if statement"); // Debugging purpose
             this.turn = "enemies";
-            this.nextTurn();
+            // this.nextTurn();
         }
     }
     enemyAttack() {
+        // Make sure combat is active
+        if (!this.isCombatActive) {
+            return;
+        }
+
+        // Have each enemy attack player
         this.enemies.forEach(enemy => {
             if (enemy.health > 0) {
-                const damage = Math.max(0, enemy.attack - this.player.defense);
-                this.player.health -= damage;
-                console.log(`${enemy.name} attacked you for ${damage} damage.`); // Debugging purpose
-                updateStatusBar(`${enemy.name} attacked you for ${damage} damage.`);
-                // Check if player is defeated
-                if (this.player.health <= 0) {
-                    this.checkCombatEnd();
-                    return;
-                }
+                // const damage = Math.max(0, enemy.attack - this.player.defense);
+
+                this.player.takeDamage(enemy);
             }
         });
+
+        // Check to see if all enemies or player died
         this.checkCombatEnd();
+
         if (!this.isCombatOver()) {
             this.turn = "player";
-            this.nextTurn();
+            // this.nextTurn();
         }
     }
     useItem(itemIndex) {
+        // Make sure it's the players turn and combat is active
+        if (this.turn !== "player" || !this.isCombatActive) {
+            return;
+        }
+
+        // Grab correct item clicked
         const item = this.player.inventory[itemIndex];
+
+        // Apply the item effect
         item.applyEffect(this.player);
+
+        // Remove item from inventory
         this.player.inventory.splice(itemIndex, 1);
         updateStatusBar(`You used ${item.name}.`);
+
         this.turn = "enemies";
-        this.nextTurn();
+        // this.nextTurn();
     }
     applyItemEffect(effect, target) {
         effect(target, this);
@@ -79,35 +130,68 @@ export class CombatManager {
         return aliveEnemies[Math.floor(Math.random() * aliveEnemies.length)];
     }
     isCombatOver() {
+        // Check if all enemies health is 0
         const allEnemiesDefeated = this.enemies.every(enemy => enemy.health <= 0);
+
+        // Check if player's health is 0
         const playerDefeated = this.player.health <= 0;
+
         return allEnemiesDefeated || playerDefeated;
     }
     checkCombatEnd() {
-        // Place all enemies at 0 health check into variable
-        const allEnemiesDefeated = this.enemies.every(enemy => enemy.health <= 0);
+        if (this.isCombatOver()) {
+            this.endCombat();
+        }
+    }
+    endCombat() {
+        // Set isCombatActive false and clear combatInterval
+        this.isCombatActive = false;
+        clearInterval(this.combatInterval);
 
-        // Place player at 0 health check into variable
+        // Make variables for check if all enemies and player have 0 health
+        const allEnemiesDefeated = this.enemies.every(enemy => enemy.health <= 0);
         const playerDefeated = this.player.health <= 0;
 
-        // If all enemies defeated, award gold the sum of enemies health
         if (allEnemiesDefeated) {
-            let goldAward = this.calculateGoldReward();
-            updateStatusBar(`You are victorious! You earned ${goldAward} gold.`);
+            const goldAward = this.calculateGoldReward();
+            
+            updateStatusBar(`You are victorious! You earned ${goldAward} gold.`)
             this.player.gold += goldAward;
-            return;
-        } else if (playerDefeated) {            // If player dies give prompt
-            alert(`You were defeated!`);
-            // Death logic !!!!!!!!!!!!!!
-            return;
-        } else {
-            this.turn = "enemies";
+        } else if (playerDefeated) {
+            this.player.health = 0;
+            updateStatusBar(`You were defeated!`);
+            alert("Game over!");
         }
-        
+
     }
+    // checkCombatEnd() {
+    //     // Place all enemies at 0 health check into variable
+    //     const allEnemiesDefeated = this.enemies.every(enemy => enemy.health <= 0);
+
+    //     // Place player at 0 health check into variable
+    //     const playerDefeated = this.player.health <= 0;
+
+    //     // If all enemies defeated, award gold the sum of enemies health
+    //     if (allEnemiesDefeated) {
+    //         let goldAward = this.calculateGoldReward();
+    //         updateStatusBar(`You are victorious! You earned ${goldAward} gold.`);
+    //         this.player.gold += goldAward;
+    //         return;
+    //     } else if (playerDefeated) {            // If player dies give prompt
+    //         // this.player.health = 0;
+    //         alert(`You were defeated!`);
+    //         // Death logic !!!!!!!!!!!!!!
+    //         return;
+    //     } else {
+    //         this.turn = "enemies";
+    //     }
+        
+    // }
+    
     calculateGoldReward() {
         let totalGold = 0;
 
+        // Add up total of each monster's health for gold award
         this.enemies.forEach((enemy) => {
             if (enemy.health <= 0) {
                 totalGold += enemy.maxHealth;

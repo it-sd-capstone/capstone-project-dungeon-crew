@@ -148,7 +148,11 @@ function initRoom(firstRoom = false) {
                 combatManager.setEnemies(monsters);
 
                 // Start combat
-                combatManager.startCombat();
+                combatManager.startCombat(
+                    () => rmBuildRoom(dungeon.getCurrentRoom),
+                    () => rmBuildStats(player),
+                    () => rmBuildInventory(player)
+                );
             }
 
             let monsterButtons = $(".enemyDiv button").toArray();
@@ -167,24 +171,8 @@ function initRoom(firstRoom = false) {
                         combatManager.playerAttack(index);
                     }
                     rmBuildRoom(dungeon.getCurrentRoom); // Update room
-                    
-                    // Monitor combat status
-                    const combatCheckInterval = setInterval(() => {
-                        if (combatManager.isCombatOver()) {
-                            clearInterval(combatCheckInterval);
-                            if (dungeon.getCurrentRoom.isCleared()) {
-                                                    
-                            }
-                        } else if (combatManager.turn === "enemies") {
-                            combatManager.enemyAttack();
-                            rmBuildRoom(dungeon.getCurrentRoom);
-                            rmBuildStats(player);
-                            rmBuildInventory(player);
-                        }
-                    }, 1700); // Check every 1.7s
                 });
             });
-
 
             break;
         case "item":

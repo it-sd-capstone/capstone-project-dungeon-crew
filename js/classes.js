@@ -16,13 +16,18 @@ export class Creature {
         this.isDodged = random < this.dodgeChance;
         return this.isDodged;
     }
-    takeDamage(damage) {
-        const damageAfterDefense = damage * (1 - this.defense / 100); // Test
+    takeDamage(enemy) {
+        const damageAfterDefense = enemy.attack * (1 - this.defense / 100); // Test
+
         if (this.isDodged) {
             updateStatusBar("Attack dodged!");
             return;
         }
-        this.health = Math.max(this.health - damageAfterDefense, 0);
+
+        this.health = Math.max(0, this.health - damageAfterDefense);
+
+        console.log(`${enemy.name} attacked you for ${damageAfterDefense} damage.`); // Debugging purpose
+        updateStatusBar(`${enemy.name} attacked you for ${damageAfterDefense} damage.`);
     }
     get getAttack() {
         return this.attack;
@@ -176,7 +181,7 @@ export class BossRoom extends Room {
     get getBoss() {
         return this.boss;
     }
-    get isCleared() {
+    isCleared() {
         return this.cleared;
     }
 }
@@ -189,7 +194,7 @@ export class MonsterRoom extends Room {
     get getMonsters() {
         return this.monsters;
     }
-    get isCleared() {
+    isCleared() {
         return this.cleared;
     }
 }
