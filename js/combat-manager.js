@@ -12,6 +12,7 @@ export class CombatManager {
         this.enemies = enemies;
     }
     startCombat(updateRoom, updateStats, updateInventory) {
+        this.turn = "player";
         this.isCombatActive = true;
         updateStatusBar(`Combat started! It's your turn.`);
         this.startCombatLoop(updateRoom, updateStats, updateInventory);
@@ -20,7 +21,6 @@ export class CombatManager {
         this.combatInterval = setInterval(() => {
             if (this.turn === "player") {
                 // Wait for player input via main.js
-                console.log("Player's turn: " + this.turn);
             } else if (this.turn === "enemies") {
                 this.enemyAttack(updateRoom, updateStats, updateInventory);
             }
@@ -59,16 +59,12 @@ export class CombatManager {
         target.health -= damage;
 
         // Update status bar to show damage to which enemy
-        console.log(`You attacked ${target.name} for ${damage} damage.`); // Debugging purpose
         updateStatusBar(`You attacked ${target.name} for ${damage} damage.`);
     
         // Check to see if all enemies or player died
         this.checkCombatEnd();
 
         if (this.isCombatOver) {
-            console.log(this.isCombatOver());
-            console.log(this.isCombatActive);
-
             this.turn = "enemies";
         } else {
             this.nextTurn();
@@ -126,8 +122,6 @@ export class CombatManager {
     //     }
     // }
     useItem(itemIndex) {
-        console.log("PLAYER INVENTORY:", this.player.inventory);
-        console.log("ITEM INDEX:", itemIndex);
         // Grab correct item clicked
         const item = this.player.inventory[itemIndex];
 

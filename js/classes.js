@@ -27,7 +27,6 @@ export class Creature {
 
         this.health = Math.max(0, this.health - damageAfterDefense);
 
-        console.log(`${enemy.name} attacked you for ${damageAfterDefense} damage.`); // Debugging purpose
         updateStatusBar(`${enemy.name} attacked you for ${damageAfterDefense} damage.`);
     }
     get getAttack() {
@@ -151,8 +150,6 @@ export class Equipment extends BaseItem {
         target.attack += this.attackMod;
         target.defense += this.defenseMod;
 
-        console.log(`Applying effect to`, target);
-
         // Only increase health if healMod is not 0
         if (this.healthMod !== 0) {
             target.health += Math.min(target.maxHealth, target.health + this.healthMod);
@@ -160,12 +157,10 @@ export class Equipment extends BaseItem {
         
         if (this.attackScript) {
             this.attackScript(target);
-            console.log(target);
         }
 
         if (this.hurtScript) {
             this.hurtScript(target);
-            console.log(target);
         }
     }
 }

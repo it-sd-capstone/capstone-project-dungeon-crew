@@ -145,7 +145,6 @@ function initRoom(firstRoom = false) {
     invButtons.forEach((button, index) => {
         $(button).on("click", () => {
             const item = player.inventory[index];
-            console.log(`Clicked on item: ${item.name} (${JSON.stringify(item)})`);
             
             if (item) {
                 combatManager.useItem(index);
@@ -166,7 +165,6 @@ function initRoom(firstRoom = false) {
         case "monster":
             if (dungeon.getCurrentRoom instanceof MonsterRoom) {
                 let monsters = dungeon.getCurrentRoom.getMonsters;
-                console.log("Current room monsters: " + JSON.stringify(monsters, null, 2)); // Debugging purpose
 
                 combatManager.setEnemies(monsters);
 
@@ -189,7 +187,6 @@ function initRoom(firstRoom = false) {
             monsterButtons.forEach((button, index) => {
                 $(button).on("click", () => {
                     const targetMonster = combatManager.enemies[index];
-                    console.log("Clicked index: " + index); // Debugging purpose
                     if (targetMonster.health > 0) {
                         combatManager.playerAttack(index);
                     }
@@ -213,7 +210,6 @@ function initRoom(firstRoom = false) {
                 if (!dungeon.getCurrentRoom.taken) {
                     if (takeItem instanceof Equipment) { //add item to equipment
                         player.addToEquipment = takeItem;
-                        console.log(`PLAYER STATS: att: ${player.attack} def: ${player.defense} dod: ${player.dodgeChance}`);
                         dungeon.getCurrentRoom.taken = true;
                         updateStatusBar("You took the "+takeItem.name+"!");
 
@@ -264,7 +260,6 @@ function initRoom(firstRoom = false) {
                 if (player.gold >= shopItem1.value) {
                     if (shopItem1 instanceof Equipment) {
                         player.addToEquipment = shopItem1;
-                        console.log(`PLAYER STATS: att: ${player.attack} def: ${player.defense} dod: ${player.dodgeChance}`);
                         player.gold -= shopItem1.value;
                         delete dungeon.getCurrentRoom.forSale[0];
                         updateStatusBar("You bought the "+shopItem1.name+"!");
@@ -302,7 +297,6 @@ function initRoom(firstRoom = false) {
                 if (player.gold >= shopItem2.value) {
                     if (shopItem2 instanceof Equipment) {
                         player.addToEquipment = shopItem2;
-                        console.log(`PLAYER STATS: att: ${player.attack} def: ${player.defense} dod: ${player.dodgeChance}`);
                         player.gold -= shopItem2.value;
                         delete dungeon.getCurrentRoom.forSale[1];
                         updateStatusBar("You bought the "+shopItem2.name+"!");
@@ -435,7 +429,6 @@ function initRoom(firstRoom = false) {
         case "boss":
             if (dungeon.getCurrentRoom instanceof BossRoom) {
                 let monsters = dungeon.getCurrentRoom.getBoss;
-                console.log("Current room monsters: " + JSON.stringify(monsters, null, 2)); // Debugging purpose
 
                 combatManager.setEnemies([monsters]);
 
@@ -458,7 +451,6 @@ function initRoom(firstRoom = false) {
             monsterButtons.forEach((button, index) => {
                 $(button).on("click", () => {
                     const targetMonster = combatManager.enemies[index];
-                    console.log("Clicked index: " + index); // Debugging purpose
                     if (targetMonster.health > 0) {
                         combatManager.playerAttack(index);
                     }
