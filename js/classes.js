@@ -80,11 +80,17 @@ export class Player extends Creature {
         return this.equipped;
     }
     set addToEquipment(equipment) {
-        this.equipped.push(equipment);
+        if (equipment instanceof Equipment) {
+            this.equipped.push(equipment);
+            equipment.applyEffect(this);
+        }
     }
     set removeFromEquipment(equipment) {
         const itemIndex = this.equipped.findIndex(item => item === equipment);
         if (itemIndex !== -1) {
+            this.attack -= equipment.attackMod;
+            this.defense -= equipment.defenseMod;
+            this.health -= Math.min(this.maxHealth, this.health - equipment.healthMod);
             this.equipped.splice(itemIndex, 1);
         }
     }
@@ -132,7 +138,7 @@ export class Consumable extends BaseItem {
     }
 }
 export class Equipment extends BaseItem {
-    constructor(name, value, sprite, attackMod, defenseMod, healthMod, attackScript, hurtScript) {
+    constructor(name, value, sprite, attackMod, defenseMod, healthMod, attackScript = () => {}, hurtScript = () => {}) {
         super(name, value, sprite);
         this.attackMod = attackMod;
         this.defenseMod = defenseMod;
@@ -143,8 +149,14 @@ export class Equipment extends BaseItem {
     applyEffect(target) {
         target.attack += this.attackMod;
         target.defense += this.defenseMod;
-        target.health += this.healthMod;
-        this.attackScript();
+
+        // Only increase health if healMod is not 0
+        if (this.healthMod !== 0) {
+            target.health += Math.min(target.maxHealth, target.health + this.healthMod);
+        }
+        
+        if (this.attackScript) this.attackScript();
+        if (this.hurtScript) this.hurtScript();
     }
 }
 // 

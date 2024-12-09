@@ -213,11 +213,13 @@ function initRoom(firstRoom = false) {
                 if (!dungeon.getCurrentRoom.taken) {
                     if (takeItem instanceof Equipment) { //add item to equipment
                         player.addToEquipment = takeItem;
+                        console.log(`PLAYER STATS: att: ${player.attack} def: ${player.defense} dod: ${player.dodgeChance}`);
                         dungeon.getCurrentRoom.taken = true;
                         updateStatusBar("You took the "+takeItem.name+"!");
 
                         rmBuildRoom(dungeon.getCurrentRoom);
                         rmBuildInventory(player);
+                        rmBuildStats(player);
                     } else if (takeItem instanceof Consumable) {
                         if (player.inventory.length < 8) { //has room
                             player.addToInventory = takeItem;
@@ -262,6 +264,7 @@ function initRoom(firstRoom = false) {
                 if (player.gold >= shopItem1.value) {
                     if (shopItem1 instanceof Equipment) {
                         player.addToEquipment = shopItem1;
+                        console.log(`PLAYER STATS: att: ${player.attack} def: ${player.defense} dod: ${player.dodgeChance}`);
                         player.gold -= shopItem1.value;
                         delete dungeon.getCurrentRoom.forSale[0];
                         updateStatusBar("You bought the "+shopItem1.name+"!");
@@ -299,6 +302,7 @@ function initRoom(firstRoom = false) {
                 if (player.gold >= shopItem2.value) {
                     if (shopItem2 instanceof Equipment) {
                         player.addToEquipment = shopItem2;
+                        console.log(`PLAYER STATS: att: ${player.attack} def: ${player.defense} dod: ${player.dodgeChance}`);
                         player.gold -= shopItem2.value;
                         delete dungeon.getCurrentRoom.forSale[1];
                         updateStatusBar("You bought the "+shopItem2.name+"!");
