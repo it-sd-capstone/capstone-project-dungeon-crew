@@ -4,10 +4,10 @@ import { updateStatusBar } from "./combat-manager.js";
 // 
 export class Creature {
     constructor(health, maxHealth, attack, defense, dodgeChance = 0.1) {
-        this.health = health;
-        this.maxHealth = maxHealth;
-        this.attack = attack;
-        this.defense = defense;
+        this.health = Math.round(health);
+        this.maxHealth = Math.round(maxHealth);
+        this.attack = Math.round(attack);
+        this.defense = Math.round(defense);
         this.dodgeChance = dodgeChance;
         this.isDodged = false;
     }
@@ -138,8 +138,8 @@ export class Equipment extends BaseItem {
     applyEffect(target) {
         target.attack += this.attackMod;
         target.defense += this.defenseMod;
+        target.maxHealth += this.healthMod;
         target.health += this.healthMod;
-        this.attackScript();
     }
 }
 // 

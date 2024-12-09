@@ -11,6 +11,7 @@ export var ConsumableType;
     ConsumableType["FireballScroll"] = "Fireball Scroll";
     ConsumableType["Bomb"] = "Bomb";
     ConsumableType["SuperiorHealingPotion"] = "Superior Healing Potion";
+    ConsumableType["LightningScroll"] = "Lightning Scroll";
 })(ConsumableType || (ConsumableType = {}));
 export class ConsumableFactory {
     static createConsumable(type) {
@@ -101,6 +102,19 @@ export class ConsumableFactory {
                         const healAmount = Math.floor(target.getMaxHealth() * 1.5);
                         target.heal(healAmount);
                      } // Hurt Script
+                );
+            case ConsumableType.LightningScroll:
+                return new Consumable(
+                    ConsumableType.LightningScroll, // Name
+                    20, // Value
+                    "img/items/lightning-scroll.png", // Sprite
+                    0, // Attack Mod
+                    0, // Defense Mod
+                    0, // Health Mod
+                    () => { }, // Attack Script
+                    (target) => {
+                        //add functionality
+                    } // Hurt Script
                 );
             default:
                 throw new Error(`Unknown consumable type: ${type}`);
