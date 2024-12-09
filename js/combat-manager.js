@@ -22,22 +22,20 @@ export class CombatManager {
                 // Wait for player input via main.js
                 console.log("Player's turn: " + this.turn);
             } else if (this.turn === "enemies") {
-                this.enemyAttack();
-
-                updateRoom();
-                updateStats();
-                updateInventory();
+                this.enemyAttack(updateRoom, updateStats, updateInventory);
             }
 
             // Check combat end after each turn
             if (this.isCombatOver()) {
+                clearInterval(this.combatInterval);
                 this.endCombat();
             }
         }, 1700);
     }
     nextTurn() {
-        if (this.turn === "enemies") {
-            this.enemyAttack();
+        if (this.turn === "player" && this.isCombatActive) {
+            this.turn = "enemies";
+            this.startCombatLoop(updateRoom, updateStats, updateInventory);
         }
     }
     playerAttack(targetIndex) {
@@ -67,45 +65,69 @@ export class CombatManager {
         // Check to see if all enemies or player died
         this.checkCombatEnd();
 
-        console.log(this.isCombatOver());
-        console.log(this.isCombatActive);
         if (this.isCombatOver) {
             console.log(this.isCombatOver());
             console.log(this.isCombatActive);
-            console.log("Inside of isCombatOver if statement"); // Debugging purpose
+
             this.turn = "enemies";
-            // this.nextTurn();
+        } else {
+            this.nextTurn();
         }
     }
-    enemyAttack() {
-        // Make sure combat is active
-        if (!this.isCombatActive) {
-            return;
-        }
+    enemyAttack(updateRoom, updateStats, updateInventory) {
+        let enemyIndex = 0;
 
-        // Have each enemy attack player
-        this.enemies.forEach(enemy => {
+        // loop to handle attacks
+        for (enemyIndex; enemyIndex < this.enemies.length; enemyIndex++) {
+            const enemy = this.enemies[enemyIndex];
+
+            // Attack player if the enemy is still alive
             if (enemy.health > 0) {
-                // const damage = Math.max(0, enemy.attack - this.player.defense);
-
                 this.player.takeDamage(enemy);
+
+                // Update information after each attack
+                updateRoom();
+                updateStats();
+                updateInventory();
+
+                // Check if combat is over after this attack
+                if (this.isCombatOver()) {
+                    return; // Stop if the game is over
+                }
             }
-        });
+        } 
 
-        // Check to see if all enemies or player died
-        this.checkCombatEnd();
-
-        if (!this.isCombatOver()) {
+        if (enemyIndex >= this.enemies.length) {
+            // After all enemies have attacked, switch turn to player
             this.turn = "player";
-            // this.nextTurn();
         }
     }
-    useItem(itemIndex) {
-        // Make sure it's the players turn and combat is active
-        if (this.turn !== "player" || !this.isCombatActive) {
-            return;
-        }
+    // enemyAttack() {
+    //     // Make sure combat is active
+    //     if (!this.isCombatActive) {
+    //         return;
+    //     }
 
+    //     // Have each enemy attack player
+    //     this.enemies.forEach(enemy => {
+    //         if (enemy.health > 0) {
+    //             // const damage = Math.max(0, enemy.attack - this.player.defense);
+
+    //             this.player.takeDamage(enemy);
+    //         }
+    //     });
+
+    //     // Check to see if all enemies or player died
+    //     this.checkCombatEnd();
+
+    //     if (!this.isCombatOver()) {
+    //         this.turn = "player";
+    //         // this.nextTurn();
+    //     }
+    // }
+    useItem(itemIndex) {
+        console.log("PLAYER INVENTORY:", this.player.inventory);
+        console.log("ITEM INDEX:", itemIndex);
         // Grab correct item clicked
         const item = this.player.inventory[itemIndex];
 

@@ -139,6 +139,29 @@ function initRoom(firstRoom = false) {
     rmBuildStats(player);
     rmBuildInventory(player);
 
+    // Inventory interactability---
+    let invButtons = $(".invItem").toArray();
+
+    invButtons.forEach((button, index) => {
+        $(button).on("click", () => {
+            const item = player.inventory[index];
+            console.log(`Clicked on item: ${item.name} (${JSON.stringify(item)})`);
+            
+            if (item) {
+                combatManager.useItem(index);
+
+                // Update UI after using item
+                rmBuildRoom(player);
+                rmBuildStats(player);
+                rmBuildInventory(player);
+            }
+        })
+    })
+
+    // ----------------------------
+
+    let monsterButtons;
+
     switch (dungeon.getCurrentRoom.getType) { // room type initialization
         case "monster":
             if (dungeon.getCurrentRoom instanceof MonsterRoom) {
@@ -155,7 +178,7 @@ function initRoom(firstRoom = false) {
                 );
             }
 
-            let monsterButtons = $(".enemyDiv button").toArray();
+            monsterButtons = $(".enemyDiv button").toArray();
 
             // Remove old event listeners
             monsterButtons.forEach((button) => {
@@ -410,10 +433,14 @@ function initRoom(firstRoom = false) {
                 let monsters = dungeon.getCurrentRoom.getBoss;
                 console.log("Current room monsters: " + JSON.stringify(monsters, null, 2)); // Debugging purpose
 
-                combatManager.setEnemies(monsters);
+                combatManager.setEnemies([monsters]);
 
                 // Start combat
-                combatManager.startCombat();
+                combatManager.startCombat(
+                    () => rmBuildRoom(dungeon.getCurrentRoom),
+                    () => rmBuildStats(player),
+                    () => rmBuildInventory(player)
+                );
             }
 
             monsterButtons = $(".bossEnemyDiv button").toArray();
@@ -424,7 +451,7 @@ function initRoom(firstRoom = false) {
             });
 
             // Attach event listeners to monsters
-            monsterButtons.forEach((button) => {
+            monsterButtons.forEach((button, index) => {
                 $(button).on("click", () => {
                     const targetMonster = combatManager.enemies[index];
                     console.log("Clicked index: " + index); // Debugging purpose
@@ -434,18 +461,6 @@ function initRoom(firstRoom = false) {
                     rmBuildRoom(dungeon.getCurrentRoom); // update room
                 });
             });
-
-            // Monitor combat status
-            combatCheckInterval = setInterval(() => {
-                if (combatManager.isCombatOver()) {
-                    clearInterval(combatCheckInterval);
-                    if (dungeon.getCurrentRoom.isCleared()) {
-                        rmBuildRoom(dungeon.getCurrentRoom);
-                    }
-                } else if (combatManager.turn === "enemies") {
-                    combatManager.enemyAttack();
-                }
-            }, 100); // Check every 100ms
 
             break;
     }
