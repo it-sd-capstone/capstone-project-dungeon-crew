@@ -55,9 +55,7 @@ export class ItemFactory {
                 0, // Health Mod
                 () => { }, // Attack Script
                 (target) => {
-                    if (Math.random() < 0.1) {
-                        target.isDodged = true;
-                    }
+                    target.dodgeChance += 0.1;
                 });
             case ItemType.SturdyBoots:
                 return new Equipment(ItemType.SturdyBoots, // Name

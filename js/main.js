@@ -14,7 +14,7 @@ import {BossFactory,BossType} from "./boss-factory.js";
 import {ConsumableFactory,ConsumableType} from "./consumable-factory.js";
 
 // player initialization
-let player = new Player(25,25,5,0,25,[],[], 0);
+let player = new Player(25,25,5,0,25,[],[], 0.1);
 
 // combat manager initialization
 let combatManager = new CombatManager(player, []);
