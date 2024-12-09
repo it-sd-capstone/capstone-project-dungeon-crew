@@ -41,7 +41,7 @@ export class Creature {
     get getMaxHealth() {
         return this.maxHealth;
     }
-    set heal(healAmount) {
+    heal(healAmount) {
         this.health += healAmount;
     }
     healFull() {
@@ -129,12 +129,22 @@ export class BaseItem {
     }
 }
 export class Consumable extends BaseItem {
-    constructor(name, value, sprite, effect) {
+    constructor(name, value, sprite, attackMod, defenseMod, healthMod, attackScript = () => {}, hurtScript = () => {}) {
         super(name, value, sprite);
-        this.effect = effect;
+        this.attackMod = attackMod;
+        this.defenseMod = defenseMod;
+        this.healthMod = healthMod;
+        this.attackScript = attackScript; // Test
+        this.hurtScript = hurtScript; // Test
     }
     applyEffect(target) {
-        this.effect();
+        if (this.attackScript) {
+            this.attackScript(target);
+        } 
+
+        if (this.hurtScript) {
+            this.hurtScript(target);
+        }
     }
 }
 export class Equipment extends BaseItem {

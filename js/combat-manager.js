@@ -60,6 +60,13 @@ export class CombatManager {
 
         // Update status bar to show damage to which enemy
         updateStatusBar(`You attacked ${target.name} for ${damage} damage.`);
+
+        // Trigger equipment effects
+        this.player.equipped.forEach(item => {
+            if (item.attackScript) {
+                item.attackScript(this);
+            }
+        });
     
         // Check to see if all enemies or player died
         this.checkCombatEnd();
@@ -132,7 +139,7 @@ export class CombatManager {
         this.player.inventory.splice(itemIndex, 1);
         updateStatusBar(`You used ${item.name}.`);
 
-        this.turn = "enemies";
+        // this.turn = "enemies";
         // this.nextTurn();
     }
     applyItemEffect(effect, target) {

@@ -40,9 +40,16 @@ export class ItemFactory {
                 0, // Defense Mod
                 0, // Health Mod
                 (target) => {
+                    console.log("Target in bow", target);
                     if (target.enemies && target.enemies.length > 0) {
-                        const randomEnemy = target.enemies[Math.floor(Math.random() * target.enemies.length)];
-                        randomEnemy.health -= 4;
+                        const aliveEnemies = target.enemies.filter(enemy => enemy.health > 0);
+                        const randomEnemy = aliveEnemies[Math.floor(Math.random() * aliveEnemies.length)];
+                        const damage = Math.max(0, this.player.attack - target.defense);
+
+                        console.log("aliveEnemies in bow", aliveEnemies);
+                        console.log(`Bow deals 4 damage to ${randomEnemy.name}`);
+
+                        randomEnemy.health -= damage;
                     }
                 }, () => { } // Hurt Script
                 );

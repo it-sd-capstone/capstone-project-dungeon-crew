@@ -150,7 +150,7 @@ function initRoom(firstRoom = false) {
                 combatManager.useItem(index);
 
                 // Update UI after using item
-                rmBuildRoom(player);
+                rmBuildRoom(dungeon.getCurrentRoom);
                 rmBuildStats(player);
                 rmBuildInventory(player);
             }
