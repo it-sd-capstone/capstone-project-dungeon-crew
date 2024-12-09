@@ -44,6 +44,11 @@ button#backToMainMenu {
     padding: 0;
 }
 
+#howToPlay h2 {
+    margin: 0;
+    padding: 12px;
+}
+
 #roomWrapper {
     height: 75%;
     background-image: url("../img/room/room.png");
@@ -300,7 +305,7 @@ div#howToPlay h2 {
     height: 13.33%;
     width: 10%;
     position: absolute;
-    top: 45%;
+    top: 51%;
     left: 45%;
 }
 
