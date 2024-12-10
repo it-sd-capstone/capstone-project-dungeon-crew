@@ -143,6 +143,10 @@ function initRoom(firstRoom = false) {
     let invButtons = $(".invItem").toArray();
 
     invButtons.forEach((button, index) => {
+        $(button).off("click");
+    })
+
+    invButtons.forEach((button, index) => {
         $(button).on("click", () => {
             const item = player.inventory[index];
             
