@@ -1,5 +1,6 @@
 import { Monster, Boss, Dungeon } from "./classes.js";
 import { ItemType } from "./item-factory.js";
+
 export class CombatManager {
     constructor(player, enemies = []) {
         this.player = player;
@@ -183,7 +184,7 @@ export class CombatManager {
         } else if (playerDefeated) {
             this.player.health = 0;
             updateStatusBar(`You were defeated!`);
-            alert("Game over!");
+            gameOver();
         }
 
     }
@@ -231,4 +232,9 @@ export function updateStatusBar(message) {
     if (statusBar) {
         statusBar.innerHTML = message;
     }
+}
+
+function gameOver() {
+    $("#gameWrapper").addClass("hide");
+    $("#gameOverDiv").removeClass("hide");
 }
