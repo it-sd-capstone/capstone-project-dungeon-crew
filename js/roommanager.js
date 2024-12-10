@@ -205,7 +205,25 @@ export function rmBuildRoom(room) {
     }
 }
 
+function updateDirections(currentRoom) {
+    const roomDirections = {
+        shop: "The shop contains 4 items that you may choose to buy, <br> provided you have enough gold. The doctor also offers <br> a full healing service that can be purchased for 10 gold.",
+        boss: "Works the same as monster rooms. Prepare <br> for a tough fight! The boss won't go down easily.",
+        item: "The chest can be clicked, opening and closing it.<br> Search the chest for a powerful item to aid in your journey.",
+        monster: "You may either click on a monster to attack it,<br> or click on an inventory item to use it.<br> Defeat the monsters to progress to the next room.",
+        default: "Explore the dungeon and move forward carefully."
+    };
+
+    const directionsText = roomDirections[currentRoom] || roomDirections.default;
+    const directionsParagraph = document.getElementById("directionsText");
+
+    directionsParagraph.innerHTML = directionsText;
+}
+
 export function rmBuildMap(dungeon) {
+
+    updateDirections(dungeon.getCurrentRoom.type);
+    console.log();
     // Update Map
     let mapNum1 = $("#mapNumberRow .mapCol1");
     let mapNum2 = $("#mapNumberRow .mapCol2");
@@ -261,7 +279,7 @@ export function rmBuildMap(dungeon) {
     //col 4 (ALWAYS ACTIVE)
     mapNum4.text(curRoom+1);
     mapType4.text(dungeon.getCurrentRoom.type.toUpperCase().charAt(0));
-
+    
     if (curRoom+1 >= dunLength) { //col 5
         mapNum5.addClass("mapBlack");
         mapType5.addClass("mapBlack");
@@ -298,6 +316,7 @@ export function rmBuildMap(dungeon) {
     } else {
         mapRemaining.text("");
     }
+
 }
 
 /*
@@ -434,3 +453,4 @@ export function rmBuildSampleBoss() {
     let bossRoom = new BossRoom("boss",boss,false);
     rmBuildRoom(bossRoom);
 }
+
