@@ -33,11 +33,6 @@ function initializeGame() {
     initRoom(true);
 }
 
-function gameOver() {
-    $("#gameWrapper").addClass("hide");
-    $("#gameOverDiv").removeClass("hide");
-}
-
 function generateRooms(difficulty) {
     let roomCount = Math.round(8*difficulty); // total rooms in current dungeon layout
     let roomCountMod = roomCount-2; // total rooms minus boss and shop
