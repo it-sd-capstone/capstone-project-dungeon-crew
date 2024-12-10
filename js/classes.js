@@ -4,10 +4,10 @@ import { updateStatusBar } from "./combat-manager.js";
 // 
 export class Creature {
     constructor(health, maxHealth, attack, defense, dodgeChance = 0.1) {
-        this.health = health;
-        this.maxHealth = maxHealth;
-        this.attack = attack;
-        this.defense = defense;
+        this.health = Math.round(health);
+        this.maxHealth = Math.round(maxHealth);
+        this.attack = Math.round(attack);
+        this.defense = Math.round(defense);
         this.dodgeChance = dodgeChance;
         this.isDodged = false;
     }

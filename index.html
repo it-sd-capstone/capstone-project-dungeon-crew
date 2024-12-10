@@ -42,7 +42,7 @@
             <div id="shopRoom" class="hide shopDiv">
                 <div class="shopCharacter chrShopkeeper">
                     <button onclick=""> <!-- This is the shop keeper and you can click on them for dialogue -->
-                            <img src="#" alt="Shop Keeper" class="imgFill">
+                            <img src="img/room/shopkeeper.png" alt="Shop Keeper" class="imgFill">
                     </button>
                 </div>
                 <div class="doorDiv">
@@ -52,7 +52,7 @@
                 </div>
                 <div class="shopCharacter chrDoctor">
                     <button onclick=""> <!-- This is the doctor and you can click on them for dialogue -->
-                        <img src="#" alt="Doctor" class="imgFill">
+                        <img src="img/room/doctor.png" alt="Doctor" class="imgFill">
                     </button>
                 </div>
                 <div class="shopItemDiv sItem1">
@@ -83,7 +83,7 @@
 
             <div id="bossRoom" class="hide bossDiv">
                 <div class="doorDiv">
-                    <button onclick="enterRoom('itemRoom')"> <!-- This is the door and you can click it to go to another room -->
+                    <button onclick=""> <!-- This is the door and you can click it to go to another room -->
                         <img src="img/room/door-gray.png" alt="Next Room" class="imgFill">
                     </button>
                 </div>
@@ -108,7 +108,7 @@
                 <div class="chest">
                     <div class="chestDiv">
                         <button onclick=""> <!-- This is the chest the player can click to open. The image src attribute should change if the player clicks on the chest -->
-                            <img src="#" alt="Chest">
+                            <img src="#" alt="Chest" class="imgFill">
                         </button>
                     </div>
                     <div class="chestItemDiv">
@@ -123,7 +123,7 @@
 
             <div id="monsterRoom" class="hide monsterDiv">
                 <div class="doorDiv">
-                    <button onclick="enterRoom('shopRoom')">
+                    <button onclick="">
                         <img src="img/room/door-gray.png" alt="Next Room" class="imgFill">
                     </button>
                 </div>
@@ -240,12 +240,11 @@
     <div id="howToPlay" class="hide">
         <div id="helpOverview">
             <h2>Directions</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-               Cras est quam, fringilla ut elit ut, dictum ultrices enim. Donec ac enim et lorem vestibulum gravida ut eget massa.
-               In commodo tristique ultrices. Duis tempus ultricies massa id aliquam. Duis tristique est in iaculis maximus.
-               Pellentesque at augue in eros tincidunt vehicula quis quis risus. Mauris semper pellentesque metus non bibendum.
-               Pellentesque ut vulputate libero. Nam ac arcu orci. Pellentesque consectetur odio eros, id venenatis magna elementum quis.
-               Vivamus tempus ante id nisl ornare imperdiet.
+            <p>In this game, you'll explore different rooms where you'll face off against monsters, discover items in chests, and visit shops.
+               On your turn, you can either attack a monster by clicking on it or use an item from your inventory. Once all the monsters are defeated, 
+               you'll move on to the next room. You can click on chests to open them, revealing an item that you may decide to take. In the shop, you 
+               can buy up to four items if you have enough gold, or even pay 10 gold for a full healing service from the doctor. Boss rooms work the same 
+               as monster rooms, except you’ll face a tougher enemy before you can move forward.
             </p>
             <button onclick="backToMainMenu('mainMenu')" id="backToMainMenu">Back to Main Menu</button>
         </div>

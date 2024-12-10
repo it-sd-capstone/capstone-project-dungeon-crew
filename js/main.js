@@ -29,13 +29,15 @@ function generateRooms(difficulty) {
 
     let rooms = [];
 
-
-    // !! TODO add more items to pools once implemented. !!
-
     let shopEquipPool = [
         ItemType.Bow,
         ItemType.Whip,
-        ItemType.Shield
+        ItemType.Shield,
+        ItemType.SturdyBoots,
+        ItemType.ChainmailOfVitality,
+        ItemType.CatONineTails,
+        ItemType.KettleHat,
+        ItemType.TitaniumGreatsword
     ];
     let shopConsumePool = [
         ConsumableType.LesserHealingPotion,
@@ -44,14 +46,22 @@ function generateRooms(difficulty) {
     ];
     let itemEquipPool = [
         ItemType.RabbitsFoot,
-        ItemType.RustyDagger,
-        ItemType.Shield
+        ItemType.RustyDagger, ItemType.RustyDagger, ItemType.RustyDagger, ItemType.RustyDagger,
+        ItemType.Shield, ItemType.Shield, ItemType.Shield,
+        ItemType.ButterKnife, ItemType.ButterKnife, ItemType.ButterKnife, ItemType.ButterKnife,
+        ItemType.HeartPendant, ItemType.HeartPendant,
+        ItemType.ChainmailOfVitality,
+        ItemType.VampireCharm,
+        ItemType.RingOfVigor,
+        ItemType.LightningStaff,
+        ItemType.AmuletOfProtection
     ];
     let itemConsumePool = [
-        ConsumableType.BlizzardScroll,
-        ConsumableType.FireballScroll,
-        ConsumableType.LesserHealingPotion,
-        ConsumableType.GreaterHealingPotion,
+        ConsumableType.BlizzardScroll, ConsumableType.BlizzardScroll,
+        ConsumableType.FireballScroll, ConsumableType.FireballScroll,
+        ConsumableType.LightningScroll, ConsumableType. LightningScroll,
+        ConsumableType.LesserHealingPotion, ConsumableType.LesserHealingPotion, ConsumableType.LesserHealingPotion, ConsumableType.LesserHealingPotion, ConsumableType.LesserHealingPotion,
+        ConsumableType.GreaterHealingPotion, ConsumableType.GreaterHealingPotion, ConsumableType.GreaterHealingPotion,
         ConsumableType.SuperiorHealingPotion
     ];
 
@@ -98,7 +108,7 @@ function generateRooms(difficulty) {
         remainingRooms.splice(randSelect,1);
 
         let rewardItem;
-        if (Math.random() < .5) { //give equipment
+        if (Math.random() < .66) { //give equipment
             rewardItem = ItemFactory.createItem(itemEquipPool[Math.floor(Math.random()*itemEquipPool.length)]);
         } else { //give consumable
             rewardItem = ConsumableFactory.createConsumable(itemConsumePool[Math.floor(Math.random()*itemConsumePool.length)]);
@@ -215,6 +225,8 @@ function initRoom(firstRoom = false) {
                     if (takeItem instanceof Equipment) { //add item to equipment
                         player.addToEquipment = takeItem;
                         dungeon.getCurrentRoom.taken = true;
+                        takeItem.applyEffect(player);
+                        rmBuildStats(player);
                         updateStatusBar("You took the "+takeItem.name+"!");
 
                         rmBuildRoom(dungeon.getCurrentRoom);
@@ -265,6 +277,7 @@ function initRoom(firstRoom = false) {
                     if (shopItem1 instanceof Equipment) {
                         player.addToEquipment = shopItem1;
                         player.gold -= shopItem1.value;
+                        shopItem1.applyEffect(player);
                         delete dungeon.getCurrentRoom.forSale[0];
                         updateStatusBar("You bought the "+shopItem1.name+"!");
 
@@ -302,6 +315,7 @@ function initRoom(firstRoom = false) {
                     if (shopItem2 instanceof Equipment) {
                         player.addToEquipment = shopItem2;
                         player.gold -= shopItem2.value;
+                        shopItem2.applyEffect(player);
                         delete dungeon.getCurrentRoom.forSale[1];
                         updateStatusBar("You bought the "+shopItem2.name+"!");
 
@@ -339,6 +353,7 @@ function initRoom(firstRoom = false) {
                     if (shopItem3 instanceof Equipment) {
                         player.addToEquipment = shopItem3;
                         player.gold -= shopItem3.value;
+                        shopItem3.applyEffect(player);
                         delete dungeon.getCurrentRoom.forSale[2];
                         updateStatusBar("You bought the "+shopItem3.name+"!");
 
@@ -376,6 +391,7 @@ function initRoom(firstRoom = false) {
                     if (shopItem4 instanceof Equipment) {
                         player.addToEquipment = shopItem4;
                         player.gold -= shopItem4.value;
+                        shopItem4.applyEffect(player);
                         delete dungeon.getCurrentRoom.forSale[3];
                         updateStatusBar("You bought the "+shopItem4.name+"!");
 
