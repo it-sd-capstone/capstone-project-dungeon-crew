@@ -13,13 +13,30 @@ import { CombatManager, updateStatusBar } from './combat-manager.js';
 import {BossFactory,BossType} from "./boss-factory.js";
 import {ConsumableFactory,ConsumableType} from "./consumable-factory.js";
 
-// player initialization
-let player = new Player(25,25,5,0,25,[],[], 0);
+let player;
+let combatManager;
+let dungeon;
+
+initializeGame();
+
+function initializeGame() {
+    // player initialization
+    player = new Player(25,25,5,0,10,[ ConsumableFactory.createConsumable(ConsumableType.GreaterHealingPotion) ],[], 0);
 
 // combat manager initialization
-let combatManager = new CombatManager(player, []);
+    combatManager = new CombatManager(player, []);
 
 // Generate Dungeon
+    dungeon = new Dungeon(generateRooms(1),1,0);
+
+// initialize room
+    initRoom(true);
+}
+
+function gameOver() {
+    $("#gameWrapper").addClass("hide");
+    $("#gameOverDiv").removeClass("hide");
+}
 
 function generateRooms(difficulty) {
     let roomCount = Math.round(8*difficulty); // total rooms in current dungeon layout
@@ -430,12 +447,6 @@ function initRoom(firstRoom = false) {
     }
 }
 
-// dungeon initialization
-let dungeon = new Dungeon(generateRooms(1),1,0);
-
-// initialize room
-initRoom(true);
-
 // go to next room
 // TODO: ONLY ALLOW PASSAGE TO NEXT ROOM IF CURRENT ROOM IS CLEARED
 $(".doorDiv button").on("click", () => {
@@ -459,4 +470,15 @@ $("#viewEquip").on("click", ()=>{
 $("#returnToGame").on("click", ()=>{
     $("#gameWrapper").removeClass("hide");
     $("#equipmentDiv").addClass("hide");
+});
+
+$("#returnToMenu").on("click", ()=>{
+    $("#gameOverDiv").addClass("hide");
+    $("#mainMenu").removeClass("hide");
+});
+
+$("#restartGame").on("click",()=>{
+    initializeGame();
+    $("#gameOverDiv").addClass("hide");
+    $("#gameWrapper").removeClass("hide");
 });
