@@ -21,7 +21,7 @@ initializeGame();
 
 function initializeGame() {
     // player initialization
-    player = new Player(25,25,5,0,10,[
+    player = new Player(50,50,5,0,25,[
         ConsumableFactory.createConsumable(ConsumableType.GreaterHealingPotion),
     ],[], 0.1);
 
@@ -38,7 +38,7 @@ function initializeGame() {
 }
 
 function generateRooms(difficulty) {
-    let roomCount = Math.round(8+(difficulty*1.1)); // total rooms in current dungeon layout
+    let roomCount = Math.round(8*(difficulty)); // total rooms in current dungeon layout
     let roomCountMod = roomCount-2; // total rooms minus boss and shop
     const itemRatio = 0.3; // how many item rooms there are compared to monster rooms
     let itemRooms = Math.round(roomCountMod*itemRatio);
@@ -88,19 +88,19 @@ function generateRooms(difficulty) {
     if (difficulty >= 1) {
         monsterPool.push(EnemyType.CrimeSlime);
     }
-    if (difficulty >= 1.1) {
+    if (difficulty >= 1.25) {
         monsterPool.push(EnemyType.Snobgoblin);
         floorBoss = BossType.Slimelord;
     }
-    if (difficulty >= 1.2) {
+    if (difficulty >= 1.5) {
         monsterPool.push(EnemyType.LazyBones);
         floorBoss = BossType.Orchestrator;
     }
-    if (difficulty >= 1.3) {
+    if (difficulty >= 1.75) {
         monsterPool.push(EnemyType.HungryGhost);
         floorBoss = BossType.GrimSleeper;
     }
-    if (difficulty >= 1.4) {
+    if (difficulty >= 2) {
         floorBoss = BossType.SoulFeaster;
     }
 
@@ -150,7 +150,7 @@ function generateRooms(difficulty) {
 function initRoom(firstRoom = false) {
     if (!firstRoom) {
         if (dungeon.getCurrentRoom instanceof BossRoom) { // regenerate dungeon after last room of floor
-            dungeon.setDifficulty = dungeon.getDifficulty+0.1;
+            dungeon.setDifficulty = dungeon.getDifficulty+0.25;
             dungeon.setRooms = generateRooms(dungeon.getDifficulty);
             dungeon.resetRoomIndex();
 
@@ -519,10 +519,13 @@ $("#returnToGame").on("click", ()=>{
 $("#returnToMenu").on("click", ()=>{
     $("#gameOverDiv").addClass("hide");
     $("#mainMenu").removeClass("hide");
+
+    initializeGame();
 });
 
 $("#restartGame").on("click",()=>{
-    initializeGame();
     $("#gameOverDiv").addClass("hide");
     $("#gameWrapper").removeClass("hide");
+
+    initializeGame();
 });

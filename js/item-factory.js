@@ -140,7 +140,7 @@ export class ItemFactory {
                 return new Equipment(ItemType.CatONineTails,
                     75,
                     "img/items/cat-o-nine-tails.png",
-                    5,
+                    2,
                     0,
                     0,
                     (target) => {

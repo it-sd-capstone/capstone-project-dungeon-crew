@@ -28,11 +28,8 @@ export class ConsumableFactory {
                     () => { }, // Attack Script
                     (target) => {
                         const healAmount = Math.floor(target.player.getMaxHealth * 0.5);
-                        target.heal(healAmount);
-                        
-                        if (target.health > target.maxHealth) {
-                            target.health = target.maxHealth;
-                        }
+                        target.player.heal(healAmount);
+
                      } // Hurt Script
                 );
             case ConsumableType.GreaterHealingPotion:
