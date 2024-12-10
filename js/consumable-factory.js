@@ -26,10 +26,11 @@ export class ConsumableFactory {
                     0, // Health Mod
                     () => { }, // Attack Script
                     (target) => {
-                        const healAmount = Math.floor(target.getMaxHealth() * 0.5);
+                        const healAmount = Math.floor(target.getMaxHealth * 0.5);
                         target.heal(healAmount);
-                        if (target.health > target.getMaxHealth()) {
-                            target.health = target.getMaxHealth();
+                        
+                        if (target.health > target.maxHealth) {
+                            target.health = target.maxHealth;
                         }
                      } // Hurt Script
                 );
@@ -99,7 +100,8 @@ export class ConsumableFactory {
                     0, // Health Mod
                     () => { }, // Attack Script
                     (target) => {
-                        const healAmount = Math.floor(target.getMaxHealth() * 1.5);
+                        const healAmount = Math.floor(target.getMaxHealth * 1.5);
+                        target.healFull();
                         target.heal(healAmount);
                      } // Hurt Script
                 );
