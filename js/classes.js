@@ -161,9 +161,7 @@ export class Equipment extends BaseItem {
         target.defense += this.defenseMod;
 
         // Only increase health if healMod is not 0
-        if (this.healthMod !== 0) {
-            target.health += Math.min(target.maxHealth, target.health + this.healthMod);
-        }
+        target.maxHealth += this.healthMod;
         
         if (this.attackScript) {
             this.attackScript(target);

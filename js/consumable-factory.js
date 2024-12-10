@@ -65,7 +65,7 @@ export class ConsumableFactory {
             case ConsumableType.FireballScroll:
                 return new Consumable(
                     ConsumableType.FireballScroll, // Name
-                    15, // Value
+                    25, // Value
                     "img/items/fireball-scroll.png", // Sprite
                     0, // Attack Mod
                     0, // Defense Mod
@@ -93,7 +93,7 @@ export class ConsumableFactory {
             case ConsumableType.SuperiorHealingPotion:
                 return new Consumable(
                     ConsumableType.SuperiorHealingPotion, // Name
-                    20, // Value
+                    30, // Value
                     "img/items/superior-healing-potion.png", // Sprite
                     0, // Attack Mod
                     0, // Defense Mod

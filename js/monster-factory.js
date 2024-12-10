@@ -30,14 +30,14 @@ export class EnemyFactory {
                 return new Monster(20 * difficultyMultiplier, // Health
                 10 * difficultyMultiplier, // Max Health
                 2 * difficultyMultiplier, // Attack
-                3 * difficultyMultiplier, // Defense
+                6 * difficultyMultiplier, // Defense
                 EnemyType.Snobgoblin, // Name
                 "img/monsters/snobgoblin.gif" // Sprite
                 );
             case EnemyType.LazyBones:
                 return new Monster(35 * difficultyMultiplier, // Health
-                35 * difficultyMultiplier, // Max Health
-                10 * difficultyMultiplier, // Attack
+                15 * difficultyMultiplier, // Max Health
+                6 * difficultyMultiplier, // Attack
                 10 * difficultyMultiplier, // Defense
                 EnemyType.LazyBones, // Name
                 "img/monsters/lazy-bones.gif" // Sprite

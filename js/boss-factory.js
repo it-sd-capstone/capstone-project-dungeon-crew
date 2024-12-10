@@ -26,7 +26,7 @@ export class BossFactory {
                 40 * difficultyMultiplier, // Health
                 40 * difficultyMultiplier, // Max Health
                 7 * difficultyMultiplier, // Attack
-                5 * difficultyMultiplier, // Defense
+                3 * difficultyMultiplier, // Defense
                 BossType.Slimelord, // Name
                 "img/monsters/slimelord.gif" // Sprite
                 );
@@ -34,8 +34,8 @@ export class BossFactory {
                 return new Boss(
                 75 * difficultyMultiplier, // Health
                 75 * difficultyMultiplier, // Max Health
-                10 * difficultyMultiplier, // Attack
-                10 * difficultyMultiplier, // Defense
+                8 * difficultyMultiplier, // Attack
+                4 * difficultyMultiplier, // Defense
                 BossType.Orchestrator, // Name
                 "img/monsters/orchestrator.gif" // Sprite
                 );
@@ -43,8 +43,8 @@ export class BossFactory {
                 return new Boss(
                 100 * difficultyMultiplier, // Health
                 100 * difficultyMultiplier, // Max Health
-                20 * difficultyMultiplier, // Attack
-                15 * difficultyMultiplier, // Defense
+                10 * difficultyMultiplier, // Attack
+                5 * difficultyMultiplier, // Defense
                 BossType.GrimSleeper, // Name
                 "img/monsters/grim-sleeper.gif" // Sprite
                 );
@@ -52,8 +52,8 @@ export class BossFactory {
                 return new Boss(
                 200 * difficultyMultiplier, // Health
                 200 * difficultyMultiplier, // Max Health
-                30 * difficultyMultiplier, // Attack
-                30 * difficultyMultiplier, // Defense
+                12 * difficultyMultiplier, // Attack
+                7 * difficultyMultiplier, // Defense
                 BossType.SoulFeaster, // Name
                 "img/monsters/soul-feaster.gif" // Sprite
                 );
