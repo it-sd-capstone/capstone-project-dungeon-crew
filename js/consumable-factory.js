@@ -101,8 +101,7 @@ export class ConsumableFactory {
                     () => { }, // Attack Script
                     (target) => {
                         const healAmount = Math.floor(target.getMaxHealth * 1.5);
-                        target.healFull();
-                        target.heal(healAmount);
+                        target.health = healAmount;
                      } // Hurt Script
                 );
             case ConsumableType.LightningScroll:

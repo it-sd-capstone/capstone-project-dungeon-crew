@@ -1,4 +1,5 @@
 import { Equipment } from "./classes.js";
+import { calcDamage } from "./combat-manager.js"
 export var ItemType;
 (function (ItemType) {
     ItemType["RustyDagger"] = "Rusty Dagger";
@@ -38,10 +39,19 @@ export class ItemFactory {
                 1, // Attack Mod
                 0, // Defense Mod
                 0, // Health Mod
-                () => { }, // Attack Script
                 (target) => {
-                    target.extraDamage = (target.extraDamage || 0) + 1;
-                });
+                    if (target.enemies && target.enemies.length > 0) {
+                        const aliveEnemies = target.enemies.filter(enemy => enemy.health > 0);
+                        if (aliveEnemies.length > 0) {
+                            aliveEnemies.forEach(monster => {
+                                monster.health -= 1;
+                            });
+                            console.log("All enemies where whipped for 1 damage!");
+                        }
+                    }
+                },
+                () => { }, // Attack Script
+                );
             case ItemType.Bow:
                 return new Equipment(ItemType.Bow, // Name
                 25, // Value
@@ -53,13 +63,15 @@ export class ItemFactory {
                     console.log("Target in bow", target);
                     if (target.enemies && target.enemies.length > 0) {
                         const aliveEnemies = target.enemies.filter(enemy => enemy.health > 0);
-                        const randomEnemy = aliveEnemies[Math.floor(Math.random() * aliveEnemies.length)];
-                        const damage = Math.max(0, this.player.attack - target.defense);
+                        if (aliveEnemies.length > 0) {
+                            const randomEnemy = aliveEnemies[Math.floor(Math.random() * aliveEnemies.length)];
+                            const damage = calcDamage(4,randomEnemy.defense);
 
-                        console.log("aliveEnemies in bow", aliveEnemies);
-                        console.log(`Bow deals 4 damage to ${randomEnemy.name}`);
+                            console.log("aliveEnemies in bow", aliveEnemies);
+                            console.log(`Bow deals ${damage} damage to ${randomEnemy.name}`);
 
-                        randomEnemy.health -= damage;
+                            randomEnemy.health -= damage;
+                        }
                     }
                 }, () => { } // Hurt Script
                 );
@@ -131,7 +143,17 @@ export class ItemFactory {
                     5,
                     0,
                     0,
-                    () => { /*Additional functionality*/ },
+                    (target) => {
+                        if (target.enemies && target.enemies.length > 0) {
+                            const aliveEnemies = target.enemies.filter(enemy => enemy.health > 0);
+                            if (aliveEnemies.length > 0) {
+                                aliveEnemies.forEach(monster => {
+                                    monster.health -= calcDamage(5,monster.defense);
+                                });
+                                console.log("All enemies where whipped for 5 damage!");
+                            }
+                        }
+                    },
                     () => {},
                 );
             case ItemType.VampireCharm:
@@ -141,7 +163,7 @@ export class ItemFactory {
                     0,
                     0,
                     10,
-                    () => { /*Additional functionality*/ },
+                    (target) => { target.player.heal(Math.floor(Math.max(1,target.player.maxHealth*0.02))); },
                     () => {},
                 );
             case ItemType.KettleHat:
@@ -171,7 +193,19 @@ export class ItemFactory {
                     0,
                     0,
                     0,
-                    () => { /* Additional functionality */ },
+                    (target) => {
+                        console.log("Target in staff", target);
+                        if (target.enemies && target.enemies.length > 0) {
+                            const aliveEnemies = target.enemies.filter(enemy => enemy.health > 0);
+                            if (aliveEnemies.length > 0) {
+                                const randomEnemy = aliveEnemies[Math.floor(Math.random() * aliveEnemies.length)];
+                                const damage = calcDamage(10,randomEnemy.defense);
+
+                                console.log(`Lightning Staff deals ${damage} damage to ${randomEnemy.name}`);
+
+                                randomEnemy.health -= damage;
+                            }
+                        } },
                     () => {},
                 );
             case ItemType.TitaniumGreatsword:

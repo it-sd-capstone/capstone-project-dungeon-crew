@@ -56,7 +56,7 @@ export class CombatManager {
         }
 
         // Calculate damage
-        const damage = Math.max(0, this.player.attack - target.defense);
+        const damage = calcDamage(this.player.attack,target.defense);
         
         // Assign damage to target health
         target.health -= damage;
@@ -238,10 +238,15 @@ export function updateStatusBar(message) {
     const statusBar = document.getElementById("statusBarText");
     if (statusBar) {
         statusBar.innerHTML = message;
+        console.log(message);
     }
 }
 
 function gameOver() {
     $("#gameWrapper").addClass("hide");
     $("#gameOverDiv").removeClass("hide");
+}
+
+export function calcDamage(attack,targetDefense) {
+    return (Math.max(1,Math.floor(attack*(1-(targetDefense/100)))));
 }

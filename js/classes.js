@@ -17,7 +17,7 @@ export class Creature {
         return this.isDodged;
     }
     takeDamage(enemy) {
-        const damageAfterDefense = enemy.attack * (1 - this.defense / 100); // Test
+        const damageAfterDefense = (Math.max(1,Math.floor(enemy.attack*(1-(this.defense/100))))); // Test
         
 
         if (this.dodgeAttack()) {
@@ -43,6 +43,9 @@ export class Creature {
     }
     heal(healAmount) {
         this.health += healAmount;
+        if (this.health > this.maxHealth) {
+            this.health = this.maxHealth;
+        }
     }
     healFull() {
         this.health = this.maxHealth;
@@ -162,6 +165,7 @@ export class Equipment extends BaseItem {
 
         // Only increase health if healMod is not 0
         target.maxHealth += this.healthMod;
+        target.health += this.healthMod;
         
         if (this.attackScript) {
             this.attackScript(target);

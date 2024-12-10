@@ -36,9 +36,9 @@ function initializeGame() {
 }
 
 function generateRooms(difficulty) {
-    let roomCount = Math.round(8*difficulty); // total rooms in current dungeon layout
+    let roomCount = Math.round(8+(difficulty*1.1)); // total rooms in current dungeon layout
     let roomCountMod = roomCount-2; // total rooms minus boss and shop
-    const itemRatio = 0.25; // how many item rooms there are compared to monster rooms
+    const itemRatio = 0.3; // how many item rooms there are compared to monster rooms
     let itemRooms = Math.round(roomCountMod*itemRatio);
 
     let rooms = [];
@@ -86,19 +86,19 @@ function generateRooms(difficulty) {
     if (difficulty >= 1) {
         monsterPool.push(EnemyType.CrimeSlime);
     }
-    if (difficulty >= 1.25) {
+    if (difficulty >= 1.1) {
         monsterPool.push(EnemyType.Snobgoblin);
         floorBoss = BossType.Slimelord;
     }
-    if (difficulty >= 1.5) {
+    if (difficulty >= 1.2) {
         monsterPool.push(EnemyType.LazyBones);
         floorBoss = BossType.Orchestrator;
     }
-    if (difficulty >= 1.75) {
+    if (difficulty >= 1.3) {
         monsterPool.push(EnemyType.HungryGhost);
         floorBoss = BossType.GrimSleeper;
     }
-    if (difficulty >= 2) {
+    if (difficulty >= 1.4) {
         floorBoss = BossType.SoulFeaster;
     }
 
@@ -148,7 +148,7 @@ function generateRooms(difficulty) {
 function initRoom(firstRoom = false) {
     if (!firstRoom) {
         if (dungeon.getCurrentRoom instanceof BossRoom) { // regenerate dungeon after last room of floor
-            dungeon.setDifficulty = dungeon.getDifficulty+0.25;
+            dungeon.setDifficulty = dungeon.getDifficulty+0.1;
             dungeon.setRooms = generateRooms(dungeon.getDifficulty);
             dungeon.resetRoomIndex();
 

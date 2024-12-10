@@ -21,31 +21,31 @@ export class EnemyFactory {
             case EnemyType.CrimeSlime:
                 return new Monster(10 * difficultyMultiplier, // Health
                 10 * difficultyMultiplier, // Max Health
-                1 * difficultyMultiplier, // Attack
-                2 * difficultyMultiplier, // Defense
+                2 * difficultyMultiplier, // Attack
+                5 * difficultyMultiplier, // Defense
                 EnemyType.CrimeSlime, // Name
                 "img/monsters/crime-slime.gif" // Sprite
                 );
             case EnemyType.Snobgoblin:
-                return new Monster(20 * difficultyMultiplier, // Health
-                10 * difficultyMultiplier, // Max Health
-                2 * difficultyMultiplier, // Attack
-                6 * difficultyMultiplier, // Defense
+                return new Monster(15 * difficultyMultiplier, // Health
+                15 * difficultyMultiplier, // Max Health
+                3 * difficultyMultiplier, // Attack
+                8 * difficultyMultiplier, // Defense
                 EnemyType.Snobgoblin, // Name
                 "img/monsters/snobgoblin.gif" // Sprite
                 );
             case EnemyType.LazyBones:
-                return new Monster(35 * difficultyMultiplier, // Health
-                15 * difficultyMultiplier, // Max Health
-                6 * difficultyMultiplier, // Attack
-                10 * difficultyMultiplier, // Defense
+                return new Monster(20 * difficultyMultiplier, // Health
+                20 * difficultyMultiplier, // Max Health
+                5 * difficultyMultiplier, // Attack
+                15 * difficultyMultiplier, // Defense
                 EnemyType.LazyBones, // Name
                 "img/monsters/lazy-bones.gif" // Sprite
                 );
             case EnemyType.HungryGhost:
-                return new Monster(50 * difficultyMultiplier, // Health
-                50 * difficultyMultiplier, // Max Health
-                20 * difficultyMultiplier, // Attack
+                return new Monster(30 * difficultyMultiplier, // Health
+                30 * difficultyMultiplier, // Max Health
+                15 * difficultyMultiplier, // Attack
                 25 * difficultyMultiplier, // Defense
                 EnemyType.HungryGhost, // Name
                 "img/monsters/hungry-ghost.gif" // Sprite
