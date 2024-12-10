@@ -21,7 +21,9 @@ initializeGame();
 
 function initializeGame() {
     // player initialization
-    player = new Player(25,25,5,0,10,[ ConsumableFactory.createConsumable(ConsumableType.GreaterHealingPotion) ],[], 0.1);
+    player = new Player(25,25,5,0,10,[
+        ConsumableFactory.createConsumable(ConsumableType.GreaterHealingPotion),
+    ],[], 0.1);
 
     // Generate Dungeon
     dungeon = new Dungeon([],1,0);

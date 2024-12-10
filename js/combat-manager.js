@@ -106,6 +106,7 @@ export class CombatManager {
         if (enemyIndex >= this.enemies.length) {
             // After all enemies have attacked, switch turn to player
             this.turn = "player";
+            updateStatusBar("It's your turn!");
         }
     }
     // enemyAttack() {
@@ -132,18 +133,28 @@ export class CombatManager {
     //     }
     // }
     useItem(itemIndex) {
-        // Grab correct item clicked
-        const item = this.player.inventory[itemIndex];
+        if (!this.isCombatActive || this.turn === "player") {
+            // Grab correct item clicked
+            const item = this.player.inventory[itemIndex];
 
-        // Apply the item effect
-        item.applyEffect(this.player);
+            // Apply the item effect
+            item.applyEffect(this);
 
-        // Remove item from inventory
-        this.player.inventory.splice(itemIndex, 1);
-        updateStatusBar(`You used ${item.name}.`);
+            // Remove item from inventory
+            this.player.inventory.splice(itemIndex, 1);
+            updateStatusBar(`You used ${item.name}.`);
 
-        // this.turn = "enemies";
-        // this.nextTurn();
+            if (this.isCombatActive) {
+                // Check to see if all enemies or player died
+                this.checkCombatEnd();
+
+                if (this.isCombatOver) {
+                    this.turn = "enemies";
+                } else {
+                    this.nextTurn();
+                }
+            }
+        }
     }
     applyItemEffect(effect, target) {
         effect(target, this);

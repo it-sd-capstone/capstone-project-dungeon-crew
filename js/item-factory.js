@@ -1,5 +1,5 @@
 import { Equipment } from "./classes.js";
-import { calcDamage } from "./combat-manager.js"
+import { calcDamage, updateStatusBar } from "./combat-manager.js"
 export var ItemType;
 (function (ItemType) {
     ItemType["RustyDagger"] = "Rusty Dagger";
@@ -46,7 +46,7 @@ export class ItemFactory {
                             aliveEnemies.forEach(monster => {
                                 monster.health -= 1;
                             });
-                            console.log("All enemies where whipped for 1 damage!");
+                            updateStatusBar("All enemies where whipped for 1 damage!");
                         }
                     }
                 },
@@ -60,15 +60,15 @@ export class ItemFactory {
                 0, // Defense Mod
                 0, // Health Mod
                 (target) => {
-                    console.log("Target in bow", target);
+                    //console.log("Target in bow", target);
                     if (target.enemies && target.enemies.length > 0) {
                         const aliveEnemies = target.enemies.filter(enemy => enemy.health > 0);
                         if (aliveEnemies.length > 0) {
                             const randomEnemy = aliveEnemies[Math.floor(Math.random() * aliveEnemies.length)];
                             const damage = calcDamage(4,randomEnemy.defense);
 
-                            console.log("aliveEnemies in bow", aliveEnemies);
-                            console.log(`Bow deals ${damage} damage to ${randomEnemy.name}`);
+                            //console.log("aliveEnemies in bow", aliveEnemies);
+                            updateStatusBar(`Bow deals ${damage} damage to ${randomEnemy.name}`);
 
                             randomEnemy.health -= damage;
                         }
@@ -150,7 +150,7 @@ export class ItemFactory {
                                 aliveEnemies.forEach(monster => {
                                     monster.health -= calcDamage(5,monster.defense);
                                 });
-                                console.log("All enemies where whipped for 5 damage!");
+                                updateStatusBar("All enemies where whipped for 5 damage!");
                             }
                         }
                     },
@@ -163,7 +163,11 @@ export class ItemFactory {
                     0,
                     0,
                     10,
-                    (target) => { target.player.heal(Math.floor(Math.max(1,target.player.maxHealth*0.02))); },
+                    (target) => {
+                        let healAmount = Math.floor(Math.max(1,target.player.maxHealth*0.02));
+                        target.player.heal(healAmount);
+                        updateStatusBar(`You were healed by Vampire Charm for ${healAmount} health!`);
+                    },
                     () => {},
                 );
             case ItemType.KettleHat:
@@ -201,7 +205,7 @@ export class ItemFactory {
                                 const randomEnemy = aliveEnemies[Math.floor(Math.random() * aliveEnemies.length)];
                                 const damage = calcDamage(10,randomEnemy.defense);
 
-                                console.log(`Lightning Staff deals ${damage} damage to ${randomEnemy.name}`);
+                                updateStatusBar(`Lightning Staff deals ${damage} damage to ${randomEnemy.name}`);
 
                                 randomEnemy.health -= damage;
                             }
