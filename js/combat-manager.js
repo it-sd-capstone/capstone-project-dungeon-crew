@@ -1,13 +1,15 @@
 import { Monster, Boss, Dungeon } from "./classes.js";
 import { ItemType } from "./item-factory.js";
+import { rmBuildStats, rmBuildRoom, rmBuildInventory } from "./roommanager.js";
 
 export class CombatManager {
-    constructor(player, enemies = []) {
+    constructor(player, enemies = [], dungeon) {
         this.player = player;
         this.enemies = enemies;
         this.turn = "player";
         this.isCombatActive = false;
         this.combatInterval = null;
+        this.dungeon = dungeon;
     }
     setEnemies(enemies) {
         this.enemies = enemies;
@@ -181,6 +183,11 @@ export class CombatManager {
             
             updateStatusBar(`You are victorious! You earned ${goldAward} gold.`)
             this.player.gold += goldAward;
+
+            this.dungeon.getCurrentRoom.cleared = true;
+            rmBuildRoom(this.dungeon.getCurrentRoom);
+            rmBuildStats(this.player);
+            rmBuildInventory(this.player);
         } else if (playerDefeated) {
             this.player.health = 0;
             updateStatusBar(`You were defeated!`);

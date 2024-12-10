@@ -23,11 +23,13 @@ function initializeGame() {
     // player initialization
     player = new Player(25,25,5,0,10,[ ConsumableFactory.createConsumable(ConsumableType.GreaterHealingPotion) ],[], 0.1);
 
-    // combat manager initialization
-    combatManager = new CombatManager(player, []);
-
     // Generate Dungeon
-    dungeon = new Dungeon(generateRooms(1),1,0);
+    dungeon = new Dungeon([],1,0);
+
+    // combat manager initialization
+    combatManager = new CombatManager(player, [], dungeon);
+
+    dungeon.setRooms = generateRooms(1);
 
     // initialize room
     initRoom(true);
@@ -492,9 +494,8 @@ function initRoom(firstRoom = false) {
 // go to next room
 // TODO: ONLY ALLOW PASSAGE TO NEXT ROOM IF CURRENT ROOM IS CLEARED
 $(".doorDiv button").on("click", () => {
-    initRoom(false)
-    
-    /* USE THIS CODE INSTEAD ONCE BATTLE SYSTEM IS FUNCTIONAL
+    //initRoom(false)
+
     if (dungeon.getCurrentRoom.type === "monster" || dungeon.getCurrentRoom.type === "boss") {
         if (dungeon.getCurrentRoom.isCleared()) {
             initRoom(false)
@@ -502,7 +503,6 @@ $(".doorDiv button").on("click", () => {
         } else {
             initRoom(false)
         }
-        */
     });
 
 $("#viewEquip").on("click", ()=>{

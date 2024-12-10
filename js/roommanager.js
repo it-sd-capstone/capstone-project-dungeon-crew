@@ -81,7 +81,7 @@ export function rmBuildRoom(room) {
             monster3.addClass("hide");
         }
 
-        if (buildRoom.isCleared === true) {
+        if (buildRoom.cleared === true) {
             doorImg.attr("src","img/room/door.png");
         } else {
             doorImg.attr("src","img/room/door-gray.png");
