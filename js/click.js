@@ -38,6 +38,8 @@ function backToMainMenu(mainMenuId) {
 function showGameWrapper() {
     const gameWrapperDiv = document.querySelector('#gameWrapper');
     gameWrapperDiv.classList.remove('hide'); 
+    const directionsButton = document.getElementById("inGameButton");
+    directionsButton.classList.remove('hide');
 
     const mainMenu = document.querySelector('#mainMenu');
     if (mainMenu) {
@@ -56,11 +58,18 @@ function openDirections(divId){
 
 }
 
-
-
 function clickObject(actionId) {
     // Handle specific object clicks
     alert("Object clicked!");
     // Define object-specific logic here
+}
+
+function showInGameDirections() {
+    const directionsButtonDiv = document.querySelector('#directionsDiv');
+    const directionsButtonParagraph = document.querySelector('#directionsText');
+    
+    // Toggle visibility of both the div and the paragraph
+    directionsButtonDiv.classList.toggle('hide');
+    directionsButtonParagraph.classList.toggle('hide');
 }
 

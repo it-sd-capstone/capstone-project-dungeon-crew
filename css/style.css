@@ -10,6 +10,10 @@ body, html {
     height: 100%;
 }
 
+body {
+    position: relative;
+}
+
 button#backToMainMenu {
     padding: 10px 20px;    
     margin-top: 50px;  
@@ -188,6 +192,30 @@ button#backToMainMenu {
 }
 
 /* ROOMS */
+
+#directionsDiv, #inGameButton {
+    position: absolute;
+    top: 20px; 
+    right: 20px; 
+}
+
+#inGameButton {
+    font-size: 20px; 
+    padding: 10px 20px; 
+    width: auto; 
+    height: auto; 
+    border-radius: 5px; 
+    color: black; 
+    cursor: pointer; 
+}
+
+.directionsBox {
+    background-color: rgba(0, 0, 255, 1); /* Black background with 50% opacity */
+    color: white; 
+    padding: 10px;
+    border-radius: 5px; 
+    margin-top: 25px;
+}
 
 .doorDiv {
     height: 33.88%;
