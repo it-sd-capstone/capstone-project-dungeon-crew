@@ -40,12 +40,23 @@ button#backToMainMenu {
     border: 2px solid white;
 }
 
-#gameWrapper, #howToPlay, #equipmentDiv {
+#gameWrapper, #howToPlay, #equipmentDiv, #gameOverDiv {
     aspect-ratio: 1 / 1;
     min-height: 720px;
     height: 100vh;
     margin: auto;
     padding: 0;
+}
+
+#howToPlay h2, #gameOverDiv h2 {
+    margin: 0;
+    padding: 12px;
+}
+
+#gameOverDiv div {
+    position: absolute;
+    text-align: center;
+    top: 25%;
 }
 
 #roomWrapper {
@@ -328,7 +339,7 @@ div#howToPlay h2 {
     height: 13.33%;
     width: 10%;
     position: absolute;
-    top: 45%;
+    top: 51%;
     left: 45%;
 }
 

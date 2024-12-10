@@ -42,7 +42,7 @@
             <div id="shopRoom" class="hide shopDiv">
                 <div class="shopCharacter chrShopkeeper">
                     <button onclick=""> <!-- This is the shop keeper and you can click on them for dialogue -->
-                            <img src="#" alt="Shop Keeper" class="imgFill">
+                            <img src="img/room/shopkeeper.png" alt="Shop Keeper" class="imgFill">
                     </button>
                 </div>
                 <div class="doorDiv">
@@ -52,7 +52,7 @@
                 </div>
                 <div class="shopCharacter chrDoctor">
                     <button onclick=""> <!-- This is the doctor and you can click on them for dialogue -->
-                        <img src="#" alt="Doctor" class="imgFill">
+                        <img src="img/room/doctor.png" alt="Doctor" class="imgFill">
                     </button>
                 </div>
                 <div class="shopItemDiv sItem1">
@@ -108,7 +108,7 @@
                 <div class="chest">
                     <div class="chestDiv">
                         <button onclick=""> <!-- This is the chest the player can click to open. The image src attribute should change if the player clicks on the chest -->
-                            <img src="#" alt="Chest">
+                            <img src="#" alt="Chest" class="imgFill">
                         </button>
                     </div>
                     <div class="chestItemDiv">
@@ -231,6 +231,26 @@
     </div>
     <button onclick="showInGameDirections()" class="hide" id="inGameButton">?</button>
 
+    <div id="gameOverDiv" class="hide">
+        <div>
+            <h2>Game Over!</h2>
+            <p>Despite what can only be assumed were your best efforts, you have fallen. It was bound to happen eventually...</p>
+            <br />
+            <button id="restartGame">Try Again!</button>
+            <button id="returnToMenu">Return to Main Menu</button>
+        </div>
+    </div>
+    <button onclick="showInGameDirections()" class="hide" id="inGameButton">?</button>
+
+    <div id="gameOverDiv" class="hide">
+        <div>
+            <h2>Game Over!</h2>
+            <p>Despite what can only be assumed were your best efforts, you have fallen. It was bound to happen eventually...</p>
+            <br />
+            <button id="restartGame">Try Again!</button>
+            <button id="returnToMenu">Return to Main Menu</button>
+        </div>
+    </div>
     <div id="equipmentDiv" class="hide">
         <div id="equipHolder">
             <h3>Equipped Items</h3>

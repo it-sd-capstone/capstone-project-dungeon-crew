@@ -4,10 +4,10 @@ import { updateStatusBar } from "./combat-manager.js";
 // 
 export class Creature {
     constructor(health, maxHealth, attack, defense, dodgeChance = 0.1) {
-        this.health = health;
-        this.maxHealth = maxHealth;
-        this.attack = attack;
-        this.defense = defense;
+        this.health = Math.round(health);
+        this.maxHealth = Math.round(maxHealth);
+        this.attack = Math.round(attack);
+        this.defense = Math.round(defense);
         this.dodgeChance = dodgeChance;
         this.isDodged = false;
     }
@@ -16,13 +16,18 @@ export class Creature {
         this.isDodged = random < this.dodgeChance;
         return this.isDodged;
     }
-    takeDamage(damage) {
-        const damageAfterDefense = damage * (1 - this.defense / 100); // Test
-        if (this.isDodged) {
+    takeDamage(enemy) {
+        const damageAfterDefense = enemy.attack * (1 - this.defense / 100); // Test
+        
+
+        if (this.dodgeAttack()) {
             updateStatusBar("Attack dodged!");
             return;
         }
-        this.health = Math.max(this.health - damageAfterDefense, 0);
+
+        this.health = Math.max(0, this.health - damageAfterDefense);
+
+        updateStatusBar(`${enemy.name} attacked you for ${damageAfterDefense} damage.`);
     }
     get getAttack() {
         return this.attack;
@@ -36,7 +41,7 @@ export class Creature {
     get getMaxHealth() {
         return this.maxHealth;
     }
-    set heal(healAmount) {
+    heal(healAmount) {
         this.health += healAmount;
     }
     healFull() {
@@ -75,11 +80,17 @@ export class Player extends Creature {
         return this.equipped;
     }
     set addToEquipment(equipment) {
-        this.equipped.push(equipment);
+        if (equipment instanceof Equipment) {
+            this.equipped.push(equipment);
+            equipment.applyEffect(this);
+        }
     }
     set removeFromEquipment(equipment) {
         const itemIndex = this.equipped.findIndex(item => item === equipment);
         if (itemIndex !== -1) {
+            this.attack -= equipment.attackMod;
+            this.defense -= equipment.defenseMod;
+            this.health -= Math.min(this.maxHealth, this.health - equipment.healthMod);
             this.equipped.splice(itemIndex, 1);
         }
     }
@@ -118,16 +129,26 @@ export class BaseItem {
     }
 }
 export class Consumable extends BaseItem {
-    constructor(name, value, sprite, effect) {
+    constructor(name, value, sprite, attackMod, defenseMod, healthMod, attackScript = () => {}, hurtScript = () => {}) {
         super(name, value, sprite);
-        this.effect = effect;
+        this.attackMod = attackMod;
+        this.defenseMod = defenseMod;
+        this.healthMod = healthMod;
+        this.attackScript = attackScript; // Test
+        this.hurtScript = hurtScript; // Test
     }
     applyEffect(target) {
-        this.effect();
+        if (this.attackScript) {
+            this.attackScript(target);
+        } 
+
+        if (this.hurtScript) {
+            this.hurtScript(target);
+        }
     }
 }
 export class Equipment extends BaseItem {
-    constructor(name, value, sprite, attackMod, defenseMod, healthMod, attackScript, hurtScript) {
+    constructor(name, value, sprite, attackMod, defenseMod, healthMod, attackScript = () => {}, hurtScript = () => {}) {
         super(name, value, sprite);
         this.attackMod = attackMod;
         this.defenseMod = defenseMod;
@@ -138,8 +159,17 @@ export class Equipment extends BaseItem {
     applyEffect(target) {
         target.attack += this.attackMod;
         target.defense += this.defenseMod;
-        target.health += this.healthMod;
-        this.attackScript();
+
+        // Only increase health if healMod is not 0
+        target.maxHealth += this.healthMod;
+        
+        if (this.attackScript) {
+            this.attackScript(target);
+        }
+
+        if (this.hurtScript) {
+            this.hurtScript(target);
+        }
     }
 }
 // 
@@ -176,7 +206,7 @@ export class BossRoom extends Room {
     get getBoss() {
         return this.boss;
     }
-    get isCleared() {
+    isCleared() {
         return this.cleared;
     }
 }
@@ -189,7 +219,7 @@ export class MonsterRoom extends Room {
     get getMonsters() {
         return this.monsters;
     }
-    get isCleared() {
+    isCleared() {
         return this.cleared;
     }
 }
