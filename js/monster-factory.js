@@ -13,7 +13,7 @@ export class EnemyFactory {
             case EnemyType.Seeker:
                 return new Monster(5 * difficultyMultiplier, // Health
                 5 * difficultyMultiplier, // Max Health
-                2 * difficultyMultiplier, // Attack
+                1 * difficultyMultiplier, // Attack
                 0 * difficultyMultiplier, // Defense
                 EnemyType.Seeker, // Name
                 "img/monsters/seeker.gif" // Sprite
@@ -21,23 +21,23 @@ export class EnemyFactory {
             case EnemyType.CrimeSlime:
                 return new Monster(10 * difficultyMultiplier, // Health
                 10 * difficultyMultiplier, // Max Health
-                3 * difficultyMultiplier, // Attack
-                3 * difficultyMultiplier, // Defense
+                1 * difficultyMultiplier, // Attack
+                2 * difficultyMultiplier, // Defense
                 EnemyType.CrimeSlime, // Name
                 "img/monsters/crime-slime.gif" // Sprite
                 );
             case EnemyType.Snobgoblin:
                 return new Monster(20 * difficultyMultiplier, // Health
-                20 * difficultyMultiplier, // Max Health
-                6 * difficultyMultiplier, // Attack
-                5 * difficultyMultiplier, // Defense
+                10 * difficultyMultiplier, // Max Health
+                2 * difficultyMultiplier, // Attack
+                6 * difficultyMultiplier, // Defense
                 EnemyType.Snobgoblin, // Name
                 "img/monsters/snobgoblin.gif" // Sprite
                 );
             case EnemyType.LazyBones:
                 return new Monster(35 * difficultyMultiplier, // Health
-                35 * difficultyMultiplier, // Max Health
-                10 * difficultyMultiplier, // Attack
+                15 * difficultyMultiplier, // Max Health
+                6 * difficultyMultiplier, // Attack
                 10 * difficultyMultiplier, // Defense
                 EnemyType.LazyBones, // Name
                 "img/monsters/lazy-bones.gif" // Sprite
